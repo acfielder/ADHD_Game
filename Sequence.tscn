@@ -1,0 +1,78 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6v33c7vv42j7"]
+
+[ext_resource type="Script" path="res://Sequence.gd" id="1_108bh"]
+[ext_resource type="PackedScene" uid="uid://cvlgpdko4fu0o" path="res://PushPin.tscn" id="2_l4vms"]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(389, 232)
+script = ExtResource("1_108bh")
+
+[node name="Image5" type="ColorRect" parent="."]
+offset_left = -69.0
+offset_top = -78.0
+offset_right = 17.0
+offset_bottom = 7.00001
+metadata/_edit_use_anchors_ = true
+
+[node name="Image4" type="ColorRect" parent="."]
+offset_left = 186.0
+offset_top = -85.0
+offset_right = 272.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Image3" type="ColorRect" parent="."]
+offset_left = -209.0
+offset_top = 60.0
+offset_right = -123.0
+offset_bottom = 145.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Image2" type="ColorRect" parent="."]
+offset_left = 63.0
+offset_top = 82.0
+offset_right = 149.0
+offset_bottom = 167.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Image" type="ColorRect" parent="."]
+offset_left = -265.0
+offset_top = -132.0
+offset_right = -179.0
+offset_bottom = -47.0
+metadata/_edit_use_anchors_ = true
+
+[node name="PushPin5" parent="." instance=ExtResource("2_l4vms")]
+position = Vector2(198, -155)
+scale = Vector2(0.2, 0.2)
+
+[node name="PushPin4" parent="." instance=ExtResource("2_l4vms")]
+position = Vector2(71, 13)
+scale = Vector2(0.2, 0.2)
+
+[node name="PushPin3" parent="." instance=ExtResource("2_l4vms")]
+position = Vector2(-59, -147)
+scale = Vector2(0.2, 0.2)
+
+[node name="PushPin2" parent="." instance=ExtResource("2_l4vms")]
+position = Vector2(-198, -4.99994)
+scale = Vector2(0.2, 0.2)
+
+[node name="PushPin1" parent="." instance=ExtResource("2_l4vms")]
+position = Vector2(-257, -197)
+scale = Vector2(0.2, 0.2)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -191.0
+offset_top = -134.0
+offset_right = 181.0
+offset_bottom = 112.0
+
+[node name="StartButton" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 22.0
+offset_right = 340.0
+offset_bottom = 226.0
+text = "Start Game"
+
+[connection signal="pressed" from="ColorRect/StartButton" to="." method="_on_start_button_pressed"]
