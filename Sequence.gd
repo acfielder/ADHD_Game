@@ -14,8 +14,10 @@ var pins_dict = {}
 @export var total_trials = 10
 var current_trial = 1
 
-const Sequence_Info = preload("res://sequence_info.gd")
+const Sequence_Info = preload("res://sequence_game.gd")
 var sequence_info = SequenceInfo.new()
+
+enum state {HIGHLIGHT, RESPONSE}
 
 #NEXT**************
 #change length based on randomized

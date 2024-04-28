@@ -1,10 +1,12 @@
 class_name SequenceInfo
 
 var overall_performance = [0,0,0,0,0,0,0,0]
-var new_length
+var new_length = 4
 var memory_order = []
 var rng = RandomNumberGenerator.new()
 var trial = 1
+
+
 
 #this should:
 #determine length of sequence based on performance
@@ -18,11 +20,12 @@ var trial = 1
 #i think eventually I might make it so board elements and pins are initiated together for more board possibilities
 	
 func start_game():
-	new_length = 4
 	create_sequence_order()
 	return memory_order
 	
 func next_trial(lastResponseScores):
+	#if trial < 20:
+	#trial += 1
 	update_performance_log(lastResponseScores)
 	determine_new_length(lastResponseScores)
 	memory_order = []
@@ -51,5 +54,10 @@ func create_sequence_order():
 func update_performance_log(lastResponseScores):
 	for i in lastResponseScores.size():
 		overall_performance[i] += lastResponseScores[i]
+		
+#below this would maybe be an individual round
+
+func check_response():
+	pass
 	
 
