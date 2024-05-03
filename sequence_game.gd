@@ -1,63 +1,74 @@
-class_name SequenceInfo
+class_name Sequence_Game
 
-var overall_performance = [0,0,0,0,0,0,0,0]
-var new_length = 4
-var memory_order = []
+#old
+#var overall_performance = [0,0,0,0,0,0,0,0]
+#var new_length = 4
+#var memory_order = []
 var rng = RandomNumberGenerator.new()
-var trial = 1
+#var trial = 1
+
+var length = 4
+var mem_order = []
+var response = []
+var current_trial = 1
+var total_trials = 20
+var overall_performance = [0,0,0,0,0,0,0,0]
+var pins_pressed = 0
+var pins = 5
+
+signal continue_run
 
 
+#new implementation
 
-#this should:
-#determine length of sequence based on performance
-	#if do poorly with 3, bring down to 2, if do well move to 4
-#create the order of the sequence
-#?determine the pushpin layouts for different boards
-#track performance throughout
-	#keep list of each sequence lengths number correct/incorrect(like the example graph)
-	#note this class will have to be instantiated in the actual sequence scene
-	
-#i think eventually I might make it so board elements and pins are initiated together for more board possibilities
-	
-func start_game():
-	create_sequence_order()
-	return memory_order
-	
-func next_trial(lastResponseScores):
-	#if trial < 20:
-	#trial += 1
-	update_performance_log(lastResponseScores)
-	determine_new_length(lastResponseScores)
-	memory_order = []
-	create_sequence_order()
-	return memory_order
-	
-func determine_new_length(lastResponseScores): #takes in array of scores for each press for last done sequence
-	var score_sum = 0
-	for response in range(lastResponseScores.size()):
-		if lastResponseScores[response] != -1:
-			score_sum += lastResponseScores[response]
-	if score_sum == memory_order.size() && memory_order.size()<8: #change to fit correct num pins
-		new_length = memory_order.size()+1
-	elif score_sum < memory_order.size() && memory_order.size()>3:
-		new_length = memory_order.size()-1
+func check_update_response(pin_key):
+	response.append(pin_key)
+	if pin_key == mem_order[response.size()-1]:
+		return true
 	else:
-		new_length = memory_order.size()
-
+		return false
+	pins_pressed += 1
 	
 func create_sequence_order():
-	var pin_num
-	for i in range(new_length):
-		pin_num = int(rng.randf_range(1, 5)) #needs changed to fit however many pins there are
-		memory_order.append(pin_num)
+	determine_new_length()
+	mem_order = []
+	for i in range(length):
+		mem_order.append(int(rng.randf_range(1,pins)))
+	return mem_order
 	
-func update_performance_log(lastResponseScores):
-	for i in lastResponseScores.size():
-		overall_performance[i] += lastResponseScores[i]
+func determine_new_length():
+	if current_trial == 1:
+		length = 4
+	else:
+		var score_sum = 0
+		for i in range(response.size()):
+			score_sum += mem_order[i]
+		if score_sum == mem_order.size() && mem_order.size() <8:
+			length = mem_order.size() + 1
+		elif score_sum < mem_order.size() && mem_order.size() >3:
+			length = mem_order.size() - 1
+		else:
+			length = mem_order.size()
+	
+func update_overall_performance():
+	for i in range(response.size()):
+		overall_performance[i] += response[i]
 		
-#below this would maybe be an individual round
-
-func check_response():
-	pass
+func reset_trial_info():
+	response = []
+	pins_pressed = 0
+	current_trial += 1
 	
-
+func _process(delta):
+	if pins_pressed == mem_order.size():
+		emit_signal("continue_run")
+		
+func get_current_trial():
+	return current_trial
+	
+func get_total_trials():
+	return total_trials
+	
+	
+	
+	

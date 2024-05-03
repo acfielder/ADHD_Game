@@ -1,23 +1,24 @@
+class_name Sequence
 extends Node2D
 
-signal begin_sequence
-var memory_order
-var all_pins = []
-var original_color
-var already_ran = false
-var response_index = 0
-var response_result = [-1,-1,-1,-1,-1,-1,-1,-1]
-var pins = []
-var pins_pressed = 0
-var rng = RandomNumberGenerator.new()
-var pins_dict = {}
-@export var total_trials = 10
-var current_trial = 1
 
-const Sequence_Info = preload("res://sequence_game.gd")
-var sequence_info = SequenceInfo.new()
+var pins = []
+
+
+#const Sequence_Game = preload("res://sequence_game.gd")
+#var sequence_game = Sequence_Game.new()
 
 enum state {HIGHLIGHT, RESPONSE}
+
+#new
+
+var pins_highlight
+var pins_detect
+signal pin_press_detected
+signal begin_trial
+var controller_instance
+#const Sequence_Controller = preload("res://sequence_controller.gd")
+#var sequence_controller = Sequence_Controller.new()
 
 #NEXT**************
 #change length based on randomized
@@ -26,104 +27,60 @@ enum state {HIGHLIGHT, RESPONSE}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#########all but pin connects would be removed here
-	pins_dict = {1:[get_node("PushPin1/Button"), $PushPin1], 2:[get_node("PushPin2/Button"), $PushPin2], 3:[get_node("PushPin3/Button"), $PushPin3], 4: [get_node("PushPin4/Button"), $PushPin4], 5: [get_node("PushPin5/Button"), $PushPin5]}
-	#all_pins = [[get_node("PushPin1/Button"), $PushPin1], [get_node("PushPin2/Button"), $PushPin2], [get_node("PushPin3/Button"), $PushPin3], [get_node("PushPin4/Button"), $PushPin4], [get_node("PushPin5/Button"), $PushPin5]]
+	pins_highlight = {1:get_node("PushPin1/Button"), 2:get_node("PushPin2/Button"), 3: get_node("PushPin3/Button"), 4: get_node("PushPin4/Button"), 5: get_node("PushPin5/Button")}
+	pins_detect = {1:$PushPin1, 2:$PushPin2, 3:$PushPin3, 4:$PushPin4, 5:$PushPin5}
+	
 	pins = [$PushPin1, $PushPin2, $PushPin3, $PushPin4, $PushPin5]
-	memory_order = [1,1,1,1]
 	#.set_mouse_filter(Control.MOUSE_FILTER_PASS)
+	
 	
 	for i in range(pins.size()):
 		pins[i].pin_pressed.connect(_on_pin_pressed)
+		
+	var Sequence_Controller = preload("res://sequence_controller.gd")
+	var sequence_controller = Sequence_Controller.new(self)
+	
+	controller_instance = preload("res://sequence_controller.gd").new(self)
+	#switch between controller_instance and sequence_controller
+	controller_instance.connect("highlight_pin", Callable(self, "_on_highlight_pin"))
+	controller_instance.connect("prompt_for_response", Callable(self, "_on_prompt_for_response"))
 
+	
+	#controller_instance.connect("highlight_pin", self, "_on_highlight_pin")
+	#controller_instance.connect("prompt_for_response", self, "_on_prompt_for_response")
+	# Connect the signal from this script to a method in the receiving script (if needed)
+	# script_instance.connect("some_signal", self, "handle_some_signal")
 
 	# Connect the custom signal to a function in this script
 	#button_scene.connect("button_pressed", self, "_on_button_pressed")
 	
-	
-#have both references in one
-	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
-func start_game():
-	#start_game in the other file is called twice, making the array too long
-	response_index = 0
-	pins_pressed = 0
-	already_ran = false
-	var memory_order_key
-	if current_trial > 1:
-		memory_order_key = sequence_info.next_trial(response_result)
-	else: #current_trial < 1:
-		memory_order_key = sequence_info.start_game()
-	response_result = [-1,-1,-1,-1,-1,-1,-1,-1]
-	#memory_order = call start_game #this creates the starting sequence and saves it here
-	#var memory_order_key = sequence_info.start_game()
-	memory_order = memory_order_key.duplicate()
-	
-	for i in range(memory_order_key.size()):
-		memory_order[i] = pins_dict.get(memory_order_key[i])
-		#print(key)
-		#print(pins_dict.get(key))
-		
-	#this next piece will go away, needs to come back if connection fails
-	#memory_order = [1,1,1,1]
-	
-	#goes through the sequence to light things up
-	highlight_sequence()
-	
-	#these need to come back if the connection fails
-	#these two pieces below will also be removed
-	#for i in range(memory_order.size()):
-		#var index = rng.randf_range(0, all_pins.size()-1)
-		#memory_order[i] = all_pins[index]	
-	#highlight_sequence()
-		
-		
-	
-func highlight_sequence():
-	for i in range(memory_order.size()):
-		original_color = memory_order[i][0].self_modulate
-		memory_order[i][0].self_modulate = Color(0,0,1)
-		await get_tree().create_timer(0.75).timeout
-		memory_order[i][0].self_modulate = original_color
-		await get_tree().create_timer(0.25).timeout
-	already_ran = true
-	
-	
-#this is seeing which pin was pressed and comparing to make the array of correct/incorrect responses
-#is this good to stay in this script?
-func _on_pin_pressed(pin):
-	if already_ran == true && (pins_pressed < memory_order.size()):
-		if pin == memory_order[response_index][1]:
-			print("correct")
-			response_result[response_index] = 1
-		
-		elif pin != memory_order[response_index][1]:
-			print("incorrect")
-			response_result[response_index] = 0
-		response_index += 1
-		pins_pressed += 1
-	
-		if pins_pressed == memory_order.size() && current_trial < total_trials:
-			print("completed sequence and response")
-			current_trial += 1
-			await get_tree().create_timer(0.5).timeout
-			start_game()
-			
-			#call next trial to re-setup sequence for next found
-			
-			
-
-
-	# Connect the custom signal to a function in this script
-   # button_scene.connect("button_pressed", self, "_on_button_pressed")
-	
+#new
 
 
 func _on_start_button_pressed():
 	$ColorRect.hide()
-	start_game()
+	#start_game()
+	self.emit_signal("begin_trial")
+
+
+func _on_highlight_pin(pin_key, highlight_type):
+	var color
+	match highlight_type:
+		0: color = Color(0,0,0.545098)
+		1: color = Color(0.564706,0.933333,0.564706)
+		2: color = Color(1,0,0)
+	var pin = pins_highlight.get(pin_key)
+	var original_color = pin.self_modulate
+	pin.self_modulate = color
+	await get_tree().create_timer(0.75).timeout
+	pin.self_modulate = original_color
+	await get_tree().create_timer(0.25).timeout
+	
+func _on_pin_pressed(pin):
+	var pin_key = pins_detect.find_key(pin)
+	self.emit_signal("pin_press_detected", pin_key)
+	
+func _on_prompt_for_response():
+	pass
+	
