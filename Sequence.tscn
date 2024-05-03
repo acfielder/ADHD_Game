@@ -75,4 +75,18 @@ offset_right = 340.0
 offset_bottom = 226.0
 text = "Start Game"
 
+[node name="ResponsePrompt" type="Label" parent="."]
+visible = false
+offset_left = -99.0
+offset_top = -263.0
+offset_right = 77.0
+offset_bottom = -237.0
+text = "Recreate the sequence"
+
+[node name="current_trial" type="Label" parent="."]
+offset_left = -429.0
+offset_top = -261.0
+offset_right = -389.0
+offset_bottom = -238.0
+
 [connection signal="pressed" from="ColorRect/StartButton" to="." method="_on_start_button_pressed"]
