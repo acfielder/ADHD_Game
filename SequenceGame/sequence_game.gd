@@ -60,17 +60,16 @@ func create_sequence_order(sequence_type: int):
 	
 	
 func choose_sequence_type():
-	var sequence_type 
 	if current_trial == 1:
-		sequence_type = 0
+		return 0
 	else:
 		var i = rng.randf_range(0,1)
 		if i < .31:
-			sequence_type = 1
+			return 1
 		else:
-			sequence_type = 0
-	print(sequence_type)
-	return sequence_type
+			return 0
+
+
 	
 func choose_sequence_type_static_test():
 	var sequence_type
