@@ -6,15 +6,15 @@ var length = 4
 var mem_order = []
 var response = []
 var current_trial = 1
-var total_trials = 4
+var total_trials = 5
 var overall_performance = [0,0,0,0,0,0,0,0]
 var pins_pressed = 0
 var pins = 5
 #testing in adding reverse things
 var last_for_length = 3
-var last_rev_length = 3
+var last_rev_length = 2
 var last_for_score = 3
-var last_rev_score = 3
+var last_rev_score = 2
 var reversed_order = []
 
 enum Sequence_Type{FORWARD, REVERSE, TEST}
@@ -42,9 +42,12 @@ func check_update_response(pin_key: int):
 			return false
 	
 	
-func create_sequence_order():
-	choose_sequence_type()
-	determine_new_length()
+func create_sequence_order(sequence_type: int):
+	if sequence_type == 0:
+		sequence_type_state = Sequence_Type.FORWARD
+	elif sequence_type == 1:
+		sequence_type_state = Sequence_Type.REVERSE
+	length = determine_new_length(sequence_type_state)
 	mem_order = []
 	reversed_order = []
 	response = []
@@ -57,34 +60,64 @@ func create_sequence_order():
 	
 	
 func choose_sequence_type():
+	var sequence_type 
 	if current_trial == 1:
-		sequence_type_state = Sequence_Type.FORWARD
+		sequence_type = 0
 	else:
 		var i = rng.randf_range(0,1)
 		if i < .31:
-			sequence_type_state = Sequence_Type.REVERSE
+			sequence_type = 1
 		else:
-			sequence_type_state = Sequence_Type.FORWARD
-	print(sequence_type_state)
+			sequence_type = 0
+	print(sequence_type)
+	return sequence_type
+	
+func choose_sequence_type_static_test():
+	var sequence_type
+	match current_trial:
+		1:
+			sequence_type = 0
+		2:
+			sequence_type = 0
+		3:
+			sequence_type = 1
+		4: 
+			sequence_type = 0
+		5:
+			sequence_type = 1
+		6:
+			sequence_type = 1
+	return sequence_type
 	
 	
-func determine_new_length():
+	#if current_trial == 1:
+		#sequence_type_state = Sequence_Type.FORWARD
+	#else:
+		#var i = rng.randf_range(0,1)
+		#if i < .31:
+			#sequence_type_state = Sequence_Type.REVERSE
+		#else:
+			#sequence_type_state = Sequence_Type.FORWARD
+	#print(sequence_type_state)
+	
+	
+func determine_new_length(sequence_type: int):
 	if current_trial == 1:
-		length = 3
+		return 3
 	else:
 		#var score_sum = 0
 		#for i in range(response.size()):
 			#score_sum += response[i]
-		if sequence_type_state == Sequence_Type.REVERSE:
+		if sequence_type == 1:#Sequence_Type.REVERSE:
 			if last_rev_score == last_rev_length && last_rev_length < 8:
-				length = last_rev_length + 1
+				return last_rev_length + 1
 			elif last_rev_score < last_rev_length && last_rev_length > 3:
-				length = last_rev_length - 1
-		elif sequence_type_state == Sequence_Type.FORWARD:
+				return last_rev_length - 1
+		elif sequence_type == 0:#Sequence_Type.FORWARD:
 			if last_for_score == last_for_length && last_for_length < 8:
-				length = last_for_length + 1
+				return last_for_length + 1
 			elif last_for_score < last_for_length && last_for_length > 3:
-				length = last_for_length - 1
+				return last_for_length - 1
 		#if reverse
 			#sum = mem size && last reverse
 

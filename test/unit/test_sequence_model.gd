@@ -24,12 +24,21 @@ func test_check_update_response():
 	assert_eq(model.check_update_response(3), true, "answer was correct should be true")
 	assert_eq(model.response, [0,1], "correct response should be 1 added onto list")
 
+func test_create_sequence_order_final():
+	var model = Sequence_Game.new()
+
+
+
+
+
+
+
 
 
 
 func test_create_sequence_order():
 	var model = Sequence_Game.new()
-	model.create_sequence_order()
+	model.create_sequence_order(model.choose_sequence_type())
 	assert_eq(model.mem_order.size(), 4, "first trial length should be 4")
 	for i in range(model.mem_order.size()-1):
 		assert(model.mem_order[i] >= 1 and model.mem_order[i] <= 8)
@@ -37,7 +46,7 @@ func test_create_sequence_order():
 	if model.sequence_type_state == model.Sequence_Type.FORWARD:
 		model.current_trial = 2
 		model.response = [1,1,1,1]
-		model.create_sequence_order()
+		model.create_sequence_order(model.choose_sequence_type())
 		assert_eq(model.mem_order.size(), 5, "second trial all correct length should be 5")
 		for i in range(model.mem_order.size()-1):
 			assert(model.mem_order[i] >= 1 and model.mem_order[i] <= 8)
@@ -47,12 +56,64 @@ func test_create_sequence_order_2():
 		
 	
 
-func test_determine_new_length_2():
+func test_determine_new_length_all_correct():
+	var model = Sequence_Game.new()
+	
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()),3,"trial 1 length should be 3")
+	model.current_trial = 2
+	model.last_for_score = 3
+	model.last_for_length = 3
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()),4, "2nd forward after all correct should be 4")
+	model.current_trial = 3
+	model.last_for_score = 4
+	model.last_for_length = 4
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 3, "1st reverse should be 3")
+	model.current_trial = 4
+	model.last_rev_score = 3
+	model.last_rev_length = 3
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 5, "3rd forward all correct should be 5")
+	model.current_trial = 5
+	model.last_for_score = 5
+	model.last_for_length = 5
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 4, "2nd reverse all correct should be 4")
+	model.current_trial = 6
+	model.last_rev_score = 4
+	model.last_rev_length = 4
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 5, "3rd reverse all correct should be 5")
+	
+func test_determine_new_length_errors_edges():
+	var model = Sequence_Game.new()
+	
+	model.current_trial = 2
+	model.last_for_score = 2
+	model.last_for_length = 3
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()),3, "2nd forward after incorrect should be 3 - edge case")
+	model.current_trial = 3
+	model.last_for_score = 4
+	model.last_for_length = 4
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 3, "1st reverse should be 3")
+	model.current_trial = 4
+	model.last_rev_score = 2
+	model.last_rev_length = 3
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 4, "3rd forward all correct should be 4")
+	model.current_trial = 5
+	model.last_for_score = 5
+	model.last_for_length = 5
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 4, "2nd reverse all correct should be 4")
+	model.current_trial = 6
+	model.last_rev_score = 4
+	model.last_rev_length = 4
+	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 5, "3rd reverse all correct should be 5")
+	
+	
+	
+	
 	#unsure how to fully test when random
+func test_to_ignore():
 	var for_count = 0
 	var rev_count = 0
 	var model = Sequence_Game.new()
-	model.determine_new_length()
+	model.determine_new_length(model.choose_sequence_type_static_test())
 	assert_eq(model.length, 3, "trial 1 length should be 3")
 	for_count += 1
 	
@@ -60,14 +121,14 @@ func test_determine_new_length_2():
 	model.mem_order = [1,2,3,4]
 	model.reversed_order = [4,3,2,1]
 	model.current_trial = 2
-	model.determine_new_length()
+	model.determine_new_length(model.choose_sequence_type_static_test())
 	if model.sequence_type_state == model.Sequence_Type.FORWARD:
 		assert_eq(model.length, 4, "Trial 2 length after all correct and length < 8, should be 4")
 		for_count += 1
 	elif model.sequence_type_state == model.Sequence_Type.REVERSE:
 		assert_eq(model.length, 3, "First trial with reverse should be 3")
 		rev_count += 1
-	
+	pass
 
 
 #unc test_determine_new_length():
@@ -116,16 +177,23 @@ func test_reset_trial_info():
 
 func test_choose_sequence_type():
 	var model = Sequence_Game.new()
-	model.choose_sequence_type()
-	assert_eq(model.sequence_type_state, model.Sequence_Type.FORWARD, "first trial should always be forward")
-	model.sequence_type_state = model.Sequence_Type.TEST
-	model.choose_sequence_type()
-	assert(model.sequence_type_state == model.Sequence_Type.FORWARD || model.sequence_type_state == model.Sequence_Type.REVERSE)
+	assert_eq(model.choose_sequence_type(), 0, "first trial should always be forward")
+	assert(model.choose_sequence_type() == 0 || model.choose_sequence_type() == 1)
 	
 
-
-
-
+func test_choose_sequence_type_static():
+	var model = Sequence_Game.new()
+	assert_eq(model.choose_sequence_type_static_test(), 0, "1st trial should always be forward")
+	model.current_trial += 1
+	assert_eq(model.choose_sequence_type_static_test(), 0, "2nd is set for forward")
+	model.current_trial += 1
+	assert_eq(model.choose_sequence_type_static_test(), 1, "3rd is set for forward")
+	model.current_trial += 1
+	assert_eq(model.choose_sequence_type_static_test(), 0, "4th is set for forward")
+	model.current_trial += 1
+	assert_eq(model.choose_sequence_type_static_test(), 1, "5th is set for forward")
+	model.current_trial += 1
+	assert_eq(model.choose_sequence_type_static_test(), 1, "6th is set for forward")
 
 
 #func before_each():

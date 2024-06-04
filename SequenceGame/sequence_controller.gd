@@ -33,7 +33,7 @@ func begin_trial():
 	if model.get_current_trial() <= model.get_total_trials():
 		await view.prompt_for_next_trial()
 		game_state = State_Type.HIGHLIGHT
-		highlight_sequence(model.create_sequence_order())
+		highlight_sequence(model.create_sequence_order(model.choose_sequence_type()))
 		game_state = State_Type.RESPONSE
 		view.prompt_for_response(1)
 	else:

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cvlgpdko4fu0o"]
 
-[ext_resource type="Script" path="res://PushPin.gd" id="1_3jud2"]
+[ext_resource type="Script" path="res://SequenceGame/PushPin.gd" id="1_3jud2"]
 [ext_resource type="Texture2D" uid="uid://cvlju6pesn3p1" path="res://Art/PushPin.png" id="1_j7mdg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f2lgc"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b6v33c7vv42j7"]
 
-[ext_resource type="Script" path="res://Sequence.gd" id="1_108bh"]
-[ext_resource type="PackedScene" uid="uid://cvlgpdko4fu0o" path="res://PushPin.tscn" id="2_l4vms"]
+[ext_resource type="Script" path="res://SequenceGame/Sequence.gd" id="1_108bh"]
+[ext_resource type="PackedScene" uid="uid://cvlgpdko4fu0o" path="res://SequenceGame/PushPin.tscn" id="2_l4vms"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(389, 232)
