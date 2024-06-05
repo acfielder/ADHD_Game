@@ -1,171 +1,75 @@
 extends GutTest
 
 
-
-func before_all():
-	pass
-
 func test_check_update_response():
 	var model = Sequence_Game.new()
-	model.mem_order = [1,2,4,3]
-	model.sequence_type_state = model.Sequence_Type.FORWARD
-	assert_eq(model.check_update_response(1), true, "answer was correct should be true")
-	assert_eq(model.response, [1], "correct response should be 1")
-	
-	assert_eq(model.check_update_response(3), false, "answer was incorrect should be false")
-	assert_eq(model.response, [1,0], "incorrect response should be 0 added onto list")
-	
-	model = Sequence_Game.new()
-	model.reversed_order = [4,3,2,1]
-	model.sequence_type_state = model.Sequence_Type.REVERSE
-	assert_eq(model.check_update_response(1), false, "answer was incorrect should be false")
-	assert_eq(model.response, [0], "incorrect response should be added as 0 onto list")
-	
-	assert_eq(model.check_update_response(3), true, "answer was correct should be true")
-	assert_eq(model.response, [0,1], "correct response should be 1 added onto list")
-
-func test_create_sequence_order_final():
-	var model = Sequence_Game.new()
-
-
-
-
-
-
-
-
+	model.trial_history.append(SequenceTrialInfo.new(0,4,[1,2,3,4]))
+	assert_true(model.check_update_response(1),"should be true as response was correct")
+	assert_eq(model.pins_pressed,1,"should be 1 after one check")
+	model.trial_history.append(SequenceTrialInfo.new(1,3,[1,2,3]))
+	assert_true(model.check_update_response(3),"should be true as response was correct")
+	assert_eq(model.pins_pressed,2,"should be 2 after a second run")
+	assert_false(model.check_update_response(1), "should be false as response was incorrect")
 
 
 func test_create_sequence_order():
 	var model = Sequence_Game.new()
-	model.create_sequence_order(model.choose_sequence_type())
-	assert_eq(model.mem_order.size(), 4, "first trial length should be 4")
-	for i in range(model.mem_order.size()-1):
-		assert(model.mem_order[i] >= 1 and model.mem_order[i] <= 8)
-		
-	if model.sequence_type_state == model.Sequence_Type.FORWARD:
-		model.current_trial = 2
-		model.response = [1,1,1,1]
-		model.create_sequence_order(model.choose_sequence_type())
-		assert_eq(model.mem_order.size(), 5, "second trial all correct length should be 5")
-		for i in range(model.mem_order.size()-1):
-			assert(model.mem_order[i] >= 1 and model.mem_order[i] <= 8)
-
-func test_create_sequence_order_2():
-	pass
-		
-	
-
-func test_determine_new_length_all_correct():
-	var model = Sequence_Game.new()
-	
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()),3,"trial 1 length should be 3")
-	model.current_trial = 2
-	model.last_for_score = 3
-	model.last_for_length = 3
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()),4, "2nd forward after all correct should be 4")
 	model.current_trial = 3
-	model.last_for_score = 4
-	model.last_for_length = 4
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 3, "1st reverse should be 3")
-	model.current_trial = 4
-	model.last_rev_score = 3
-	model.last_rev_length = 3
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 5, "3rd forward all correct should be 5")
-	model.current_trial = 5
-	model.last_for_score = 5
-	model.last_for_length = 5
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 4, "2nd reverse all correct should be 4")
-	model.current_trial = 6
-	model.last_rev_score = 4
-	model.last_rev_length = 4
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 5, "3rd reverse all correct should be 5")
+	var trial1 = SequenceTrialInfo.new(0,4,[1,2,3,4])
+	var trial2 = SequenceTrialInfo.new(1,5,[1,2,3,4,3])
 	
-func test_determine_new_length_errors_edges():
-	var model = Sequence_Game.new()
+	model.trial_history.append(trial1)
+	model.trial_history.append(trial2)
+	trial1.score = 4
+	trial2.score = 4
 	
-	model.current_trial = 2
-	model.last_for_score = 2
-	model.last_for_length = 3
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()),3, "2nd forward after incorrect should be 3 - edge case")
-	model.current_trial = 3
-	model.last_for_score = 4
-	model.last_for_length = 4
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 3, "1st reverse should be 3")
-	model.current_trial = 4
-	model.last_rev_score = 2
-	model.last_rev_length = 3
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 4, "3rd forward all correct should be 4")
-	model.current_trial = 5
-	model.last_for_score = 5
-	model.last_for_length = 5
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 4, "2nd reverse all correct should be 4")
-	model.current_trial = 6
-	model.last_rev_score = 4
-	model.last_rev_length = 4
-	assert_eq(model.determine_new_length(model.choose_sequence_type_static_test()), 5, "3rd reverse all correct should be 5")
-	
-	
-	
-	
-	#unsure how to fully test when random
-func test_to_ignore():
-	var for_count = 0
-	var rev_count = 0
-	var model = Sequence_Game.new()
-	model.determine_new_length(model.choose_sequence_type_static_test())
-	assert_eq(model.length, 3, "trial 1 length should be 3")
-	for_count += 1
-	
-	model.response = [1,1,1,1]
-	model.mem_order = [1,2,3,4]
-	model.reversed_order = [4,3,2,1]
-	model.current_trial = 2
-	model.determine_new_length(model.choose_sequence_type_static_test())
-	if model.sequence_type_state == model.Sequence_Type.FORWARD:
-		assert_eq(model.length, 4, "Trial 2 length after all correct and length < 8, should be 4")
-		for_count += 1
-	elif model.sequence_type_state == model.Sequence_Type.REVERSE:
-		assert_eq(model.length, 3, "First trial with reverse should be 3")
-		rev_count += 1
-	pass
+	var mem_order = model.create_sequence_order(0)
+	assert_eq(model.trial_history[model.trial_history.size()-1].length,5,"should be 5")
+	for i in range(mem_order.size()-1):
+		assert(mem_order[i] >= 1 && mem_order[i] <= 5)
+		
+	mem_order = model.create_sequence_order(1)
+	assert_eq(model.trial_history[model.trial_history.size()-1].length,4,"should be 4")
+	for i in range(mem_order.size()-1):
+		assert(mem_order[i] >= 1 && mem_order[i] <= 5)
+		
+	model.trial_history[model.trial_history.size()-1].score = 2
+	mem_order = model.create_sequence_order(1)
+	assert_eq(model.trial_history[model.trial_history.size()-1].length,3,"should be 3")
+	for i in range(mem_order.size()-1):
+		assert(mem_order[i] >= 1 && mem_order[i] <= 5)
 
-
-#unc test_determine_new_length():
-	#var model = Sequence_Game.new()
-	#model.determine_new_length()
-	#assert_eq(model.length, 4, "Trial 1 length should be 4")
+func test_determine_new_length():
+	var model = Sequence_Game.new()
+	assert_eq(model.determine_new_length(0),3,"first trial should be 3")
+	var trial = SequenceTrialInfo.new(0,3,[2,5,3])
+	model.trial_history.append(trial)
+	trial.score = 3
+	model.current_trial += 1
+	assert_eq(model.determine_new_length(0),4,"all correct increases")
+	assert_eq(model.determine_new_length(1),3,"should be back down to three for reverse")
 	
-	#model.response = [1,1,1,1]
-	#model.mem_order = [1,2,3,4]
-	#model.current_trial = 2
-	#model.determine_new_length()
-	#assert_eq(model.length, 5, "Trial 2 length after all correct and length < 8, should be 5")
-	
-	#model.response = [1,0,1,1]
-	#model.determine_new_length()
-	#assert_eq(model.length, 3, "Trial 2 length after incorrect and length > 3, should be 3")
-	
-	#model.response = [1,0,0]
-	#model.mem_order = [2,3,3]
-	#model.determine_new_length()
-	#assert_eq(model.length, 3, "Trial 2 length after incorrect and length =3, should be 3")
-	
-	#model.response = [1,1,1,1,1,1,1,1]
-	#model.mem_order = [1,2,3,4,5,6,7,8]
-	#model.determine_new_length()
-	#assert_eq(model.length, 8, "Trial 2 length after all correct and length = 8, should be 8")
+	var trial2 = SequenceTrialInfo.new(1,3,[3,1,2])
+	model.trial_history.append(trial2)
+	trial2.score = 3
+	model.current_trial += 1
+	trial.score = 3
+	assert_eq(model.determine_new_length(0),4,"should go up despite break in forward")
 	
 	
 func test_update_overall_performance():
 	var model = Sequence_Game.new()
-	model.response = [1,0,1,1,1]
+	var trial = SequenceTrialInfo.new(0,4,[4,4,2,3])
+	model.trial_history.append(trial)
+	trial.response = [1,0,1,1]
 	model.update_overall_performance()
-	assert_eq(model.overall_performance, [1,0,1,1,1,0,0,0], "initial trial performance")
+	assert_eq(model.overall_performance, [1,0,1,1,0,0,0,0], "initial trial performance")
 	
-	model.response = [1,1,0,1,0,0,1,1]
+	var trial2 = SequenceTrialInfo.new(1,6,[4,4,2,3,1,2])
+	model.trial_history.append(trial2)
+	trial2.response = [1,0,1,1,0,1]
 	model.update_overall_performance()
-	assert_eq(model.overall_performance, [2,1,1,2,1,0,1,1], "after trial after the intial, adding more")
+	assert_eq(model.overall_performance, [2,0,2,2,0,1,0,0], "after trial after the intial, adding more")
 	
 func test_reset_trial_info():
 	var model = Sequence_Game.new()
@@ -180,7 +84,6 @@ func test_choose_sequence_type():
 	assert_eq(model.choose_sequence_type(), 0, "first trial should always be forward")
 	assert(model.choose_sequence_type() == 0 || model.choose_sequence_type() == 1)
 	
-
 func test_choose_sequence_type_static():
 	var model = Sequence_Game.new()
 	assert_eq(model.choose_sequence_type_static_test(), 0, "1st trial should always be forward")
@@ -194,33 +97,4 @@ func test_choose_sequence_type_static():
 	assert_eq(model.choose_sequence_type_static_test(), 1, "5th is set for forward")
 	model.current_trial += 1
 	assert_eq(model.choose_sequence_type_static_test(), 1, "6th is set for forward")
-
-
-#func before_each():
-#	gut.p("ran setup", 2)
-
-#func after_each():
-#	gut.p("ran teardown", 2)
-
-#func before_all():
-#	gut.p("ran run setup", 2)
-
-#func after_all():
-#	gut.p("ran run teardown", 2)
-
-#func test_assert_eq_number_not_equal():
-#	assert_eq(1, 2, "Should fail.  1 != 2")
-
-#func test_assert_eq_number_equal():
-#	assert_eq('asdf', 'asdf', "Should pass")
-
-#func test_assert_true_with_true():
-#	assert_true(true, "Should pass, true is true")
-
-#func test_assert_true_with_false():
-#	assert_true(false, "Should fail")
-
-#func test_something_else():
-#	assert_true(false, "didn't work")
-	
 

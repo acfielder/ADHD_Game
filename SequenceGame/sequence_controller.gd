@@ -25,7 +25,7 @@ func pin_press_detected(pin_key: int):
 			view.highlight_pin(pin_key,1)
 		else:
 			view.highlight_pin(pin_key,2)
-		if model.check_pins_pressed() == model.get_mem_order_size():
+		if model.check_pins_pressed() == model.get_current_mem_order().size():
 			all_pins_pressed()
 			
 			
