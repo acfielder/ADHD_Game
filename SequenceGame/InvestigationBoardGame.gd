@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var Sequence = load("res://Sequence.tscn")
+var Sequence = load("res://SequenceGame/Sequence.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

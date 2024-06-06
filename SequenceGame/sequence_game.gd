@@ -4,15 +4,15 @@ var rng = RandomNumberGenerator.new()
 
 
 var current_trial = 1
-var total_trials = 5
+var total_trials = 20
 var overall_performance = [0,0,0,0,0,0,0,0]
 var pins_pressed = 0
 var pins = 5
 var trial_history = []
 
 
-enum Sequence_Type{FORWARD, REVERSE, TEST}
-var sequence_type_state = Sequence_Type.FORWARD
+#enum Sequence_Type{FORWARD, REVERSE, TEST}
+#var sequence_type_state = Sequence_Type.FORWARD
 
 signal all_pins_pressed
 
@@ -25,6 +25,8 @@ func check_update_response(pin_key: int):
 	
 	
 func create_sequence_order(sequence_type: int):
+	#would be rather different for new sequence types
+	print(sequence_type)
 	var length = determine_new_length(sequence_type)
 	var mem_order = []
 	for i in range(length):
@@ -35,6 +37,9 @@ func create_sequence_order(sequence_type: int):
 	
 	
 func choose_sequence_type():
+	#would change, put choose sequence type in individual levels
+	#check to ensure not at end of level, return -1 if a level ended, controller should prompt again with the next level
+	#call individual trial with current level
 	if current_trial == 1:
 		return 0
 	else:
@@ -67,7 +72,7 @@ func determine_new_length(sequence_type: int):
 	if current_trial == 1:
 		return 3
 	else:
-		var previous_trial_match
+		#var previous_trial_match
 		for i in range(trial_history.size() - 1, -1, -1):
 			if trial_history[i].get_sequence_type() == sequence_type:
 				return trial_history[i].determine_next_trial_length()
@@ -76,6 +81,7 @@ func determine_new_length(sequence_type: int):
 	
 func update_overall_performance():
 	var last_performance = trial_history[trial_history.size()-1].get_response()
+	trial_history[trial_history.size()-1].calculate_score()
 	for i in range(last_performance.size()):
 		overall_performance[i] += last_performance[i]
 	return overall_performance

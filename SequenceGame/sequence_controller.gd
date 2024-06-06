@@ -34,10 +34,12 @@ func begin_trial():
 		await view.prompt_for_next_trial()
 		game_state = State_Type.HIGHLIGHT
 		highlight_sequence(model.create_sequence_order(model.choose_sequence_type()))
+		#the above line would have to be broken up to ensure not accidentally sending the complete mem_order for upper levels
+		#here would be where the updating would happen
 		game_state = State_Type.RESPONSE
 		view.prompt_for_response(1)
 	else:
-		print("trials complete")#end_game() #this could become a func in the model
+		print("trials complete")#end_session() #this could become a func in the model
 		
 func all_pins_pressed():
 	view.prompt_for_response(0)
