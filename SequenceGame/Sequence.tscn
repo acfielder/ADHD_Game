@@ -89,4 +89,40 @@ offset_top = -261.0
 offset_right = -389.0
 offset_bottom = -238.0
 
+[node name="sequence_type" type="Label" parent="."]
+offset_left = 192.0
+offset_top = -258.0
+offset_right = 324.0
+offset_bottom = -235.0
+
+[node name="current_level" type="Label" parent="."]
+offset_left = -389.0
+offset_top = -100.0
+offset_right = -349.0
+offset_bottom = -77.0
+
+[node name="delay_distraction" type="ColorRect" parent="."]
+visible = false
+offset_left = -375.0
+offset_top = -225.0
+offset_right = 391.0
+offset_bottom = 231.0
+color = Color(0, 0.313203, 0.313493, 1)
+
+[node name="Label" type="Label" parent="delay_distraction"]
+layout_mode = 0
+offset_left = 329.0
+offset_top = 214.0
+offset_right = 417.0
+offset_bottom = 237.0
+text = "distraction."
+
+[node name="session_over_display" type="Label" parent="."]
+visible = false
+offset_left = -141.0
+offset_top = 257.0
+offset_right = 99.0
+offset_bottom = 280.0
+text = "Session is Complete, Well Done"
+
 [connection signal="pressed" from="ColorRect/StartButton" to="." method="_on_start_button_pressed"]

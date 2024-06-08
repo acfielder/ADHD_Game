@@ -13,8 +13,8 @@ var trial_num
 var reversed_order
 
 
-func _init(sequence_type_in: int, length_in: int, mem_order_in: Array):
-	sequence_type = sequence_type_in
+func _init(sequence_type_in: Array, length_in: int, mem_order_in: Array):
+	sequence_type = sequence_type_in #changed this to an array, will need updated down below
 	length = length_in
 	mem_order = mem_order_in
 	pins_pressed = 0
@@ -38,14 +38,14 @@ func determine_next_trial_length():
 
 func check_update_response(single_response: int):
 	pins_pressed += 1
-	if sequence_type == 0:
+	if sequence_type[0] == 0 || sequence_type[1] == 0:
 		if single_response == mem_order[pins_pressed-1]:
 			response.append(1)
 			return true
 		else:
 			response.append(0)
 			return false
-	elif sequence_type == 1:
+	elif sequence_type[0] == 1 || sequence_type[1] == 1:
 		if single_response == reversed_order[pins_pressed-1]:
 			response.append(1)
 			return true

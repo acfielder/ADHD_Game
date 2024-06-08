@@ -8,6 +8,8 @@ var pins_highlight
 var pins_detect
 var sequence_controller
 
+var user
+
 
 func _ready():
 	pins_highlight = {1:get_node("PushPin1/Button"), 2:get_node("PushPin2/Button"), 3: get_node("PushPin3/Button"), 4: get_node("PushPin4/Button"), 5: get_node("PushPin5/Button")}
@@ -18,7 +20,7 @@ func _ready():
 	for i in range(pins.size()):
 		pins[i].pin_pressed.connect(_on_pin_pressed)
 
-	sequence_controller = Sequence_Controller.new(self)
+	sequence_controller = Sequence_Controller.new(self,user)
 
 
 func _on_start_button_pressed():
@@ -55,5 +57,17 @@ func prompt_for_next_trial():
 	$current_trial.text = str("Trial", sequence_controller.get_current_trial())
 	print("begining next trial")
 	
-
+func display_sequence_type():
+	$sequence_type.text = str(sequence_controller.get_sequence_type())
+	
+func display_current_level():
+	$current_level.text = str(sequence_controller.get_current_level())
+	
+func display_delay_distraction():
+	$delay_distraction.visible = true
+	await get_tree().create_timer(5).timeout 
+	$delay_distraction.visible = false
+	
+func display_session_over():
+	$session_over_display.visible = true
 
