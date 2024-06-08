@@ -16,7 +16,7 @@ class_name UserModel
 @export var level_five_data : Array = [[],[],[],[],[],[]]
 @export var levels_data : Dictionary = {1:level_one_data, 2:level_two_data, 3:level_three_data, 4:level_four_data, 5:level_five_data}
 
-@export var sequence_session_performance_level : Array
+@export var sequence_session_performance_level : Array = [10,10]
 
 func create_sequence_trial_save(sequence_type: Array, length: int, score: int):
 	var trial_dict = {"sequence_type": sequence_type, "sequence_length": length, "score":score}
@@ -33,3 +33,14 @@ func increase_sequence_level():
 #funcs to return specific pieces like the actual level dicts for level report purposes
 	#session reports will happen fully in the game model
 	
+func reset_user_data():
+	current_level = 1
+	completed_of_level = 0
+	session_count = 0
+	sequence_session_performance_level = [10,10]
+	level_one_data = [[],[],[],[],[],[]]
+	level_two_data = [[],[],[],[],[],[]]
+	level_three_data = [[],[],[],[],[],[]]
+	level_four_data = [[],[],[],[],[],[]]
+	level_five_data = [[],[],[],[],[],[]]
+	levels_data = {1:level_one_data, 2:level_two_data, 3:level_three_data, 4:level_four_data, 5:level_five_data}

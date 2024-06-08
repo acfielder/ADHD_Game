@@ -16,7 +16,10 @@ func _init(view_ref: Sequence, user_in: UserModel):
 	model = Sequence_Game.new()
 	user = user_in
 	model.set_user(user)
+	print(user.sequence_session_performance_level)
 	model.setup_game_for_player()
+	print(user.sequence_session_performance_level)
+
 
 
 
@@ -49,6 +52,9 @@ func pin_press_detected(pin_key: int):
 			
 			
 func begin_trial():
+	if user.completed_of_level + model.get_current_trial() > model.level_length:
+		model.next_level()
+		view.display_current_level()
 	if model.get_current_trial() <= model.session_length:
 		await view.prompt_for_next_trial()
 		game_state = State_Type.HIGHLIGHT
@@ -57,6 +63,7 @@ func begin_trial():
 		if sequence_type[0] == -1:
 			model.next_level()
 			view.display_current_level()
+			#
 			sequence_type = model.choose_sequence_type()
 			mem_order = model.create_sequence_order(sequence_type)
 		#elif sequence_type[0] == 3:
@@ -85,6 +92,7 @@ func begin_trial():
 func all_pins_pressed():
 	view.prompt_for_response(0)
 	game_state = State_Type.MODEL
+	model.update_session_performance()
 	model.update_overall_performance()
 	model.reset_trial_info()
 	begin_trial()
@@ -93,8 +101,11 @@ func end_session():
 	game_state = State_Type.MODEL
 	model.end_session()
 	view.display_session_over()
-	#allow for all trials completed to be added to user save
-	#prompt to say session is done
+	
+	#test to ensure load
+	#User_Data_Manager.load_resource("res://user_save/User_Model.tres")
+	#user.levels_data
+
 
 	
 func get_current_trial():

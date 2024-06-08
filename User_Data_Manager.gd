@@ -3,7 +3,7 @@ class_name User_Data_Manager
 
 static var user: Resource = null
 
-static func load_resource(path: String) -> UserModel:
+static func load_resource(path: String = "user://User_Model.tres") -> UserModel:
 	user = ResourceLoader.load(path) as UserModel
 	if user == null:
 		user = UserModel.new()

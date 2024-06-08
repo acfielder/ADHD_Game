@@ -4,16 +4,15 @@ var rng = RandomNumberGenerator.new()
 
 
 var current_trial = 1
-var total_trials = 20
 var overall_performance = [0,0,0,0,0,0,0,0]
 var pins_pressed = 0
 var pins = 5
 var trial_history = []
 #would maybe need to have level lengths here as well as where they currently are in it - that should be saved to user, can this class get info from user?
 var current_level = 1
-var level_length = 10
+var level_length = 15
 var trials_completed_for_level = 0
-var session_length = 20
+var session_length = 10 #should be 20
 var current_session_performance = 0
 
 var user : UserModel
@@ -28,8 +27,8 @@ func set_user(user_in: UserModel):
 	
 func setup_game_for_player():
 	update_session_length()
-	#update session length, any other data bits that need setup first
-	#this method could maybe move to the game, it would just have to be in the constructor to call methods
+	#could add any other setup functions here, keeps it open so dont have to change controller
+	#if unnecessary could call update_session_length directly from controller
 
 func check_update_response(pin_key: int):
 	pins_pressed += 1
@@ -52,9 +51,10 @@ func create_sequence_order(sequence_type: Array):
 func choose_sequence_type():
 	#check to ensure not at end of level, return -1 if a level ended, controller should prompt again with the next level
 	#switch-case depending on level, different types allowed for different levels
+	print("current_level: " + str(current_level))
 	if current_trial == 1 && current_level == 1:
 		return [0,-1]
-	elif current_trial > level_length:
+	elif user.completed_of_level >= level_length:
 		#current_trial = 1
 		return [-1]
 		#above this would need changed bc we want trials for a session, not for a level
@@ -144,9 +144,11 @@ func determine_new_length(sequence_type: Array):
 func update_session_performance():
 	if trial_history[-1].score == trial_history[-1].length:
 		current_session_performance += 1
+		user.sequence_session_performance_level[0] = current_session_performance
+		print(current_session_performance)
 	
 	
-func update_overall_performance():
+func update_overall_performance(): #this may not need to exist or can be moved or combined with session performance, depends on how reports are created
 	var last_performance = trial_history[trial_history.size()-1].get_response()
 	trial_history[trial_history.size()-1].calculate_score()
 	for i in range(last_performance.size()):
@@ -167,22 +169,25 @@ func next_level():
 	
 func update_session_length():
 	#based on how many the user has gotten correct previously can change the session length***
-	if user.session_count != 0:
-		var performance_last_session = user.sequence_session_performence_level[0] / user.sequence_session_performance_level[1]
-		if performance_last_session < 0.5 && user.sequence_session_performance_level[0] > 5: #should be 15
+	print(user.sequence_session_performance_level)
+	if user.session_count > 0:
+		var performance_last_session = float(user.sequence_session_performance_level[0]) / float(user.sequence_session_performance_level[1])
+		if performance_last_session < 0.5 && user.sequence_session_performance_level[1] > 5: #should be 15
 			session_length -= 5
 		elif performance_last_session > 0.5 && performance_last_session < 0.7:
-			session_length = user.sequence_session_performance_level[0]
-		elif user.sequence_session_performance_level[0] < 15: #should be 25
+			session_length = user.sequence_session_performance_level[1]
+		elif performance_last_session > 0.7 && user.sequence_session_performance_level[1] < 15: #should be 25
 			session_length += 5
 	else:
 		session_length = 10 #20 - was changed for testing purposes
+	user.sequence_session_performance_level[1] = session_length
+	print(user.sequence_session_performance_level)
 
 func end_session():
 	#save users session data, and more things certainly
 	#save trials data and 
-	user.sequence_session_performance_level = [session_length,current_session_performance]
-	user.completed_of_level += session_length
+	#user.sequence_session_performance_level = [current_session_performance,session_length]
+	#user.completed_of_level += session_length
 	user.session_count += 1
 	for trial in range(trial_history.size()):
 		user.add_to_sequence_level_data(trial_history[trial].sequence_type, trial_history[trial].length, trial_history[trial].score)
@@ -193,9 +198,6 @@ func get_current_level():
 	
 func get_current_trial():
 	return current_trial
-	
-func get_total_trials():
-	return total_trials
 	
 func check_pins_pressed():
 	return pins_pressed
