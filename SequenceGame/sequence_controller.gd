@@ -2,13 +2,12 @@ class_name Sequence_Controller
 
 
 enum State_Type{MODEL, RESPONSE, HIGHLIGHT}
-
 var game_state = State_Type.MODEL
 
 var user : UserModel
 
-var view
-var model
+var view : Sequence
+var model : Sequence_Game
 
 
 func _init(view_ref: Sequence, user_in: UserModel):
@@ -16,14 +15,9 @@ func _init(view_ref: Sequence, user_in: UserModel):
 	model = Sequence_Game.new()
 	user = user_in
 	model.set_user(user)
-	print(user.sequence_session_performance_level)
 	model.setup_game_for_player()
-	print(user.sequence_session_performance_level)
 
-
-
-
-
+#highlights sequence of pins based on the type of sequence and chosen order - incomplete
 func highlight_sequence(mem_order: Array, sequence_type: Array):
 	if sequence_type[1] == -1:
 		for i in range(mem_order.size()):
@@ -36,11 +30,11 @@ func highlight_sequence(mem_order: Array, sequence_type: Array):
 			for i in range(mem_order.size()):
 				await view.highlight_pin(mem_order[i], 0)
 		else:
-			#logic for updating for missing one
+			#logic for updating for missing one 2
 			pass
 		
 		
-
+#on a pin press detected, check response for trial
 func pin_press_detected(pin_key: int):
 	if game_state == State_Type.RESPONSE:
 		if model.check_update_response(pin_key):
@@ -50,7 +44,7 @@ func pin_press_detected(pin_key: int):
 		if model.check_pins_pressed() == model.get_current_mem_order().size():
 			all_pins_pressed()
 			
-			
+#essential order of the game
 func begin_trial():
 	if user.completed_of_level + model.get_current_trial() > model.level_length:
 		model.next_level()
@@ -63,20 +57,17 @@ func begin_trial():
 		if sequence_type[0] == -1:
 			model.next_level()
 			view.display_current_level()
-			#
+			#display in some way that the level has increased
 			sequence_type = model.choose_sequence_type()
 			mem_order = model.create_sequence_order(sequence_type)
 		#elif sequence_type[0] == 3:
-		#	mem_order = model.create_sequence_order(sequence_type)
+		#	mem_order = model.create_sequence_order(sequence_type) - maybe ignore?
 		else:
 			mem_order = model.create_sequence_order(sequence_type)
 		view.display_sequence_type()
 		view.display_current_level()
 		await highlight_sequence(mem_order,sequence_type) 
-		#the above line would have to be broken up to ensure not accidentally sending the complete mem_order for upper levels
-		#continuing from above, choosing type would also have to be separated in the case that its the end of a level, in which it would then display that change and choose the type again
-		#here would be where the updating would happen await prompt
-		#this would also be were a delay might happen with a prompted distraction to stop rehearsal
+		#here would be where the updating would happen - &await prompt
 		if sequence_type[0] == 3:
 			if sequence_type[1] == 2:
 				#tell them about the updated change
@@ -86,9 +77,9 @@ func begin_trial():
 		view.prompt_for_response(1)
 	else:
 		end_session()
-		print("trials complete")#end_session() #this could become a func in the model
-		#end_session would be where then the information from that session is added to the user model to be used in the next playing
+		print("trials complete")
 		
+#finishes trial once all of response is collected - could be updated for breaks/dialogue between trials
 func all_pins_pressed():
 	view.prompt_for_response(0)
 	game_state = State_Type.MODEL
@@ -97,24 +88,20 @@ func all_pins_pressed():
 	model.reset_trial_info()
 	begin_trial()
 	
+#finishes the session
 func end_session():
 	game_state = State_Type.MODEL
 	model.end_session()
 	view.display_session_over()
-	
-	#test to ensure load
-	#User_Data_Manager.load_resource("res://user_save/User_Model.tres")
-	#user.levels_data
 
-
-	
-func get_current_trial():
+#below - used by view
+func get_current_trial() -> int:
 	return model.get_current_trial()
 		
-func get_current_level():
+func get_current_level() -> int:
 	return model.get_current_level()
 	
-func get_sequence_type():
+func get_sequence_type() -> Array:
 	return model.get_current_sequence_type()
 		
 	
