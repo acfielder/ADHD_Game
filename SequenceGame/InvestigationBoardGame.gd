@@ -11,7 +11,9 @@ func _ready():
 	var new_sequence = Sequence.instantiate()
 	new_sequence.user = user
 
-	#user.reset_user_data()
+	user.reset_user_data()
+	#getting name - this would also be moved to the larger area
+	#using text input - or buttons
 
 	get_tree().get_root().get_node("InvestigationBoardGame/Board").add_child(new_sequence)
 	

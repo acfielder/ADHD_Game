@@ -17,6 +17,7 @@ func _init(view_ref: Sequence, user_in: UserModel):
 	model.set_user(user)
 	model.setup_game_for_player()
 
+#this should be simplified when type functions are added - should be able to give just the sequence being displayed - may be easier to have groups like this though if thats not possible
 #highlights sequence of pins based on the type of sequence and chosen order - incomplete
 func highlight_sequence(mem_order: Array, sequence_type: Array):
 	if sequence_type[1] == -1:
@@ -44,7 +45,7 @@ func pin_press_detected(pin_key: int):
 		if model.check_pins_pressed() == model.get_current_mem_order().size():
 			all_pins_pressed()
 			
-#essential order of the game
+#essential order of the game - this could most likely be broken up or condensed
 func begin_trial():
 	if user.completed_of_level + model.get_current_trial() > model.level_length:
 		model.next_level()
@@ -59,7 +60,8 @@ func begin_trial():
 			view.display_current_level()
 			#display in some way that the level has increased
 			sequence_type = model.choose_sequence_type()
-			mem_order = model.create_sequence_order(sequence_type)
+			mem_order = model.create_sequence_order(sequence_type) #this will be moved to specific funcs
+		#break for match statement to call individual types
 		#elif sequence_type[0] == 3:
 		#	mem_order = model.create_sequence_order(sequence_type) - maybe ignore?
 		else:
@@ -73,11 +75,20 @@ func begin_trial():
 				#tell them about the updated change
 				pass
 			await view.display_delay_distraction()
+		#return from type specific function
 		game_state = State_Type.RESPONSE
 		view.prompt_for_response(1)
 	else:
 		end_session()
 		print("trials complete")
+		
+#func forward_reg_trial():
+	#pass		
+		
+		
+		
+		
+		
 		
 #finishes trial once all of response is collected - could be updated for breaks/dialogue between trials
 func all_pins_pressed():

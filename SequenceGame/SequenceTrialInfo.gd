@@ -12,6 +12,7 @@ var pins_pressed : int #number of pins/responses given
 var trial_num : int #ID number of trial within session
 var reversed_order : Array #mem_order reversed 
 #more may need to be added for updated order
+	#var delay: bool #3's have true
 
 func _init(sequence_type_in: Array, length_in: int, mem_order_in: Array):
 	sequence_type = sequence_type_in

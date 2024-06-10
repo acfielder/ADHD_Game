@@ -41,6 +41,7 @@ func check_update_response(pin_key: int) -> bool:
 	return trial_history[trial_history.size()-1].check_update_response(pin_key)
 	
 	
+	
 #create memory sequence order based on the sequence type
 func create_sequence_order(sequence_type: Array) -> Array:
 	#would be rather different for new sequence types - ignore this?
