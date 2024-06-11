@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://p3cplwo6jood"]
+
+[node name="SessionStats" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 160.0
+offset_bottom = 331.0
+color = Color(0.735306, 0.61066, 0.121584, 1)
+
+[node name="session_score" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_right = 153.0
+offset_bottom = 90.0
+
+[node name="current_level" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="current_trial" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

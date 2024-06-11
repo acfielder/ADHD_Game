@@ -27,7 +27,7 @@ func create_sequence_trial_save(sequence_type: Array, length: int, score: int):
 #adds previously played trial's info to user's save - info saved may change
 func add_to_sequence_level_data(sequence_type: Array, length: int, score: int):
 	var trial_dict = create_sequence_trial_save(sequence_type, length, score)
-	var index = sequence_type[0] + sequence_type[1]
+	var index = sequence_type[0] + sequence_type[1] + 1
 	levels_data.get(current_level)[index].append(trial_dict)
 
 #increases saved sequece level once user completes level within completed session
