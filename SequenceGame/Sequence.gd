@@ -26,9 +26,10 @@ func _ready():
 #begins trials
 func _on_start_button_pressed():
 	$ColorRect.hide()
+	#would probably lead to an instruction section rather than already the starting trial
 	sequence_controller.begin_trial()
 	
-func pause_for_next_trial():
+func prompt_next_trial():
 	await get_tree().create_timer(1).timeout
 	$ColorRect.show()
 
@@ -60,7 +61,7 @@ func prompt(hide: int, prompt: String = ""):
 		$trial_prompt.visible = false
 	
 #tells user the next trial is beginning
-func prompt_for_next_trial():
+func show_trial():
 	$current_trial.text = str("Trial", sequence_controller.get_current_trial())
 
 #displays prompts for what to do in trial, this will eventually become trainer speaking
