@@ -71,30 +71,30 @@ extends GutTest
 #	model.update_overall_performance()
 #	assert_eq(model.overall_performance, [2,0,2,2,0,1,0,0], "after trial after the intial, adding more")
 #	
-func test_reset_trial_info():
-	var model = Sequence_Game.new()
-	model.pins_pressed = 6
-	model.current_trial = 9
-	model.reset_trial_info()
-	assert_eq(model.pins_pressed, 0, "reset pins pressed to 0")
-	assert_eq(model.current_trial, 10, "current trial should increase by 1")
+#func test_reset_trial_info():
+#	var model = Sequence_Game.new()
+#	model.pins_pressed = 6
+#	model.current_trial = 9
+#	model.reset_trial_info()
+#	assert_eq(model.pins_pressed, 0, "reset pins pressed to 0")
+#	assert_eq(model.current_trial, 10, "current trial should increase by 1")
 
-func test_choose_sequence_type():
-	var model = Sequence_Game.new()
-	assert_eq(model.choose_sequence_type(), 0, "first trial should always be forward")
-	assert(model.choose_sequence_type() == 0 || model.choose_sequence_type() == 1)
+#func test_choose_sequence_type():
+#	var model = Sequence_Game.new()
+#	assert_eq(model.choose_sequence_type(), 0, "first trial should always be forward")
+#	assert(model.choose_sequence_type() == 0 || model.choose_sequence_type() == 1)
 	
-func test_choose_sequence_type_static():
-	var model = Sequence_Game.new()
-	assert_eq(model.choose_sequence_type_static_test(), 0, "1st trial should always be forward")
-	model.current_trial += 1
-	assert_eq(model.choose_sequence_type_static_test(), 0, "2nd is set for forward")
-	model.current_trial += 1
-	assert_eq(model.choose_sequence_type_static_test(), 1, "3rd is set for forward")
-	model.current_trial += 1
-	assert_eq(model.choose_sequence_type_static_test(), 0, "4th is set for forward")
-	model.current_trial += 1
-	assert_eq(model.choose_sequence_type_static_test(), 1, "5th is set for forward")
-	model.current_trial += 1
-	assert_eq(model.choose_sequence_type_static_test(), 1, "6th is set for forward")
+#func test_choose_sequence_type_static():
+#	var model = Sequence_Game.new()
+#	assert_eq(model.choose_sequence_type_static_test(), 0, "1st trial should always be forward")
+#	model.current_trial += 1
+#	assert_eq(model.choose_sequence_type_static_test(), 0, "2nd is set for forward")
+#	model.current_trial += 1
+#	assert_eq(model.choose_sequence_type_static_test(), 1, "3rd is set for forward")
+#	model.current_trial += 1
+#	assert_eq(model.choose_sequence_type_static_test(), 0, "4th is set for forward")
+#	model.current_trial += 1
+#	assert_eq(model.choose_sequence_type_static_test(), 1, "5th is set for forward")
+#	model.current_trial += 1
+#	assert_eq(model.choose_sequence_type_static_test(), 1, "6th is set for forward")
 

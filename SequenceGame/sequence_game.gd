@@ -53,12 +53,17 @@ func create_sequence_order(sequence_type: Array) -> Array:
 	trial_history.append(next_trial)
 	return mem_order
 	
+#updates trial object based on sequence type for later use
+func update_trial_info():
+	trial_history[-1].update_trial_info()
+
+	
 #choose trial's sequence type based on player's progress	
 func choose_sequence_type() -> Array:
 	#switch-case depending on level, different types allowed for different levels, chosen based on difficulty ratios
 	if current_trial == 1 && current_level == 1:
 		return [0,-1]
-	elif user.completed_of_level + current_trial > level_length:
+	elif user.completed_of_level + current_trial > level_length && current_trial == 1:
 		#current_trial = 1
 		return [-1]
 	else:
@@ -189,6 +194,10 @@ func end_session():
 	for trial in range(trial_history.size()):
 		user.add_to_sequence_level_data(trial_history[trial].sequence_type, trial_history[trial].length, trial_history[trial].score)
 	User_Data_Manager.save(user)
+	
+#gets prompt to be displayed from trial object
+func get_prompt(order: int):
+	return trial_history[-1].get_prompt(order)
 		
 func get_current_level() -> int:
 	return current_level

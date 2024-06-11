@@ -117,6 +117,12 @@ offset_right = 417.0
 offset_bottom = 237.0
 text = "distraction."
 
+[node name="trial_prompt" type="Label" parent="."]
+offset_left = -191.0
+offset_top = -263.0
+offset_right = 114.0
+offset_bottom = -171.0
+
 [node name="session_over_display" type="Label" parent="."]
 visible = false
 offset_left = -141.0

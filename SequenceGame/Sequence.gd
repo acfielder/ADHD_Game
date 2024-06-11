@@ -48,17 +48,22 @@ func _on_pin_pressed(pin):
 	sequence_controller.pin_press_detected(pin_key)
 
 #tell player there response is now being collected
-func prompt_for_response(hide: int):
+func prompt(hide: int, prompt: String = ""):
 	if hide == 1:
-		$ResponsePrompt.visible = true
+		$trial_prompt.text = prompt
+		$trial_prompt.visible = true
 	else:
-		$ResponsePrompt.visible = false
+		$trial_prompt.visible = false
 	
 #tells user the next trial is beginning
 func prompt_for_next_trial():
 	await get_tree().create_timer(1).timeout
 	$current_trial.text = str("Trial", sequence_controller.get_current_trial())
 	print("begining next trial")
+
+#displays prompts for what to do in trial, this will eventually become trainer speaking
+func display_trial_prompt(prompt: String):
+	$trial_prompt.text = prompt
 
 #currently testing purpose of seeing type - should be more user friendly
 func display_sequence_type():
