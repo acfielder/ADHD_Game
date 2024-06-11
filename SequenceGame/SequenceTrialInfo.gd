@@ -47,7 +47,7 @@ func update_trial_info() -> void:
 		if sequence_type[0] == 2:
 			trial_prompt_before = "Repeat this sequence in the updated order described after the sequence is presented"
 		else:
-			trial_prompt_before = "Repeat this sequence in the updated order described after the sequence is presented - will de a delay before you can respond"
+			trial_prompt_before = "Repeat this sequence in the updated order described after the sequence is presented \n- will de a delay before you can respond"
 		var i = rng.randf_range(0,1)
 		if i < .5:
 			var switch_1 = rng.randf_range(1,mem_order.size()-1)
@@ -64,7 +64,7 @@ func update_trial_info() -> void:
 			for e in range(mem_order.size()-1):
 				if int(i) % 2 == 0:
 					answer_order.append(mem_order[i])
-			trial_prompt_after = "Repeat the sequence in forward order, choosing every other event, starting with the first event presented"
+			trial_prompt_after = "Repeat the sequence in forward order, choosing every other event,\nstarting with the first event presented"
 
 	
 #calculate score of trial

@@ -2,6 +2,8 @@ extends GutTest
 
 
 #func test_check_update_response():
+
+#func test_check_update_response():
 	#var model = Sequence_Game.new()
 	#model.trial_history.append(SequenceTrialInfo.new(0,4,[1,2,3,4]))
 	#assert_true(model.check_update_response(1),"should be true as response was correct")

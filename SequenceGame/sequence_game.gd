@@ -3,8 +3,8 @@ class_name Sequence_Game
 var rng = RandomNumberGenerator.new()
 
 #game based 
-var pins : int = 5 #num pins in view, will need changed with UI
-var level_length : int = 15 #should be roughly 60 - check notes
+var pins : int = 8 #num pins in view, will need changed with UI
+var level_length : int = 15 #should be roughly 50 - check notes
 
 #session based
 var trial_history : Array = [] #holds SequenceTrialInfo objects for history of session's trials
@@ -64,7 +64,6 @@ func choose_sequence_type() -> Array:
 	if current_trial == 1 && current_level == 1:
 		return [0,-1]
 	elif user.completed_of_level + current_trial > level_length && current_trial == 1:
-		#current_trial = 1
 		return [-1]
 	else:
 		var i = rng.randf_range(0,1)
@@ -167,6 +166,7 @@ func reset_trial_info():
 func next_level() -> bool:
 	if current_level <5:
 		current_level += 1	
+		user.increase_sequence_level()
 		return true
 	else:
 		return false
@@ -187,10 +187,12 @@ func update_session_length():
 
 #save user's session's data to user
 func end_session():
-	user.completed_of_level += session_length
+	user.completed_of_level += user.sequence_session_performance_level[0]
 	user.sequence_session_count += 1
+	#if current_level > user.current_level:
+		#user.increase_sequence_level()
 	if current_level > user.current_level:
-		user.increase_sequence_level()
+		next_level()
 	for trial in range(trial_history.size()):
 		user.add_to_sequence_level_data(trial_history[trial].sequence_type, trial_history[trial].length, trial_history[trial].score)
 	User_Data_Manager.save(user)
