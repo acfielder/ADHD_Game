@@ -14,11 +14,12 @@ var reversed_order : Array #mem_order reversed  #this will be able to be deleted
 #more may need to be added for updated order
 	#var delay: bool #3's have true
 var answer_order : Array #mem_order to check response to
-var trial_prompt_before_sequence : String #trial specific prompt given in view before sequence is shown
+var trial_prompt_before_sequence : String = "" #trial specific prompt given in view before sequence is shown
 var trial_prompt_after_sequence : String = "" #trial specific prompt given in view after sequence is shown
 
 #i couldnt think of a better way atm
 var switched : bool = false
+var switched_values : Array
 
 func _init(sequence_type_in: Array, length_in: int, mem_order_in: Array):
 	sequence_type = sequence_type_in
@@ -51,6 +52,7 @@ func create_answer_order() -> Array:
 			answer_order[switch_1] = mem_order[switch_2]
 			answer_order[switch_2] = mem_order[switch_1]
 			switched = true
+			switched_values = [switch_1,switch_2]
 		else:
 			for e in range(mem_order.size()-1):
 				if int(i) % 2 == 0:
@@ -66,7 +68,7 @@ func select_prompts() -> Array:
 	elif sequence_type[0] == 2 || sequence_type[1] == 2:
 		if sequence_type[0] == 2:
 			trial_prompt_before_sequence = "Repeat this sequence in the updated order described after the sequence is presented"
-			if switched: trial_prompt_before_sequence = "Repeat this sequence in the updated order described after the sequence is presented"
+			if switched: trial_prompt_after_sequence = "The " + str(switched_values[0]) + " and " + str(switched_values[1]) + " events have been switched"
 			else: trial_prompt_after_sequence = "Repeat the sequence in forward order, choosing every other event,\nstarting with the first event presented"
 		else:
 			trial_prompt_after_sequence = "Repeat the sequence in forward order, choosing every other event,\nstarting with the first event presented"
@@ -101,25 +103,6 @@ func check_update_response(single_response: int) -> bool:
 		print("couldn't properly check response")
 		return false
 
-	
-	#if sequence_type[0] == 0 || sequence_type[1] == 0: #[0,-1] , [3,0]
-	#	if single_response == mem_order[pins_pressed-1]:
-	#		response.append(1)
-	#		return true
-	#	else:
-	#		response.append(0)
-	#		return false
-	#elif sequence_type[0] == 1 || sequence_type[1] == 1: #[1,-1] , [3,1]
-	#	if single_response == reversed_order[pins_pressed-1]:
-	#		response.append(1)
-	#		return true
-	#	else:
-	#		response.append(0)
-	#		return false
-	#anything with 2 in it may become elif or be covered by the above
-	#else:
-	#	print("couldn't properly check response")
-	#	return false
 
 func get_prompt(order: int):
 	match order:

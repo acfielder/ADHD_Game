@@ -121,17 +121,17 @@ func choose_sequence_type_static_test():
 	var sequence_type
 	match current_trial:
 		1:
-			sequence_type = 0
+			sequence_type = [0,-1]
 		2:
-			sequence_type = 0
+			sequence_type = [1,-1]
 		3:
-			sequence_type = 1
+			sequence_type = [2,-1]
 		4: 
-			sequence_type = 0
+			sequence_type = [3,0]
 		5:
-			sequence_type = 1
+			sequence_type = [3,1]
 		6:
-			sequence_type = 1
+			sequence_type = [3,2]
 	return sequence_type
 	
 #determines length of current trial's sequence based on previous trial of same sequence type
@@ -144,6 +144,10 @@ func determine_new_length(sequence_type: Array) -> int:
 				return trial_history[i].determine_next_trial_length()
 		return 3
 
+#calls for the trial's score to be calculated
+func calculate_trial_score():
+	return trial_history[-1].calculate_score()
+
 #increases self & user's session performance counts if trial was successful
 func update_session_performance():
 	if trial_history[-1].score == trial_history[-1].length:
@@ -152,8 +156,7 @@ func update_session_performance():
 	
 	
 func update_overall_performance(): #this may not need to exist or can be moved or combined with session performance, depends on how reports are created
-	var last_performance = trial_history[trial_history.size()-1].get_response()
-	trial_history[trial_history.size()-1].calculate_score()
+	var last_performance = trial_history[-1].get_response()
 	for i in range(last_performance.size()):
 		overall_performance[i] += last_performance[i]
 	return overall_performance

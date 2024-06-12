@@ -100,17 +100,18 @@ position = Vector2(-286, -227)
 scale = Vector2(0.2, 0.2)
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -191.0
-offset_top = -134.0
-offset_right = 181.0
-offset_bottom = 112.0
+offset_left = -100.0
+offset_top = -318.0
+offset_right = 55.0
+offset_bottom = -236.0
+color = Color(0.761363, 0.201599, 0.147851, 0.470588)
 
 [node name="StartButton" type="Button" parent="ColorRect"]
 layout_mode = 0
-offset_left = 36.0
-offset_top = 22.0
-offset_right = 340.0
-offset_bottom = 226.0
+offset_left = 13.0
+offset_top = 9.0
+offset_right = 143.0
+offset_bottom = 75.0
 text = "Start Trial"
 
 [node name="ResponsePrompt" type="Label" parent="."]

@@ -32,6 +32,10 @@ func _on_start_button_pressed():
 	#would probably lead to an instruction section rather than already the starting trial
 	sequence_controller.begin_trial()
 	
+#just creates a small timer to create a delay
+func create_short_timer(time: float):
+	await get_tree().create_timer(time).timeout
+	
 func prompt_next_trial():
 	await get_tree().create_timer(1).timeout
 	$ColorRect.show()
@@ -70,13 +74,15 @@ func prompt(hide: int, prompt: String = ""):
 		$trial_prompt.visible = false
 
 func activate_pins():
-	for pin in pins:
-		pin.set_disabled(false)
+	#for pin in pins:
+		#pin.set_disabled(false)
+	pass
 
 func deactivate_pins():
-	for pin in pins:
-		if pin is Button:
-			pin.set_disabled(true)
+	#for pin in pins:
+	#	if pin is Button:
+	#		pin.set_disabled(true)
+	pass
 
 
 #hides the pins for the duration of the delay period - delay time may eventually become a parameter

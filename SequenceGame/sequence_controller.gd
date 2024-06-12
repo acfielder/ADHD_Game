@@ -37,6 +37,7 @@ func pin_press_detected(pin_key: int):
 func begin_trial():
 	#if model.get_current_trial() <= model.session_length:
 		#await view.show_trial()
+	await view.create_short_timer(0.75)
 	game_state = State_Type.HIGHLIGHT
 	var sequence_type = model.choose_sequence_type()
 	if sequence_type[0] == -1:
@@ -58,7 +59,7 @@ func begin_trial():
 	if sequence_type[0] == 3:
 		await view.display_delay_distraction()
 	game_state = State_Type.RESPONSE
-	view.activate_pins()
+	#view.activate_pins()
 	#else:
 		#end_session()
 		#print("trials complete")
@@ -69,9 +70,10 @@ func update_display_stats():
 		
 #finishes trial once all of response is collected - could be updated for breaks/dialogue between trials
 func all_pins_pressed():
-	view.deactivate_pins()
+	#view.deactivate_pins()
 	if model.get_current_trial() < model.session_length:
 		game_state = State_Type.MODEL
+		model.calculate_trial_score()
 		model.update_overall_performance()
 		model.update_session_performance()
 		update_display_stats()

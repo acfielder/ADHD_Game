@@ -67,13 +67,55 @@ func test_check_update_response():
 	assert_eq(rev_trial.get_response(),[1,0,1],"should be [1,0,1] with three rev")
 	
 	
-func test_update_trial_info():
-	var trial = SequenceTrialInfo.new([0,-1],4,[3,2,4,1])
-	trial.update_trial_info()
-	#assert_eq()
-	#prompt = correct prompt
-	#answer_order is correct
-	pass
+func test_create_answer_order():
+	var trial = SequenceTrialInfo.new([0,-1],3,[1,3,2])
+	assert_eq(trial.create_answer_order(), [1,3,2])
 	
+	trial = SequenceTrialInfo.new([3,0],4,[1,8,3,6])
+	assert_eq(trial.create_answer_order(), [1,8,3,6])
 
+	trial = SequenceTrialInfo.new([1,-1],4,[1,4,2,3])
+	assert_eq(trial.create_answer_order(), [3,2,4,1])
+	
+	trial = SequenceTrialInfo.new([3,1],5,[1,8,7,3,6])
+	assert_eq(trial.create_answer_order(), [6,3,7,8,1])
+	
+	trial = SequenceTrialInfo.new([2,-1],3,[2,8,4])
+	var answer_order = trial.create_answer_order()
+	if answer_order.size() < [2,8,4].size():
+		assert_eq(answer_order,[2,4])
+	else:
+		for i in range(answer_order.size()):
+			assert_has([2,8,4],answer_order[i])
+			assert_eq(answer_order.size(),[2,8,4].size())
+			
+	trial = SequenceTrialInfo.new([3,2],6,[2,8,4,5,7,5])
+	answer_order = trial.create_answer_order()
+	if answer_order.size() < [2,8,4,5,7,5].size():
+		assert_eq(answer_order,[2,4,7])
+	else:
+		for i in range(answer_order.size()):
+			assert_has([2,8,4],answer_order[i])
+			assert_eq(answer_order.size(),[2,8,4,5,7,5].size())
+	
+	
+func test_select_prompts():
+	var trial = SequenceTrialInfo.new([0,-1],3,[1,3,2])
+	assert_eq(trial.select_prompts(), ["Repeat this sequence in the same order as presented",""])
+	
+	trial = SequenceTrialInfo.new([3,0],3,[1,3,2])
+	assert_eq(trial.select_prompts(), ["Repeat this sequence in the same order as presented\n- there will be a delay before you can respond",""])
+	
+	trial = SequenceTrialInfo.new([1,-1],3,[1,3,2])
+	assert_eq(trial.select_prompts(), ["Repeat this sequence in reverse order",""])
+	
+	trial = SequenceTrialInfo.new([3,1],3,[1,3,2])
+	assert_eq(trial.select_prompts(), ["Repeat this sequence in reverse order\n- there will be a delay before you can respond",""])
 
+	trial = SequenceTrialInfo.new([2,-1],3,[1,3,2])
+	var answer_order = trial.create_answer_order()
+	var trial_prompts = trial.select_prompts()
+	if trial.switched:
+		assert_eq(trial_prompts, ["Repeat this sequence in the updated order described after the sequence is presented","The " + str(trial.switched_values[0]+1) + " and " + str(trial.switched_values[1]+1) + " events have been switched"])
+	else:
+		assert_eq(trial_prompts, ["Repeat this sequence in the updated order described after the sequence is presented","Repeat the sequence in forward order, choosing every other event,\nstarting with the first event presented"])
