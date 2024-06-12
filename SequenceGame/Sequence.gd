@@ -22,16 +22,25 @@ func _ready():
 		pins[i].pin_pressed.connect(_on_pin_pressed)
 
 	sequence_controller = Sequence_Controller.new(self,user)
+	
+	#randomly select from images in a particular location to assign as images - images may become sprites or texture or something idk yet
 
 #begins trials
 func _on_start_button_pressed():
 	$ColorRect.hide()
+	deactivate_pins()
 	#would probably lead to an instruction section rather than already the starting trial
 	sequence_controller.begin_trial()
 	
 func prompt_next_trial():
 	await get_tree().create_timer(1).timeout
 	$ColorRect.show()
+	
+func update_display(level: int, trial: int, score: int):
+	$SessionStats/ColorRect/current_level.text = "Level: " + str(level)
+	$SessionStats/ColorRect/current_trial.text = "Trial: " + str(trial)
+	$SessionStats/ColorRect/session_score.text = "Score: " + str(score)
+	#$SessionStats/ColorRect/trial_type.text = "Trial Type: " + str(type)
 
 #highlights individual pin based on highlight reason
 func highlight_pin(pin_key: int, highlight_type: int):
@@ -59,22 +68,17 @@ func prompt(hide: int, prompt: String = ""):
 		$trial_prompt.visible = true
 	else:
 		$trial_prompt.visible = false
-	
-#tells user the next trial is beginning
-func show_trial():
-	$current_trial.text = str("Trial", sequence_controller.get_current_trial())
 
-#displays prompts for what to do in trial, this will eventually become trainer speaking
-func display_trial_prompt(prompt: String):
-	$trial_prompt.text = prompt
+func activate_pins():
+	for pin in pins:
+		pin.set_disabled(false)
 
-#currently testing purpose of seeing type - should be more user friendly
-func display_sequence_type():
-	$sequence_type.text = str(sequence_controller.get_sequence_type())
-	
-func display_current_level():
-	$current_level.text = str(sequence_controller.get_current_level())
-	
+func deactivate_pins():
+	for pin in pins:
+		if pin is Button:
+			pin.set_disabled(true)
+
+
 #hides the pins for the duration of the delay period - delay time may eventually become a parameter
 func display_delay_distraction():
 	$delay_distraction.visible = true

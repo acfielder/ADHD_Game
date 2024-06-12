@@ -12,7 +12,7 @@ func _ready():
 	new_sequence.user = user
 	#make controller here and also pass to Sequence like user
 
-	#user.reset_user_data()
+	user.reset_user_data()
 	#getting name - this would also be moved to the larger area
 	#using text input - or buttons
 

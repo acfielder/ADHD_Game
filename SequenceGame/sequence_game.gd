@@ -55,7 +55,8 @@ func create_sequence_order(sequence_type: Array) -> Array:
 	
 #updates trial object based on sequence type for later use
 func update_trial_info():
-	trial_history[-1].update_trial_info()
+	trial_history[-1].create_answer_order()
+	trial_history[-1].select_prompts()
 
 	
 #choose trial's sequence type based on player's progress	

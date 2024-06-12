@@ -35,41 +35,51 @@ func pin_press_detected(pin_key: int):
 			
 #essential order of the game - this could most likely be broken up or condensed
 func begin_trial():
-	if model.get_current_trial() <= model.session_length:
-		await view.show_trial()
-		game_state = State_Type.HIGHLIGHT
-		var sequence_type = model.choose_sequence_type()
-		if sequence_type[0] == -1:
-			model.next_level()
-			view.display_current_level()
-			#display in some way that the level has increased
-			sequence_type = model.choose_sequence_type()
-		view.display_current_level()
-		var mem_order = model.create_sequence_order(sequence_type)
-		model.update_trial_info()
-		var trial_prompt = model.get_prompt(0)
-		if trial_prompt != null:
-			view.prompt(1, trial_prompt)
-		await highlight_sequence(mem_order)
-		trial_prompt = model.get_prompt(1)
-		if sequence_type[0] == 2 || sequence_type[1] == 2:
-			view.prompt(1,trial_prompt)
-		if sequence_type[0] == 3:
-			await view.display_delay_distraction()
-		game_state = State_Type.RESPONSE
-	else:
-		end_session()
-		print("trials complete")
+	#if model.get_current_trial() <= model.session_length:
+		#await view.show_trial()
+	game_state = State_Type.HIGHLIGHT
+	var sequence_type = model.choose_sequence_type()
+	if sequence_type[0] == -1:
+		model.next_level()
+		#view.display_current_level()
+		#display in some way that the level has increased
+		sequence_type = model.choose_sequence_type()
+	#view.display_current_level()
+	update_display_stats()
+	var mem_order = model.create_sequence_order(sequence_type)
+	model.update_trial_info()
+	var trial_prompt = model.get_prompt(0)
+	if trial_prompt != null:
+		view.prompt(1, trial_prompt)
+	await highlight_sequence(mem_order)
+	trial_prompt = model.get_prompt(1)
+	if sequence_type[0] == 2 || sequence_type[1] == 2:
+		view.prompt(1,trial_prompt)
+	if sequence_type[0] == 3:
+		await view.display_delay_distraction()
+	game_state = State_Type.RESPONSE
+	view.activate_pins()
+	#else:
+		#end_session()
+		#print("trials complete")
 		
+#updates stats in sequence game view
+func update_display_stats():
+	view.update_display(model.current_level,model.current_trial,model.current_session_performance)
 		
 #finishes trial once all of response is collected - could be updated for breaks/dialogue between trials
 func all_pins_pressed():
-	game_state = State_Type.MODEL
-	model.update_session_performance()
-	model.update_overall_performance()
-	model.reset_trial_info()
-	await view.prompt_next_trial()
-	view.prompt(0)
+	view.deactivate_pins()
+	if model.get_current_trial() < model.session_length:
+		game_state = State_Type.MODEL
+		model.update_overall_performance()
+		model.update_session_performance()
+		update_display_stats()
+		model.reset_trial_info()
+		await view.prompt_next_trial()
+		view.prompt(0)
+	else:
+		end_session()
 	#begin_trial() #if want to continuously go through, uncomment this and comment out above line
 	
 #finishes the session
