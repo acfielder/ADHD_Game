@@ -10,7 +10,7 @@ static func load_resource(path: String = "user://User_Model.tres") -> UserModel:
 		user = UserModel.new()
 		print("Created new user data")
 	else:
-		print("User data loaded, " + str(user.completed_of_level))
+		print("User data loaded")
 	return user
 
 #save current user to usermodel resource

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvlju6pesn3p1"
-path="res://.godot/imported/PushPin.png-3ef574d96fc29e6b9c9951ebcde92e97.ctex"
+uid="uid://dulwgj2l8g47l"
+path="res://.godot/imported/pink_image.png-759a3bac72c12e9b61a08da5019f38b5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/PushPin.png"
-dest_files=["res://.godot/imported/PushPin.png-3ef574d96fc29e6b9c9951ebcde92e97.ctex"]
+source_file="res://Art/filler_images/pink_image.png"
+dest_files=["res://.godot/imported/pink_image.png-759a3bac72c12e9b61a08da5019f38b5.ctex"]
 
 [params]
 

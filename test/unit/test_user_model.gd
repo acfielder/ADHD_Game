@@ -26,3 +26,5 @@ func test_increase_sequence_level():
 	assert_eq(user.current_level,1)
 	user.increase_sequence_level()
 	assert_eq(user.current_level,2)
+
+func test_reset_user_info():

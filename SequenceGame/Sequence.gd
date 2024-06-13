@@ -1,23 +1,34 @@
 class_name Sequence
 extends Node2D
 
+var image_containers : Array
 
 var pins : Array = [] #pointers to pins in scene
-
 enum state {HIGHLIGHT, RESPONSE}
 var pins_dict : Dictionary #pins with associated number to recognize correct pin
 
 var sequence_controller : Sequence_Controller
 var user : UserModel
 
+var images_folder_path : String = "res://Art/filler_images/"
+var image_files : Array
+
 
 func _ready():
-	pins = [$TP1, $TP2, $TP3, $TP4, $TP5, $TP6, $TP7, $TP8]
+	pins = [$PushPin1, $PushPin2, $PushPin3, $PushPin4, $PushPin5, $PushPin6, $PushPin7, $PushPin8]
 	for i in range(pins.size()):
 		pins[i].pin_pressed.connect(_on_pin_pressed_test)
-	pins_dict = {1:$TP1, 2:$TP2, 3:$TP3, 4:$TP4, 5:$TP5, 6:$TP6, 7:$TP7, 8:$TP8}
+	pins_dict = {1:$PushPin1, 2:$PushPin2, 3:$PushPin3, 4:$PushPin4, 5:$PushPin5, 6:$PushPin6, 7:$PushPin7, 8:$PushPin8}
 
 	sequence_controller = Sequence_Controller.new(self,user)
+	
+	image_files = get_pin_images()
+	#for path in image_files:
+	#	print(path)
+	
+	image_containers = [$PinImage1, $PinImage2, $PinImage3, $PinImage4, $PinImage5, $PinImage6, $PinImage7, $PinImage8]
+	
+	set_pin_images()
 	
 	#randomly select from images in a particular location to assign as images - images may become sprites or texture or something idk yet
 
@@ -67,6 +78,30 @@ func prompt(hide: int, prompt: String = ""):
 	else:
 		$trial_prompt.visible = false
 
+func get_pin_images():
+	var image_files = []
+	var dir = DirAccess.open(images_folder_path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name:
+			if file_name.ends_with(".png"):
+				image_files.append(images_folder_path + file_name)
+			file_name = dir.get_next()
+		dir.list_dir_end()
+	return image_files
+	
+func set_pin_images():
+	var texture
+	var rand_image_path
+	for cont in image_containers:
+		rand_image_path = image_files.pick_random()
+		texture = ResourceLoader.load(rand_image_path)
+		if texture:
+			cont.texture = texture
+		else:
+			print("failed to add texture: ", rand_image_path)
+		
 
 #hides the pins for the duration of the delay period - delay time may eventually become a parameter
 func display_delay_distraction():

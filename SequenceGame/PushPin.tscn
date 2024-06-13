@@ -1,24 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvlgpdko4fu0o"]
+[gd_scene load_steps=11 format=3 uid="uid://cerk3e58an11t"]
 
 [ext_resource type="Script" path="res://SequenceGame/PushPin.gd" id="1_3jud2"]
-[ext_resource type="Texture2D" uid="uid://cvlju6pesn3p1" path="res://Art/PushPin.png" id="1_j7mdg"]
+[ext_resource type="Texture2D" uid="uid://bssbyfdgaog02" path="res://Art/Pins/default_pin.png" id="3_og1uo"]
+[ext_resource type="Texture2D" uid="uid://b73s24a4de7n6" path="res://Art/Pins/highlighted_pin.png" id="4_32c0a"]
+[ext_resource type="Texture2D" uid="uid://dm6om7dytxa4g" path="res://Art/Pins/correct_pin.png" id="5_nwxc4"]
+[ext_resource type="Texture2D" uid="uid://cjd2h6m4y7x8g" path="res://Art/Pins/incorrect_pin.png" id="6_mmoop"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_f2lgc"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0f2by"]
 
-[node name="PushPin" type="Node2D"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tpv0t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cdgdw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rq7un"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kbhuw"]
+
+[node name="PushPin" type="Button"]
+offset_left = -153.0
+offset_top = -136.0
+offset_right = 133.0
+offset_bottom = 222.0
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0f2by")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_tpv0t")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_cdgdw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_rq7un")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kbhuw")
+icon = ExtResource("3_og1uo")
 script = ExtResource("1_3jud2")
+default_icon = ExtResource("3_og1uo")
+highlighted_icon = ExtResource("4_32c0a")
+correct_icon = ExtResource("5_nwxc4")
+incorrect_icon = ExtResource("6_mmoop")
 
-[node name="Button" type="Button" parent="."]
-offset_left = -147.0
-offset_top = -129.0
-offset_right = 159.0
-offset_bottom = 252.0
-theme_override_colors/icon_pressed_color = Color(0, 0, 1, 1)
-theme_override_styles/normal = SubResource("StyleBoxEmpty_f2lgc")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_f2lgc")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_f2lgc")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_f2lgc")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_f2lgc")
-icon = ExtResource("1_j7mdg")
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="." to="." method="_on_pressed"]
