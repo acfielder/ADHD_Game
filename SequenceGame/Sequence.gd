@@ -3,23 +3,19 @@ extends Node2D
 
 
 var pins : Array = [] #pointers to pins in scene
+
 enum state {HIGHLIGHT, RESPONSE}
-#these two may be able to change or not be needed
-var pins_highlight : Dictionary #pins with associated number to highlight correct pin
-var pins_detect : Dictionary #pins with associated number to recognize correct pin
+var pins_dict : Dictionary #pins with associated number to recognize correct pin
 
 var sequence_controller : Sequence_Controller
 var user : UserModel
 
 
 func _ready():
-	pins_highlight = {1:get_node("PushPin1/Button"), 2:get_node("PushPin2/Button"), 3: get_node("PushPin3/Button"), 4: get_node("PushPin4/Button"), 5: get_node("PushPin5/Button"), 6: get_node("PushPin6/Button"), 7: get_node("PushPin7/Button"), 8: get_node("PushPin8/Button")}
-	pins_detect = {1:$PushPin1, 2:$PushPin2, 3:$PushPin3, 4:$PushPin4, 5:$PushPin5, 6:$PushPin6, 7:$PushPin7, 8:$PushPin8}
-	
-	pins = [$PushPin1, $PushPin2, $PushPin3, $PushPin4, $PushPin5, $PushPin6, $PushPin7, $PushPin8]
-
+	pins = [$TP1, $TP2, $TP3, $TP4, $TP5, $TP6, $TP7, $TP8]
 	for i in range(pins.size()):
-		pins[i].pin_pressed.connect(_on_pin_pressed)
+		pins[i].pin_pressed.connect(_on_pin_pressed_test)
+	pins_dict = {1:$TP1, 2:$TP2, 3:$TP3, 4:$TP4, 5:$TP5, 6:$TP6, 7:$TP7, 8:$TP8}
 
 	sequence_controller = Sequence_Controller.new(self,user)
 	
@@ -28,7 +24,6 @@ func _ready():
 #begins trials
 func _on_start_button_pressed():
 	$ColorRect.hide()
-	deactivate_pins()
 	#would probably lead to an instruction section rather than already the starting trial
 	sequence_controller.run_trial()
 	
@@ -47,23 +42,22 @@ func update_display(level: int, trial: int, score: int):
 	#$SessionStats/ColorRect/trial_type.text = "Trial Type: " + str(type)
 
 #highlights individual pin based on highlight reason
-func highlight_pin(pin_key: int, highlight_type: int):
-	var color
+func highlight_pin(pin_key: int, highlight_type: int, highlight_length: float): #deals with pins
+	var pin = pins_dict.get(pin_key)
 	match highlight_type:
-		0: color = Color(0,0,0.545098)
-		1: color = Color(0.564706,0.933333,0.564706)
-		2: color = Color(1,0,0)
-	var pin = pins_highlight.get(pin_key)
-	var original_color = pin.self_modulate
-	pin.self_modulate = color
-	await get_tree().create_timer(0.6).timeout
-	pin.self_modulate = original_color
+		0: pin.change_icon(0)
+		1: pin.change_icon(1)
+		2: pin.change_icon(2)
+		3: pin.change_icon(3)
+		_: pin.change_icon(0)
+	await get_tree().create_timer(highlight_length).timeout
+	pin.change_icon(0)
 	await get_tree().create_timer(0.30).timeout
 	
-#tells controller a pin was pressed
-func _on_pin_pressed(pin): 
-	var pin_key = pins_detect.find_key(pin)
+func _on_pin_pressed_test(pin):
+	var pin_key = pins_dict.find_key(pin)
 	sequence_controller.pin_press_detected(pin_key)
+	print("it worked kinda")
 
 #tell player there response is now being collected
 func prompt(hide: int, prompt: String = ""):
@@ -72,17 +66,6 @@ func prompt(hide: int, prompt: String = ""):
 		$trial_prompt.visible = true
 	else:
 		$trial_prompt.visible = false
-
-func activate_pins():
-	#for pin in pins:
-		#pin.set_disabled(false)
-	pass
-
-func deactivate_pins():
-	#for pin in pins:
-	#	if pin is Button:
-	#		pin.set_disabled(true)
-	pass
 
 
 #hides the pins for the duration of the delay period - delay time may eventually become a parameter

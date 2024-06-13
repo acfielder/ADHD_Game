@@ -9,10 +9,10 @@
 script = ExtResource("1_3jud2")
 
 [node name="Button" type="Button" parent="."]
-offset_left = 101.0
-offset_top = 67.0
-offset_right = 407.0
-offset_bottom = 448.0
+offset_left = -147.0
+offset_top = -129.0
+offset_right = 159.0
+offset_bottom = 252.0
 theme_override_colors/icon_pressed_color = Color(0, 0, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxEmpty_f2lgc")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_f2lgc")

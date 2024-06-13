@@ -20,16 +20,16 @@ func _init(view_ref: Sequence, user_in: UserModel):
 #highlights sequence of pins based on the type of sequence and chosen order - incomplete
 func highlight_sequence(mem_order: Array): #sequence_type: Array
 	for i in range(mem_order.size()):
-		await view.highlight_pin(mem_order[i], 0)
+		await view.highlight_pin(mem_order[i], 1, 0.6)
 		
 		
 #on a pin press detected, check response for trial
 func pin_press_detected(pin_key: int):
 	if game_state == State_Type.RESPONSE:
 		if model.check_update_response(pin_key):
-			view.highlight_pin(pin_key,1) #correct - feedback
+			view.highlight_pin(pin_key,2,0.3) #correct - feedback
 		else:
-			view.highlight_pin(pin_key,2) #incorrect - feedback
+			view.highlight_pin(pin_key,3,0.3) #incorrect - feedback
 		if model.check_pins_pressed() == model.get_current_mem_order().size():
 			all_pins_pressed()
 
@@ -38,16 +38,13 @@ func run_trial():
 	await setup_trial()
 	await run_visuals(model.get_current_sequence_type())
 			
-#essential order of the game - this could most likely be broken up or condensed
-func setup_trial():#could split: setup trial - 
-	#if model.get_current_trial() <= model.session_length:
-		#await view.show_trial()
+#sets up current trial
+func setup_trial():
 	await view.create_short_timer(0.75)
 	game_state = State_Type.HIGHLIGHT
 	var sequence_type = model.choose_sequence_type()
 	if sequence_type[0] == -1:
 		model.next_level()
-		#view.display_current_level()
 		#display in some way that the level has increased
 		sequence_type = model.choose_sequence_type()
 	#view.display_current_level()
@@ -56,10 +53,8 @@ func setup_trial():#could split: setup trial -
 	model.update_trial_info()
 
 	
-#broke off here, just delete header
+#shows prompts and highlights pins
 func run_visuals(sequence_type : Array):
-	#var mem_order = model.create_sequence_order(sequence_type)
-	#model.update_trial_info()
 	var trial_prompt = model.get_prompt(0)
 	if trial_prompt != null: #test out this if statement below the await highlight
 		view.prompt(1, trial_prompt)
@@ -70,10 +65,7 @@ func run_visuals(sequence_type : Array):
 	if sequence_type[0] == 3:
 		await view.display_delay_distraction()
 	game_state = State_Type.RESPONSE
-	#view.activate_pins()
-	#else:
-		#end_session()
-		#print("trials complete")
+
 		
 #updates stats in sequence game view
 func update_display_stats():
@@ -81,7 +73,6 @@ func update_display_stats():
 		
 #finishes trial once all of response is collected - could be updated for breaks/dialogue between trials
 func all_pins_pressed():
-	#view.deactivate_pins()
 	if model.get_current_trial() < model.session_length:
 		game_state = State_Type.MODEL
 		model.calculate_trial_score()
