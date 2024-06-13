@@ -32,9 +32,14 @@ func pin_press_detected(pin_key: int):
 			view.highlight_pin(pin_key,2) #incorrect - feedback
 		if model.check_pins_pressed() == model.get_current_mem_order().size():
 			all_pins_pressed()
+
+#runs through actual trial
+func run_trial():
+	await setup_trial()
+	await run_visuals(model.get_current_sequence_type())
 			
 #essential order of the game - this could most likely be broken up or condensed
-func begin_trial():
+func setup_trial():#could split: setup trial - 
 	#if model.get_current_trial() <= model.session_length:
 		#await view.show_trial()
 	await view.create_short_timer(0.75)
@@ -47,12 +52,18 @@ func begin_trial():
 		sequence_type = model.choose_sequence_type()
 	#view.display_current_level()
 	update_display_stats()
-	var mem_order = model.create_sequence_order(sequence_type)
+	model.create_sequence_order(sequence_type)
 	model.update_trial_info()
+
+	
+#broke off here, just delete header
+func run_visuals(sequence_type : Array):
+	#var mem_order = model.create_sequence_order(sequence_type)
+	#model.update_trial_info()
 	var trial_prompt = model.get_prompt(0)
-	if trial_prompt != null:
+	if trial_prompt != null: #test out this if statement below the await highlight
 		view.prompt(1, trial_prompt)
-	await highlight_sequence(mem_order)
+	await highlight_sequence(model.get_current_mem_order())
 	trial_prompt = model.get_prompt(1)
 	if sequence_type[0] == 2 || sequence_type[1] == 2:
 		view.prompt(1,trial_prompt)

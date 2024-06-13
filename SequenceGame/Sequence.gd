@@ -30,7 +30,7 @@ func _on_start_button_pressed():
 	$ColorRect.hide()
 	deactivate_pins()
 	#would probably lead to an instruction section rather than already the starting trial
-	sequence_controller.begin_trial()
+	sequence_controller.run_trial()
 	
 #just creates a small timer to create a delay
 func create_short_timer(time: float):
