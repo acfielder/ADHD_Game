@@ -4,7 +4,8 @@ var rng = RandomNumberGenerator.new()
 
 #game based 
 var pins : int = 8 #num pins in view, will need changed with UI
-var level_length : int = 15 #should be roughly 50 - check notes
+var level_length : int = 5 #should be roughly 50 - check notes - maybe less when im only taking the correct ones
+var increased_level : bool = false
 
 #session based
 var trial_history : Array = [] #holds SequenceTrialInfo objects for history of session's trials
@@ -31,7 +32,7 @@ func set_user(user_in: UserModel) -> void:
 	
 #setup any session dependent factors
 func setup_game_for_player() -> void:
-	update_session_length()
+	update_session_length(user.sequence_session_count, user.sequence_session_performance_level)
 	#could add any other setup functions here, keeps it open so dont have to change controller
 	#if unnecessary could call update_session_length directly from controller
 
@@ -62,10 +63,14 @@ func update_trial_info():
 #choose trial's sequence type based on player's progress	
 func choose_sequence_type() -> Array:
 	#switch-case depending on level, different types allowed for different levels, chosen based on difficulty ratios
-	if current_trial == 1 && current_level == 1:
-		return [0,-1]
-	elif user.completed_of_level + current_trial > level_length && current_trial == 1:
+	print(user.completed_of_level)
+	#if current_trial == 1 && current_level == 1:
+	#	return [0,-1]
+	if user.completed_of_level > level_length && current_trial == 1 && increased_level == false:
+		increased_level = true
 		return [-1]
+	elif current_trial == 1 && current_level == 1:
+		return [0,-1]
 	else:
 		var i = rng.randf_range(0,1)
 		match current_level:
@@ -176,18 +181,34 @@ func next_level() -> bool:
 		return false
 
 #change session length based on previous session performance
-func update_session_length():
-	if user.sequence_session_count > 0:
-		var performance_last_session = float(user.sequence_session_performance_level[0]) / float(user.sequence_session_performance_level[1])
-		if performance_last_session < 0.5 && user.sequence_session_performance_level[1] > 5: #should be 15
+func update_session_length(session_count: int, performance: Array):
+	if session_count > 0:
+		session_length = performance[1]
+		var performance_last_session = float(performance[0]) / float(performance[1])
+		if performance_last_session < 0.5 && performance[1] > 5: #should be 15
 			session_length -= 5
-		elif performance_last_session > 0.5 && performance_last_session < 0.7:
-			session_length = user.sequence_session_performance_level[1]
-		elif performance_last_session > 0.7 && user.sequence_session_performance_level[1] < 15: #should be 25
+		elif performance_last_session > 0.5 && performance_last_session <= 0.7:
+			session_length = performance[1]
+		elif performance_last_session > 0.7 && performance[1] < 15: #should be 25
 			session_length += 5
 	else:
 		session_length = 10 #20 - was changed for testing purposes
 	user.sequence_session_performance_level[1] = session_length
+	return session_length
+	
+	
+	#if user.sequence_session_count > 0:
+	#	session_length = user.sequence_session_performance_level[1]
+	#	var performance_last_session = float(user.sequence_session_performance_level[0]) / float(user.sequence_session_performance_level[1])
+	#	if performance_last_session < 0.5 && user.sequence_session_performance_level[1] > 5: #should be 15
+	#		session_length -= 5
+	#	elif performance_last_session > 0.5 && performance_last_session <= 0.7:
+	#		session_length = user.sequence_session_performance_level[1]
+	#	elif performance_last_session > 0.7 && user.sequence_session_performance_level[1] < 15: #should be 25
+	#		session_length += 5
+	#else:
+	#	session_length = 10 #20 - was changed for testing purposes
+	#user.sequence_session_performance_level[1] = session_length
 
 #save user's session's data to user
 func end_session():
@@ -220,6 +241,7 @@ func get_current_mem_order() -> Array:
 func get_current_sequence_type() -> Array:
 	return trial_history[-1].sequence_type
 	
-	
+func get_answer_order() -> Array:
+	return trial_history[-1].answer_order
 	
 	

@@ -30,11 +30,12 @@ func pin_press_detected(pin_key: int):
 			view.highlight_pin(pin_key,2,0.3) #correct - feedback
 		else:
 			view.highlight_pin(pin_key,3,0.3) #incorrect - feedback
-		if model.check_pins_pressed() == model.get_current_mem_order().size():
+		if model.check_pins_pressed() == model.get_answer_order().size(): #this shoudl be answer_order not mem_order
 			all_pins_pressed()
 
 #runs through actual trial
 func run_trial():
+	view.set_pin_images()
 	await setup_trial()
 	await run_visuals(model.get_current_sequence_type())
 			
@@ -44,8 +45,7 @@ func setup_trial():
 	game_state = State_Type.HIGHLIGHT
 	var sequence_type = model.choose_sequence_type()
 	if sequence_type[0] == -1:
-		model.next_level()
-		#display in some way that the level has increased
+		model.next_level() #display in some way that the level has increased
 		sequence_type = model.choose_sequence_type()
 	#view.display_current_level()
 	update_display_stats()
@@ -69,7 +69,7 @@ func run_visuals(sequence_type : Array):
 		
 #updates stats in sequence game view
 func update_display_stats():
-	view.update_display(model.current_level,model.current_trial,model.current_session_performance)
+	view.update_display(model.current_level,model.current_trial,model.current_session_performance, model.session_length)
 		
 #finishes trial once all of response is collected - could be updated for breaks/dialogue between trials
 func all_pins_pressed():

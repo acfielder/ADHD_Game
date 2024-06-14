@@ -42,21 +42,22 @@ func create_answer_order() -> Array:
 		answer_order = []
 		var i = rng.randf_range(0,1)
 		if i < .5:
-			var switch_1 = rng.randf_range(1,mem_order.size()-1)
+			var switch_1 = int(rng.randf_range(1,mem_order.size()-1))
 			var switch_2
 			if switch_1 == mem_order.size()-1:
 				switch_2 = 0
 			else:
 				switch_2 = switch_1 + 1
-			answer_order = mem_order
+			answer_order = mem_order.duplicate()
 			answer_order[switch_1] = mem_order[switch_2]
 			answer_order[switch_2] = mem_order[switch_1]
 			switched = true
 			switched_values = [switch_1,switch_2]
 		else:
-			for e in range(mem_order.size()-1):
-				if int(i) % 2 == 0:
-					answer_order.append(mem_order[i])
+			for e in range(mem_order.size()):
+				if int(e) % 2 == 0:
+					answer_order.append(mem_order[e])
+	print(answer_order)
 	return answer_order
 
 #selects prompts for before and after the sequence is shown
@@ -68,7 +69,7 @@ func select_prompts() -> Array:
 	elif sequence_type[0] == 2 || sequence_type[1] == 2:
 		if sequence_type[0] == 2:
 			trial_prompt_before_sequence = "Repeat this sequence in the updated order described after the sequence is presented"
-			if switched: trial_prompt_after_sequence = "The " + str(switched_values[0]) + " and " + str(switched_values[1]) + " events have been switched"
+			if switched: trial_prompt_after_sequence = "The " + str(switched_values[0]+1) + " and " + str(switched_values[1]+1) + " events have been switched"
 			else: trial_prompt_after_sequence = "Repeat the sequence in forward order, choosing every other event,\nstarting with the first event presented"
 		else:
 			trial_prompt_after_sequence = "Repeat the sequence in forward order, choosing every other event,\nstarting with the first event presented"

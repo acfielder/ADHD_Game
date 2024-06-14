@@ -46,10 +46,11 @@ func prompt_next_trial():
 	await get_tree().create_timer(1).timeout
 	$ColorRect.show()
 	
-func update_display(level: int, trial: int, score: int):
+func update_display(level: int, trial: int, score: int, session_length: int):
 	$SessionStats/ColorRect/current_level.text = "Level: " + str(level)
 	$SessionStats/ColorRect/current_trial.text = "Trial: " + str(trial)
 	$SessionStats/ColorRect/session_score.text = "Score: " + str(score)
+	$SessionStats/ColorRect/session_length.text = "Session\nLength: " + str(session_length)
 	#$SessionStats/ColorRect/trial_type.text = "Trial Type: " + str(type)
 
 #highlights individual pin based on highlight reason
@@ -68,7 +69,6 @@ func highlight_pin(pin_key: int, highlight_type: int, highlight_length: float): 
 func _on_pin_pressed_test(pin):
 	var pin_key = pins_dict.find_key(pin)
 	sequence_controller.pin_press_detected(pin_key)
-	print("it worked kinda")
 
 #tell player there response is now being collected
 func prompt(hide: int, prompt: String = ""):

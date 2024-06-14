@@ -95,7 +95,41 @@ func test_choose_sequence_type():
 	var chosen_type = model.choose_sequence_type()
 	assert(chosen_type[0] > -1 && chosen_type[0] < 4)
 	assert(chosen_type[1] >= -1 && chosen_type[1] < 3)
-
+	
+func test_update_session_length():
+	var model = Sequence_Game.new()
+	var user = User_Data_Manager.load_resource()
+	model.set_user(user)
+	user.reset_user_data()
+	assert_eq(model.update_session_length(user.sequence_session_count, user.sequence_session_performance_level),10,"first should be 10")
+	assert_eq(user.sequence_session_performance_level[1],10,"should also change in user")
+	
+	user.sequence_session_count = 1
+	user.sequence_session_performance_level[0] = 9
+	assert_eq(model.update_session_length(user.sequence_session_count, user.sequence_session_performance_level),15,"well done should increase by 5")
+	assert_eq(user.sequence_session_performance_level[1],15,"should also change in user")
+	
+	user.sequence_session_count = 2
+	user.sequence_session_performance_level[0] = 12
+	assert_eq(model.update_session_length(user.sequence_session_count,user.sequence_session_performance_level),15,"good performance at upper limit should remain same")
+	assert_eq(user.sequence_session_performance_level[1],15,"should also stay same in user")
+	
+	user.sequence_session_count = 3
+	user.sequence_session_performance_level[0] = 3
+	assert_eq(model.update_session_length(user.sequence_session_count,user.sequence_session_performance_level),10,"bad performance should decrease it by 5")
+	assert_eq(user.sequence_session_performance_level[1],10,"should also decrease in user")
+	
+	user.sequence_session_count = 4
+	user.sequence_session_performance_level[0] = 3
+	assert_eq(model.update_session_length(user.sequence_session_count,user.sequence_session_performance_level),5,"bad performance should decrease it by 5")
+	assert_eq(user.sequence_session_performance_level[1],5,"should also decrease in user")
+	
+	user.sequence_session_count = 5
+	user.sequence_session_performance_level[0] = 2
+	assert_eq(model.update_session_length(user.sequence_session_count,user.sequence_session_performance_level),5,"bad performance at min should stay same")
+	assert_eq(user.sequence_session_performance_level[1],5,"should also stay same in user")
+	
+	
 	
 #func test_choose_sequence_type_static():
 #	var model = Sequence_Game.new()

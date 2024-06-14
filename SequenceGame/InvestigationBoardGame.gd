@@ -11,8 +11,9 @@ func _ready():
 	var new_sequence = Sequence.instantiate()
 	new_sequence.user = user
 	#make controller here and also pass to Sequence like user
-
-	user.reset_user_data()
+	#user.reset_user_data()
+	print(user.sequence_session_performance_level)
+	print(user.sequence_session_count)
 	#getting name - this would also be moved to the larger area
 	#using text input - or buttons
 
