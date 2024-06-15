@@ -155,7 +155,7 @@ func calculate_trial_score():
 
 #increases self & user's session performance counts if trial was successful
 func update_session_performance():
-	if trial_history[-1].score == trial_history[-1].length:
+	if trial_history[-1].score == trial_history[-1].answer_order.size():
 		current_session_performance += 1
 		user.sequence_session_performance_level[0] = current_session_performance
 	
