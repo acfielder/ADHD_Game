@@ -45,6 +45,7 @@ func setup_trial():
 	game_state = State_Type.HIGHLIGHT
 	var sequence_type = model.choose_sequence_type()
 	if sequence_type[0] == -1:
+		print("its session start, increasing level")
 		model.next_level() #display in some way that the level has increased
 		sequence_type = model.choose_sequence_type()
 	#view.display_current_level()
@@ -62,7 +63,7 @@ func run_visuals(sequence_type : Array):
 	trial_prompt = model.get_prompt(1)
 	if sequence_type[0] == 2 || sequence_type[1] == 2:
 		view.prompt(1,trial_prompt)
-	if sequence_type[0] == 3:
+	if sequence_type[0] == 3: #this would be checking is trial has yes delay on
 		await view.display_delay_distraction()
 	game_state = State_Type.RESPONSE
 

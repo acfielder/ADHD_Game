@@ -21,7 +21,7 @@ var trial_prompt_after_sequence : String = "" #trial specific prompt given in vi
 var switched : bool = false
 var switched_values : Array
 
-func _init(sequence_type_in: Array, length_in: int, mem_order_in: Array):
+func _init(sequence_type_in: Array, length_in: int, mem_order_in: Array): #add  , delay: bool
 	sequence_type = sequence_type_in
 	length = length_in
 	mem_order = mem_order_in
@@ -57,7 +57,6 @@ func create_answer_order() -> Array:
 			for e in range(mem_order.size()):
 				if int(e) % 2 == 0:
 					answer_order.append(mem_order[e])
-	print(answer_order)
 	return answer_order
 
 #selects prompts for before and after the sequence is shown

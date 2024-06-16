@@ -33,6 +33,7 @@ func set_user(user_in: UserModel) -> void:
 #setup any session dependent factors
 func setup_game_for_player() -> void:
 	update_session_length(user.sequence_session_count, user.sequence_session_performance_level)
+	current_level = user.current_level
 	#could add any other setup functions here, keeps it open so dont have to change controller
 	#if unnecessary could call update_session_length directly from controller
 
@@ -63,7 +64,7 @@ func update_trial_info():
 #choose trial's sequence type based on player's progress	
 func choose_sequence_type() -> Array:
 	#switch-case depending on level, different types allowed for different levels, chosen based on difficulty ratios
-	print(user.completed_of_level)
+	#print(user.completed_of_level)
 	#if current_trial == 1 && current_level == 1:
 	#	return [0,-1]
 	if user.completed_of_level > level_length && current_trial == 1 && increased_level == false:
@@ -142,12 +143,12 @@ func choose_sequence_type_static_test():
 #determines length of current trial's sequence based on previous trial of same sequence type
 func determine_new_length(sequence_type: Array) -> int:
 	if current_trial == 1:
-		return 3
+		return 4
 	else:
 		for i in range(trial_history.size() - 1, -1, -1):
 			if trial_history[i].get_sequence_type() == sequence_type:
 				return trial_history[i].determine_next_trial_length()
-		return 3
+		return 4
 
 #calls for the trial's score to be calculated
 func calculate_trial_score():
@@ -192,7 +193,7 @@ func update_session_length(session_count: int, performance: Array):
 		elif performance_last_session > 0.7 && performance[1] < 15: #should be 25
 			session_length += 5
 	else:
-		session_length = 10 #20 - was changed for testing purposes
+		session_length = 6 #20 - was changed for testing purposes #ten for testing
 	user.sequence_session_performance_level[1] = session_length
 	return session_length
 	
@@ -212,12 +213,12 @@ func update_session_length(session_count: int, performance: Array):
 
 #save user's session's data to user
 func end_session():
+	print(current_level)
 	user.completed_of_level += user.sequence_session_performance_level[0]
 	user.sequence_session_count += 1
 	#if current_level > user.current_level:
-		#user.increase_sequence_level()
-	if current_level > user.current_level:
-		next_level()
+	#	print("end of session level increase")
+	#	next_level()
 	for trial in range(trial_history.size()):
 		user.add_to_sequence_level_data(trial_history[trial].sequence_type, trial_history[trial].length, trial_history[trial].score)
 	User_Data_Manager.save(user)

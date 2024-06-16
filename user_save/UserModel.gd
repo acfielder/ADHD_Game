@@ -33,6 +33,8 @@ func add_to_sequence_level_data(sequence_type: Array, length: int, score: int):
 #increases saved sequece level once user completes level within completed session
 func increase_sequence_level():
 	current_level += 1
+	completed_of_level = 0
+	print("users internal level has been increased")
 	
 #funcs to return specific pieces like the actual level dicts for level report purposes
 #session reports will happen fully in the game model
