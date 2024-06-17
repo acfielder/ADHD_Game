@@ -161,7 +161,7 @@ func update_session_performance():
 		current_session_performance += 1
 		user.sequence_session_performance_level[0] = current_session_performance
 		user.completed_of_level += 1
-	if user.completed_of_level >= level_length && increased_level == false: # this needs moved elsewhere to where it belongs, maybe not idk?
+	if user.completed_of_level >= level_length && increased_level == false && current_level < 5: # this needs moved elsewhere to where it belongs, maybe not idk?
 		increased_level = true
 	
 	
@@ -223,11 +223,12 @@ func end_session():
 	#if current_level > user.current_level:
 	#	print("end of session level increase")
 	#	next_level()
+	
+	for trial in range(trial_history.size()):
+		user.add_to_sequence_level_data(trial_history[trial].sequence_type, trial_history[trial].length, trial_history[trial].score)
 	if increased_level:
 		next_level()
 		print(user.current_level)
-	for trial in range(trial_history.size()):
-		user.add_to_sequence_level_data(trial_history[trial].sequence_type, trial_history[trial].length, trial_history[trial].score)
 	User_Data_Manager.save(user)
 	
 #gets prompt to be displayed from trial object
