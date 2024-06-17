@@ -10,11 +10,10 @@ func _ready():
 	var user = User_Data_Manager.load_resource()#"user://user_save/User_Model.tres"
 	var new_sequence = Sequence.instantiate()
 	new_sequence.user = user
-	user.current_level = 2
 	#make controller here and also pass to Sequence like user
 	#user.reset_user_data()
 	print(str(user.completed_of_level) + str("c_o_l"))
-	print(str("user level ") + str(user.current_level))
+	print(str("start user level ") + str(user.current_level))
 	#print(user.sequence_session_performance_level)
 	#print(user.sequence_session_count)
 	#getting name - this would also be moved to the larger area

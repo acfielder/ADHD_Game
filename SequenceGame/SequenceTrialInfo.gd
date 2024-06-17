@@ -85,11 +85,11 @@ func calculate_score() -> int:
 #determine length of next trial of the same type based on performance
 func determine_next_trial_length() -> int:
 	var a_length = answer_order.size()
-	if score == a_length && a_length < 8:
-		return (a_length + 1)
-	elif score < a_length && a_length > 3:
-		return (a_length - 1)
-	else: return a_length
+	if score == a_length && length < 8:
+		return (length + 1)
+	elif score < a_length && length > 3:
+		return (length - 1)
+	else: return length
 
 #checks and records individual responses
 func check_update_response(single_response: int) -> bool:

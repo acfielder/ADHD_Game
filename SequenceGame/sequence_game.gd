@@ -63,12 +63,13 @@ func update_trial_info():
 	
 #choose trial's sequence type based on player's progress	
 func choose_sequence_type() -> Array:
+	print(user.completed_of_level)
 	#switch-case depending on level, different types allowed for different levels, chosen based on difficulty ratios
 	#print(user.completed_of_level)
 	#if current_trial == 1 && current_level == 1:
 	#	return [0,-1]
-	if user.completed_of_level > level_length && current_trial == 1 && increased_level == false:
-		increased_level = true
+	if current_level == 100: #obviously this is wrong and needs removed #user.completed_of_level >= level_length && increased_level == false: # && current_trial == 1 && increased_level == false:
+		#increased_level = true
 		return [-1]
 	elif current_trial == 1 && current_level == 1:
 		return [0,-1]
@@ -159,6 +160,9 @@ func update_session_performance():
 	if trial_history[-1].score == trial_history[-1].answer_order.size():
 		current_session_performance += 1
 		user.sequence_session_performance_level[0] = current_session_performance
+		user.completed_of_level += 1
+	if user.completed_of_level >= level_length && increased_level == false: # this needs moved elsewhere to where it belongs, maybe not idk?
+		increased_level = true
 	
 	
 func update_overall_performance(): #this may not need to exist or can be moved or combined with session performance, depends on how reports are created
@@ -174,16 +178,16 @@ func reset_trial_info():
 	
 #increases level of self & user
 func next_level() -> bool:
-	if current_level <5:
-		current_level += 1	
-		user.increase_sequence_level()
-		return true
-	else:
-		return false
+#	if current_level <5:
+#		current_level += 1	
+	user.increase_sequence_level()
+	return true
+#	else:
+#		return false
 
 #change session length based on previous session performance
 func update_session_length(session_count: int, performance: Array):
-	if session_count > 0:
+	if session_count > 100: #ession_count > 0
 		session_length = performance[1]
 		var performance_last_session = float(performance[0]) / float(performance[1])
 		if performance_last_session < 0.5 && performance[1] > 5: #should be 15
@@ -214,11 +218,14 @@ func update_session_length(session_count: int, performance: Array):
 #save user's session's data to user
 func end_session():
 	print(current_level)
-	user.completed_of_level += user.sequence_session_performance_level[0]
+	#user.completed_of_level += user.sequence_session_performance_level[0] #alternative is in update_session_performance
 	user.sequence_session_count += 1
 	#if current_level > user.current_level:
 	#	print("end of session level increase")
 	#	next_level()
+	if increased_level:
+		next_level()
+		print(user.current_level)
 	for trial in range(trial_history.size()):
 		user.add_to_sequence_level_data(trial_history[trial].sequence_type, trial_history[trial].length, trial_history[trial].score)
 	User_Data_Manager.save(user)

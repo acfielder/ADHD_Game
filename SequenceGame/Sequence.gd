@@ -106,7 +106,7 @@ func set_pin_images():
 #hides the pins for the duration of the delay period - delay time may eventually become a parameter
 func display_delay_distraction():
 	$delay_distraction.visible = true
-	await get_tree().create_timer(5).timeout 
+	await get_tree().create_timer(3).timeout 
 	$delay_distraction.visible = false
 	
 func display_session_over():

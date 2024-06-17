@@ -32,7 +32,9 @@ func add_to_sequence_level_data(sequence_type: Array, length: int, score: int):
 
 #increases saved sequece level once user completes level within completed session
 func increase_sequence_level():
+	print(str("current level before change: ") + str(current_level))
 	current_level += 1
+	print(str("current level after change: ") + str(current_level))
 	completed_of_level = 0
 	print("users internal level has been increased")
 	

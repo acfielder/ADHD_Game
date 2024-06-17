@@ -45,9 +45,8 @@ func setup_trial():
 	game_state = State_Type.HIGHLIGHT
 	var sequence_type = model.choose_sequence_type()
 	if sequence_type[0] == -1:
-		print("its session start, increasing level")
-		model.next_level() #display in some way that the level has increased
 		sequence_type = model.choose_sequence_type()
+		#model.next_level() #display in some way that the level has increased
 	#view.display_current_level()
 	update_display_stats()
 	model.create_sequence_order(sequence_type)
@@ -74,12 +73,14 @@ func update_display_stats():
 		
 #finishes trial once all of response is collected - could be updated for breaks/dialogue between trials
 func all_pins_pressed():
+	game_state = State_Type.MODEL
+	model.calculate_trial_score()
+	model.update_overall_performance()
+	model.update_session_performance()
+	update_display_stats()
 	if model.get_current_trial() < model.session_length:
-		game_state = State_Type.MODEL
-		model.calculate_trial_score()
-		model.update_overall_performance()
-		model.update_session_performance()
-		update_display_stats()
+		
+		
 		model.reset_trial_info()
 		await view.prompt_next_trial()
 		view.prompt(0)
