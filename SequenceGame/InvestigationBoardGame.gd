@@ -11,7 +11,7 @@ func _ready():
 	var new_sequence = Sequence.instantiate()
 	new_sequence.user = user
 	#make controller here and also pass to Sequence like user
-	#user.reset_user_data()
+	user.reset_user_data()
 	print(str(user.completed_of_level) + str("c_o_l"))
 	print(str("start user level ") + str(user.current_level))
 	#print(user.sequence_session_performance_level)

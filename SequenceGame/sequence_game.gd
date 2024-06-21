@@ -197,7 +197,7 @@ func update_session_length(session_count: int, performance: Array):
 		elif performance_last_session > 0.7 && performance[1] < 15: #should be 25
 			session_length += 5
 	else:
-		session_length = 6 #20 - was changed for testing purposes #ten for testing
+		session_length = 4 #20 - was changed for testing purposes #ten for testing
 	user.sequence_session_performance_level[1] = session_length
 	return session_length
 	
@@ -253,4 +253,5 @@ func get_current_sequence_type() -> Array:
 func get_answer_order() -> Array:
 	return trial_history[-1].answer_order
 	
-	
+func get_performances():
+	return overall_performance

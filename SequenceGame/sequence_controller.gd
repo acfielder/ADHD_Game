@@ -104,5 +104,6 @@ func get_current_level() -> int:
 func get_sequence_type() -> Array:
 	return model.get_current_sequence_type()
 		
-	
+func get_performances() -> Array:
+	return model.get_performances()
 		

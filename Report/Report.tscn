@@ -1,0 +1,86 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg8rlji2nyv0g"]
+
+[ext_resource type="Script" path="res://Report/Report.gd" id="1_l335i"]
+[ext_resource type="PackedScene" uid="uid://df1hxri873fms" path="res://Report/Graph_Report.tscn" id="2_nt73p"]
+
+[node name="Report" type="Node2D"]
+position = Vector2(315, 313)
+script = ExtResource("1_l335i")
+
+[node name="Page1" type="ColorRect" parent="."]
+offset_left = -224.0
+offset_top = -275.0
+offset_right = 235.0
+offset_bottom = 299.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Page2" type="ColorRect" parent="."]
+offset_left = 264.0
+offset_top = -276.0
+offset_right = 723.0
+offset_bottom = 298.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="."]
+offset_left = -182.0
+offset_top = -250.0
+offset_right = -60.0
+offset_bottom = -197.0
+theme_override_colors/font_color = Color(0.66, 0.0396, 0.16368, 1)
+theme_override_font_sizes/font_size = 35
+text = "Report"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label1" type="Label" parent="."]
+offset_left = -176.0
+offset_top = -145.0
+offset_right = 193.0
+offset_bottom = -101.56
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -177.0
+offset_top = -78.0
+offset_right = 192.0
+offset_bottom = -34.56
+metadata/_edit_use_anchors_ = true
+
+[node name="Label3" type="Label" parent="."]
+offset_left = -177.0
+offset_top = -11.0
+offset_right = 192.0
+offset_bottom = 32.44
+metadata/_edit_use_anchors_ = true
+
+[node name="Label4" type="Label" parent="."]
+offset_left = -177.0
+offset_top = 56.0
+offset_right = 192.0
+offset_bottom = 99.44
+metadata/_edit_use_anchors_ = true
+
+[node name="Label5" type="Label" parent="."]
+offset_left = -177.0
+offset_top = 124.0
+offset_right = 192.0
+offset_bottom = 167.44
+metadata/_edit_use_anchors_ = true
+
+[node name="Label6" type="Label" parent="."]
+offset_left = -177.0
+offset_top = 191.0
+offset_right = 192.0
+offset_bottom = 234.44
+metadata/_edit_use_anchors_ = true
+
+[node name="graph_cont" type="ColorRect" parent="."]
+offset_left = 295.0
+offset_top = -81.0
+offset_right = 691.14
+offset_bottom = 179.08
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(0.869157, 0.891631, 0.926982, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="GraphReport" parent="graph_cont" instance=ExtResource("2_nt73p")]

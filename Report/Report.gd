@@ -23,3 +23,8 @@ func set_tracking_texts():
 	pass
 	
 #graph updating logic
+func setup_graph(performances: Array):
+	#var performances = [stm_per, up_man_per, delay_per]
+	for per in performances:
+		var points = $graph_cont/GraphReport.determine_line_points_sequence(per)
+		$graph_cont/GraphReport.create_line(points)

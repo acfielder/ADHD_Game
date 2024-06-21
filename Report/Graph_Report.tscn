@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://df1hxri873fms"]
+
+[ext_resource type="Script" path="res://Report/Graph_Report.gd" id="1_hclgt"]
+
+[node name="GraphReport" type="Node2D"]
+scale = Vector2(0.995923, 1)
+script = ExtResource("1_hclgt")

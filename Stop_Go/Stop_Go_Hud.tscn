@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwldavlnvpiq3"]
+
+[ext_resource type="Script" path="res://Stop_Go/Stop_Go_Hud.gd" id="1_r6tlx"]
+
+[node name="StopGoHud" type="Node2D"]
+script = ExtResource("1_r6tlx")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(0, -5.65854)
+scale = Vector2(1, 0.886179)
+color = Color(0.377804, 0.266309, 0.210021, 1)
+polygon = PackedVector2Array(77, 5, 135, 124, 1018, 126, 1083, 3)

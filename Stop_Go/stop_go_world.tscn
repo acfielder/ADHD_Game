@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://bo3i4ce2vivlf"]
+
+[ext_resource type="Script" path="res://Stop_Go/Player.gd" id="1_vkflb"]
+[ext_resource type="PackedScene" uid="uid://cg46vrrmeq5rg" path="res://Stop_Go/TerrainController.tscn" id="2_6ls17"]
+[ext_resource type="PackedScene" uid="uid://cwldavlnvpiq3" path="res://Stop_Go/Stop_Go_Hud.tscn" id="3_ryd15"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_q7nlw"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_00b18"]
+sky_material = SubResource("ProceduralSkyMaterial_q7nlw")
+
+[sub_resource type="Environment" id="Environment_ktv01"]
+background_mode = 2
+sky = SubResource("Sky_00b18")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fukwa"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_6etbu"]
+
+[node name="Stop_Go_World" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ktv01")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.999976, -0.00409815, 0.00553013, -0.00618206, -0.181479, 0.983375, -0.00302642, -0.983386, -0.1815, 0, 5.97202, -2.83939)
+shadow_enabled = true
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06249, 0)
+script = ExtResource("1_vkflb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_fukwa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_6etbu")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.724054, 0.250611)
+
+[node name="TerrainController" parent="." instance=ExtResource("2_6ls17")]
+
+[node name="StopGoHud" parent="." instance=ExtResource("3_ryd15")]
