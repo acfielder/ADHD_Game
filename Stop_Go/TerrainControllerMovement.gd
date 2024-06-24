@@ -20,6 +20,7 @@ func _process_terrain(delta: float) -> void:
 	var current_block = current_terrain[0]
 	var next_block = current_terrain[1]
 
+	#this needs to be <=
 	if player.global_transform.origin.z <= next_block.global_transform.origin.z - terrain_length / 2:
 		var last_terrain = current_terrain[-1]
 		var first_terrain = current_terrain.pop_front()
@@ -30,17 +31,7 @@ func _process_terrain(delta: float) -> void:
 		current_terrain.append(block)
 		first_terrain.queue_free()
 	
-	
-	
 #	if current_terrain[0].position.z >= current_terrain[0].mesh.size.y/2:
-#		var last_terrain = current_terrain[-1]
-#		var first_terrain = current_terrain.pop_front()
-#
-#		var block = TerrainBlocks.pick_random().instantiate()
-#		append_to_far_edge(last_terrain, block)
-#		add_child(block)
-#		current_terrain.append(block)
-#		first_terrain.queue_free()
 	
 	
 func _load_terrain_scenes(path: String) -> void:

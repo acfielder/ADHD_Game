@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bo3i4ce2vivlf"]
+[gd_scene load_steps=8 format=3 uid="uid://bo3i4ce2vivlf"]
 
 [ext_resource type="PackedScene" uid="uid://bjjbtl4kawdaq" path="res://Stop_Go/player.tscn" id="1_aehw3"]
+[ext_resource type="Script" path="res://Stop_Go/stop_go_world.gd" id="1_i22q1"]
 [ext_resource type="PackedScene" uid="uid://cg46vrrmeq5rg" path="res://Stop_Go/TerrainController.tscn" id="2_6ls17"]
 [ext_resource type="PackedScene" uid="uid://cwldavlnvpiq3" path="res://Stop_Go/Stop_Go_Hud.tscn" id="3_ryd15"]
 
@@ -19,6 +20,7 @@ glow_enabled = true
 
 [node name="Stop_Go_World" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.124108, 0)
+script = ExtResource("1_i22q1")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_ktv01")

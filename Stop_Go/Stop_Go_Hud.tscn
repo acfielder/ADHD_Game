@@ -1,12 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwldavlnvpiq3"]
+[gd_scene load_steps=4 format=3 uid="uid://cwldavlnvpiq3"]
 
 [ext_resource type="Script" path="res://Stop_Go/Stop_Go_Hud.gd" id="1_r6tlx"]
+[ext_resource type="Texture2D" uid="uid://djnxedxoxo2dc" path="res://Art/stop_go/arrow_cues/left_gray_arrow.png" id="2_nlg0n"]
+[ext_resource type="Texture2D" uid="uid://bn2ebfx6th3ek" path="res://Art/stop_go/arrow_cues/right_gray_arrow.png" id="3_hnonr"]
 
 [node name="StopGoHud" type="Node2D"]
 script = ExtResource("1_r6tlx")
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="top_bar" type="Polygon2D" parent="."]
 position = Vector2(0, -5.65854)
 scale = Vector2(1, 0.886179)
 color = Color(0.377804, 0.266309, 0.210021, 1)
 polygon = PackedVector2Array(77, 5, 135, 124, 1018, 126, 1083, 3)
+
+[node name="left_arrow" type="Sprite2D" parent="top_bar"]
+position = Vector2(241, 62.8073)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_nlg0n")
+
+[node name="right_arrow" type="Sprite2D" parent="top_bar"]
+position = Vector2(912, 61.6789)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_hnonr")
+
+[node name="x_signal" type="Sprite2D" parent="top_bar"]
+
+[node name="cue_pop_up" type="Sprite2D" parent="."]
+position = Vector2(936, 582)
+scale = Vector2(0.2, 0.2)
