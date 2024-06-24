@@ -7,6 +7,8 @@ var left_green_arrow: Texture
 var right_green_arrow: Texture
 var red_x: Texture
 
+signal begin_session
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	left_default_arrow = load("res://Art/stop_go/arrow_cues/left_gray_arrow.png")
@@ -15,7 +17,7 @@ func _ready():
 	right_green_arrow = load("res://Art/stop_go/arrow_cues/right_green_arrow.png")
 	red_x = load("res://Art/stop_go/arrow_cues/red_x.png")
 	
-	
+	#$BeginSession.connect("pressed", self, "_on_Button_pressed")
 	#testing!!
 	#highlight_direction(2)
 	#await get_tree().create_timer(2).timeout 
@@ -78,3 +80,9 @@ func reset_highlights():
 	$top_bar/left_arrow.texture = left_default_arrow
 	$top_bar/right_arrow.texture = right_default_arrow
 
+
+
+func _on_begin_session_pressed():
+	emit_signal("begin_session")
+	$top_bar/ColorRect.hide()
+	
