@@ -51,7 +51,7 @@ func setup_trial(path: String, direction: int):
 #displays the evidence cue on the correct side
 #0-center for stop, 1-left, 2-right
 func display_evidence(png_path: String, direction: int):
-	var texture = load(png_path) #may not need to load if already used in another scene
+	var texture = load(png_path) #may not need to load if already used in another scene, check again
 	$cue_pop_up.texture = texture
 	#may need to reset size depending on art
 	var viewport_size = get_viewport().size

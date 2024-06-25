@@ -81,11 +81,10 @@ func calc_session_go_rt(): #go trial successful, stop unsuccessful
 	#unsure of this bc idk where ill save unsuccessful stop times, probably right in go
 	var time_sum = 0
 	for trial in session_trials:
-		if trial.trial_type && trial.successful:
+		if (trial.trial_type && trial.successful) || (!trial.trial_type && !trial.successful):
 			time_sum += trial.go_rt
-		elif !trial.trial_type && !trial.successful:
-			time_sum += trial.go_rt
-	pass
+	#	elif !trial.trial_type && !trial.successful:
+	#		time_sum += trial.go_rt
 	
 #calculates the probability of signal response across all ssd's
 func calc_session_prob_signal_response():
@@ -95,3 +94,8 @@ func calc_session_prob_signal_response():
 func calc_session_stop_signal_rt():
 	pass
 
+func get_current_trial_type():
+	return session_trials[-1].trial_type
+
+func get_if_pressed():
+	return session_trials[-1].pressed
