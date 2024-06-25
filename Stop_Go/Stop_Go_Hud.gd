@@ -1,13 +1,19 @@
 extends Node2D
 class_name StopGoHud
 
+signal begin_session
+signal key_press
+
 var left_default_arrow: Texture
 var right_default_arrow: Texture
 var left_green_arrow: Texture
 var right_green_arrow: Texture
 var red_x: Texture
 
-signal begin_session
+enum State {MOVE, TRIAL}
+var hud_state = State.MOVE
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,7 +42,11 @@ func _ready():
 	#clear_trial()
 	#display_evidence("res://Art/filler_images/green_image.png", 2)
 
-	
+#runs basic visuals of trial
+func setup_trial(path: String, direction: int):
+	hud_state = State.TRIAL
+	display_evidence(path,direction)
+	highlight_direction(direction)
 
 #displays the evidence cue on the correct side
 #0-center for stop, 1-left, 2-right
@@ -57,6 +67,7 @@ func display_evidence(png_path: String, direction: int):
 	
 #clears cue sprite texture and calls for highlight clearing
 func clear_trial():
+	hud_state = State.MOVE
 	$cue_pop_up.texture = null
 	$cue_pop_up.position = Vector2(0,0)
 	reset_highlights()
@@ -81,8 +92,17 @@ func reset_highlights():
 	$top_bar/right_arrow.texture = right_default_arrow
 
 
-
+#when the first start button is pressed and the session begins
 func _on_begin_session_pressed():
 	emit_signal("begin_session")
 	$top_bar/ColorRect.hide()
 	
+func _input(event):
+	if hud_state == State.TRIAL:
+		if event is InputEventKey:
+			if event.pressed:
+				if event.keycode == KEY_S:
+					emit_signal("key_press",1)
+				elif event.keycode == KEY_D:
+					emit_signal("key_press",2)
+#signal needs connected to stop_go_world which will then call the controller's trial_key_pressed() which would take the response and see if its right based on the model

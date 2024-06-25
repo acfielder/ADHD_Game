@@ -14,6 +14,16 @@ func _init(view_in: StopGoWorld, user_in: UserModel):
 	user = user_in
 	model = StopGoModel.new()
 	model.set_user(user)
+	model.setup_session()
 	
-#on views start session button pressed
-	#
+func begin_trial():
+	model.setup_trial()
+	
+func trial_key_pressed():
+	pass
+	
+func end_trial():
+	#tell model to end the trial
+	pass
+
+
