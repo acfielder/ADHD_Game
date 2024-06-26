@@ -22,10 +22,15 @@ func _init(trial_type_in: bool):
 	
 #based on successful and trial's ssd, only if this is a stop trial
 func determine_ssd(previous_ssd: float, success: int): #need to know if it was successful or not
-	
-	pass
+	if !success && previous_ssd > 0.1:
+		ssd = previous_ssd - 0.05
+	elif success && previous_ssd < 1.15:
+		ssd = previous_ssd + 0.05
+	else: ssd = previous_ssd
+	return ssd
 
 #determines next based on a random num between min and max
+#this may be changed to be less random and allow altering of the max and min interval
 func determine_next_interval(min_interval: float, max_interval: float):
 	var i = rng.randf_range(min_interval, max_interval)
 	return i
@@ -43,10 +48,6 @@ func choose_direction():
 func set_go_rt(rt: float):
 	go_rt = rt
 	
-#calculates the stop reaction time for the trial?
-func calc_stop_rt():
-	pass
-	
 #sets whether or not the trial was considered successful
-func set_successful():
-	pass
+func set_successful(success: bool):
+	successful = success
