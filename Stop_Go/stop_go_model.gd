@@ -8,7 +8,7 @@ var session_length: int = 20 #number of trials in a session //maybe like 40?
 
 var rng = RandomNumberGenerator.new()
 
-var session_last_ssd: float = 100 #tracking of the current ssd
+var session_last_ssd: float = 0.1 #tracking of the current ssd
 var session_last_ssd_score: int #0 or 1 for whether or not successful
 
 var min_interval : int = 2 #min time to allow walking before trial
@@ -71,10 +71,35 @@ func determine_interval():
 func choose_direction(trial: StopGoTrial):
 	return trial.choose_direction()
 	
+#ends trial when player presses a key within the trial
+func record_check_response(direction: int, r_t: float):
+	var trial = session_trials[-1]
+	trial.pressed = true
+	trial.go_rt = r_t
+	if trial.trial_type && trial.direction == direction:
+		trial.set_successful(true)
+		return true
+	else:
+		trial.set_successful(false)
+		return false
+	
+#ends trial when player fails to/successfully doesnt respond
+func timer_ended_trial(timer_type: int):
+	var trial = session_trials[-1]
+	match timer_type:
+		0:
+			trial.set_successful(true)
+		1:
+			trial.set_successful(false)
+			trial.go_rt = -1
+		_:
+			print("unable to end trial on timer timeout")
+	
 #updates any final information for a now completed trial
 func end_trial(): #should this be different depending on which calls it?
 	#if ssd was successful, note that as 1 or 0
 	#save the rt
+	#increase trials completed type of var, this is to know when to stop running more trials
 	pass
 	
 #**session end**#
@@ -130,5 +155,5 @@ func get_current_trial_type():
 func get_if_pressed():
 	return session_trials[-1].pressed
 
-func set_successful(success: bool):
-	session_trials[-1].set_successful(success)
+#func set_successful(success: bool):
+#	session_trials[-1].set_successful(success)
