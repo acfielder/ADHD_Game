@@ -7,7 +7,7 @@ var time_to_respond = .8 #or const? unsure if want to change for difficulty purp
 var trial_type: bool #true is go, false is stop
 var trial_num: int #trial num in session
 var start_interval: float #interval of time between the previous trial and the current trial
-var go_rt: float #response time for a go trial or failed stop trial
+var go_rt: float = -1#response time for a go trial or failed stop trial
 var stop_rt: float #rt for stop trial - higher level calculations
 var successful: bool #whether or not the trial was successfully completed
 var ssd: float #stop signal delay time 
@@ -17,17 +17,19 @@ var pressed: bool #to know whether or not the player responded in a trial (shoul
 
 
 
+
 func _init(trial_type_in: bool):
 	trial_type = trial_type_in
 	
 #based on successful and trial's ssd, only if this is a stop trial
-func determine_ssd(previous_ssd: float, success: int): #need to know if it was successful or not
-	if !success && previous_ssd > 0.1:
+func determine_ssd(previous_ssd: float, last_success: bool): #need to know if it was successful or not
+	
+	if !last_success && previous_ssd > 0.1:
 		ssd = previous_ssd - 0.05
-	elif success && previous_ssd < 1.15:
+	elif last_success && previous_ssd < 1.15:
 		ssd = previous_ssd + 0.05
 	else: ssd = previous_ssd
-	return ssd
+	return snappedf(ssd,0.01)
 
 #determines next based on a random num between min and max
 #this may be changed to be less random and allow altering of the max and min interval
@@ -43,6 +45,8 @@ func choose_direction():
 	else:
 		direction = 2
 	return direction
+
+
 
 #saves the go cue RT after response - either successful go or unsuccessful stop
 func set_go_rt(rt: float):

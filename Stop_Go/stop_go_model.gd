@@ -5,22 +5,24 @@ var user: UserModel
 var session_trials: Array[StopGoTrial] = [] #list of all trials completed in this session
 
 var session_length: int = 20 #number of trials in a session //maybe like 40?
+var current_trial : int = 0
 
 var rng = RandomNumberGenerator.new()
 
 var session_last_ssd: float = 0.1 #tracking of the current ssd
-var session_last_ssd_score: int #0 or 1 for whether or not successful
+var session_last_ssd_score: bool #0 or 1 for whether or not successful
 
 var min_interval : int = 2 #min time to allow walking before trial
 var max_interval : int = 4 #max time to allow walking before trial
-
-var current_trial : int = 0
 
 var session_go_rt_avg: float
 var session_prob_signal_response: float
 var session_stop_signal_rt: float
 
 var allowed_max_rt: float = 0.8
+
+var start_rt_time: float #times to subtract from one another to know actual rt
+var final_rt_time: float
 
 
 func _init():
@@ -89,9 +91,11 @@ func timer_ended_trial(timer_type: int):
 	match timer_type:
 		0:
 			trial.set_successful(true)
+			return true
 		1:
 			trial.set_successful(false)
 			trial.go_rt = -1
+			return false
 		_:
 			print("unable to end trial on timer timeout")
 	
@@ -114,9 +118,12 @@ func determine_session_results():
 #calculates the average go trial reaction time for the session
 func calc_session_go_rt(): #go trial successful, stop unsuccessful
 	var time_sum = 0
+	var go_rt_count = 0
 	for trial in session_trials:
 		if (trial.trial_type && trial.successful) || (!trial.trial_type && !trial.successful):
+			go_rt_count += 1
 			time_sum += trial.go_rt
+	return snappedf(time_sum/go_rt_count,0.001)
 	#	elif !trial.trial_type && !trial.successful:
 	#		time_sum += trial.go_rt
 	
@@ -129,12 +136,12 @@ func calc_session_prob_signal_response():
 			total_stops += 1
 			if trial.successful:
 				correct_stops += 1
-	return correct_stops/total_stops
+	return float(correct_stops)/float(total_stops)
 	
 #calculates the stop signal reaction time - needs much more research
 func calc_session_stop_signal_rt(go_rt_avg: float):
-	var ssd_sum
-	var ssd_count
+	var ssd_sum : float = 0
+	var ssd_count : float = 0
 	for trial in session_trials:
 		if !trial.trial_type:
 			ssd_count += 1
@@ -142,18 +149,37 @@ func calc_session_stop_signal_rt(go_rt_avg: float):
 	var ssd_avg = ssd_sum / ssd_count
 	return go_rt_avg - ssd_avg
 	
+	
+#may not need now with the on timer end and the other one
 #tells if chosen direction in go trial is corrent or not
-func check_go_response(chosen_dir: int):
-	if session_trials[-1].direction == chosen_dir:
-		return true
-	else:
-		return false
+#func check_go_response(chosen_dir: int):
+#	if session_trials[-1].direction == chosen_dir:
+#		return true
+#	else:
+#		return false
+
+func calc_update_current_rt():
+	var rt = final_rt_time - start_rt_time
+	session_trials[-1].go_rt = rt
+	return rt
 
 func get_current_trial_type():
 	return session_trials[-1].trial_type
 
 func get_if_pressed():
 	return session_trials[-1].pressed
+	
+func set_if_pressed_true():
+	session_trials[-1].pressed = true
+	
+func get_current_direction():
+	return session_trials[-1].direction
 
-#func set_successful(success: bool):
-#	session_trials[-1].set_successful(success)
+func set_successful(success: bool):
+	session_trials[-1].set_successful(success)
+
+func get_interval_time():
+	return session_trials[-1].start_interval
+	
+func get_current_ssd():
+	return session_trials[-1].ssd

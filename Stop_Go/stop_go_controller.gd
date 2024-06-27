@@ -9,47 +9,71 @@ var view : StopGoWorld
 var model : StopGoModel
 
 
+
 func _init(view_in: StopGoWorld, user_in: UserModel):
 	view = view_in
 	user = user_in
 	model = StopGoModel.new()
 	model.set_user(user)
+	
+	
+#begins the session
+func begin_session():
 	model.setup_session()
+	begin_trial()
 	
 #builds trial
 func begin_trial():
 	model.setup_trial()
+	view.run_timer(0,model.get_interval_time())
 	
 #starts the trial itself for the player to interact with
 func begin_visual_trial():
-	pass
+	view.begin_trial_view(model.get_current_direction())
+	if model.get_current_trial_type():
+		view.run_timer(1,model.allowed_max_rt) #fix rt time
+	else: view.run_timer(2,model.get_current_ssd())
+	model.start_rt_time = Time.get_ticks_msec()
 
 #once ssd timer is over, will then switch to the stop visuals
 func begin_stop_half():
-	pass
+	view.begin_stop_visuals()
+	view.run_timer(3,2)#change second one to be something model holds that determines how long the stop signal is shown for
+	#bro dont touch that
 	
-func trial_key_pressed(direction: int):
-	#should say to the model to note taht something was indeed pressed for this trial, whether you were supposed to or not
-	#should stop the rt timer
-	#should stop any ongoing timer/set a var to true so it doesnt run when it goes off
-	#check if response was as it was meant to be - call for it
-	pass
+func trial_key_pressed(direction: int): 
+	model.final_rt_time = Time.get_ticks_msec()
+	model.calc_update_current_rt()
+	model.set_if_pressed_true()
+	if model.get_current_trial_type():
+		if model.get_current_direction() == direction:
+			model.set_successful(true)
+	else:
+		model.set_successful(false)
+	end_trial()
 	
-#func end_timer_ran_out():
-	#if stop 
-#	pass
+#func for when stop or go timer runs out without a button press
+func timeout_check_timer():
+	if model.get_current_trial_type():
+		model.set_successful(false)
+	else:
+		model.set_successful(true)
 	
-func check_press_response(direction: int):
-	pass
+func end_trial(): 
+	view.clear_trial()
+	model.end_trial()
+	#mmmmm reaction time
+	check_for_next_trial()
 	
-func missed_go_cue():
-	pass
-	
-func end_trial(timer_type: int): #could maybe have different types of end_trial that call them a more common end trial?
-	#0 is stop timer running out, 1 is go rt timer running out
-	#need to pass in if successful?or know which one is calling this func so know if thats a good thing or not
-	#tell model to end the trial
-	#this is as soon as there is a key press OR a timer runs out
+#if there is more to go in the session, begin next trial with controller's begin_trial
+func check_for_next_trial():
+	if model.current_trial < model.session_length:
+		begin_trial()
+	else:
+		end_session()
+
+func end_session():
+	print("its over")
 	pass
 
 func get_current_trial_type():

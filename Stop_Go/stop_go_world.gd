@@ -41,7 +41,7 @@ func load_cues(folder_path):
 #upon player beginning the session, allow movement and trigger controller
 func on_session_begin():
 	$Player.change_player_state(1)
-	stop_go_controller.begin_trial()
+	stop_go_controller.begin_session()
 	
 #create and run a timer to create walking intervals, reaction time timers, and view timers
 func run_timer(timer_type: int, duration: float):
@@ -69,7 +69,7 @@ func on_go_rt_timeout():
 	$Player.change_player_state(1)
 	if !stop_go_controller.get_if_pressed():
 		stop_go_controller.missed_go_cue()
-		stop_go_controller.end_trial(1)
+		stop_go_controller.timeout_check_timer()
 	
 #when go cue ends and stop needs to begin
 func on_ssd_timeout():
@@ -80,7 +80,7 @@ func on_ssd_timeout():
 func on_stop_timeout():
 	$Player.change_player_state(1)
 	if !stop_go_controller.get_if_pressed():
-		stop_go_controller.end_trial(0)
+		stop_go_controller.timeout_check_timer()
 	#trigger to say trial ended - would need to report out if they did well or not
 	#if this times out, it would be successful - so tell controller the trial ended and was successful
 	
