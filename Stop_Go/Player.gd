@@ -5,6 +5,9 @@ const SPEED = 5.0
 enum State {MOVE, TRIAL}
 var stop_go_player_state = State.TRIAL
 
+#this will 10000% need to go away
+func _ready():
+	set_process_input(false)
 
 func _physics_process(delta):
 	if stop_go_player_state == State.MOVE:

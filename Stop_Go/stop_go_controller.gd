@@ -31,9 +31,12 @@ func begin_trial():
 func begin_visual_trial():
 	view.begin_trial_view(model.get_current_direction())
 	if model.get_current_trial_type():
+		model.start_rt_time = Time.get_ticks_msec()
 		view.run_timer(1,model.allowed_max_rt) #fix rt time
-	else: view.run_timer(2,model.get_current_ssd())
-	model.start_rt_time = Time.get_ticks_msec()
+	else: 
+		model.start_rt_time = Time.get_ticks_msec()
+		view.run_timer(2,model.get_current_ssd())
+	#model.start_rt_time = Time.get_ticks_msec()
 
 #once ssd timer is over, will then switch to the stop visuals
 func begin_stop_half():
@@ -43,8 +46,9 @@ func begin_stop_half():
 	
 func trial_key_pressed(direction: int): 
 	model.final_rt_time = Time.get_ticks_msec()
-	model.calc_update_current_rt()
 	model.set_if_pressed_true()
+	print("key pressed - pressed is true - " + str(model.current_trial))
+	model.calc_update_current_rt()
 	if model.get_current_trial_type():
 		if model.get_current_direction() == direction:
 			model.set_successful(true)
@@ -71,6 +75,7 @@ func check_for_next_trial():
 	if model.current_trial < model.session_length:
 		begin_trial()
 	else:
+		print(model.current_trial)
 		end_session()
 
 func end_session():

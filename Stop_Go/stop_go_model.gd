@@ -4,7 +4,7 @@ var user: UserModel
 
 var session_trials: Array[StopGoTrial] = [] #list of all trials completed in this session
 
-var session_length: int = 20 #number of trials in a session //maybe like 40?
+var session_length: int = 5 #number of trials in a session //maybe like 40?
 var current_trial : int = 0
 
 var rng = RandomNumberGenerator.new()
@@ -12,14 +12,14 @@ var rng = RandomNumberGenerator.new()
 var session_last_ssd: float = 0.1 #tracking of the current ssd
 var session_last_ssd_score: bool #0 or 1 for whether or not successful
 
-var min_interval : int = 2 #min time to allow walking before trial
-var max_interval : int = 4 #max time to allow walking before trial
+var min_interval : int = 5 #min time to allow walking before trial
+var max_interval : int = 5 #max time to allow walking before trial
 
 var session_go_rt_avg: float
 var session_prob_signal_response: float
 var session_stop_signal_rt: float
 
-var allowed_max_rt: float = 0.8
+var allowed_max_rt: float = 3 #put it back as like 1
 
 var start_rt_time: float #times to subtract from one another to know actual rt
 var final_rt_time: float
@@ -41,7 +41,7 @@ func setup_session():
 func setup_trial():
 	var trial = StopGoTrial.new(create_trial_type())
 	session_trials.append(trial)
-	if !trial:
+	if !trial.trial_type:
 		determine_next_ssd(trial) #updates session_last_ssd
 		trial.ssd = session_last_ssd
 	trial.start_interval = determine_interval()
@@ -55,7 +55,7 @@ func setup_trial():
 func create_trial_type():
 	var trial_type
 	var i = rng.randf_range(0,1)
-	if i <= 0.7:
+	if i <= 0.7: #should be 0.7
 		trial_type = true
 	else:
 		trial_type = false
@@ -162,6 +162,7 @@ func calc_session_stop_signal_rt(go_rt_avg: float):
 func calc_update_current_rt():
 	var rt = final_rt_time - start_rt_time
 	session_trials[-1].go_rt = rt
+	print(rt)
 	return rt
 
 func get_current_trial_type():
@@ -171,7 +172,8 @@ func get_if_pressed():
 	return session_trials[-1].pressed
 	
 func set_if_pressed_true():
-	session_trials[-1].pressed = true
+	session_trials[-1].set_pressed(true)
+	return session_trials[-1].pressed
 	
 func get_current_direction():
 	return session_trials[-1].direction

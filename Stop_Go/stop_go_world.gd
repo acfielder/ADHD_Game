@@ -8,6 +8,9 @@ var user : UserModel
 var evidence_files: Array = []
 var stop_signals: Array = []
 
+var current_timer: SceneTreeTimer = null
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$StopGoHud.connect("begin_session",on_session_begin)
@@ -45,6 +48,8 @@ func on_session_begin():
 	
 #create and run a timer to create walking intervals, reaction time timers, and view timers
 func run_timer(timer_type: int, duration: float):
+	if current_timer:
+		current_timer = null
 	var to_call: Callable
 	match timer_type:
 		0: #interval timer
@@ -57,17 +62,21 @@ func run_timer(timer_type: int, duration: float):
 			to_call = on_stop_timeout
 		_:
 			print("unable to create timer")
-	Utilities.start_timer(self,duration,to_call)
+	current_timer = Utilities.start_timer(self,duration,to_call)
 	
 #when the trial's walking interval ends - begins actual trial
 func on_interval_timeout():
+	current_timer = null
+	print("interval timer ended")
 	$Player.change_player_state(0)
 	stop_go_controller.begin_visual_trial()
 
 #when allotted time to respond runs out and trial will come to an end
 func on_go_rt_timeout():
-	$Player.change_player_state(1)
 	if !stop_go_controller.get_if_pressed():
+		current_timer = null
+		print("there wasnt a press - timer timeout " + str(stop_go_controller.model.current_trial))
+		$Player.change_player_state(1)
 		stop_go_controller.timeout_check_timer()
 	
 #when go cue ends and stop needs to begin
@@ -77,8 +86,8 @@ func on_ssd_timeout():
 
 #when stop cue ends and trial will come to an end
 func on_stop_timeout():
-	$Player.change_player_state(1)
 	if !stop_go_controller.get_if_pressed():
+		$Player.change_player_state(1)
 		stop_go_controller.timeout_check_timer()
 	#trigger to say trial ended - would need to report out if they did well or not
 	#if this times out, it would be successful - so tell controller the trial ended and was successful
@@ -104,4 +113,8 @@ func end_session():
 
 
 func on_trial_key_press(direction: int):
+	if current_timer:
+		current_timer = null
+	print("a key was pressed, not set yet")
 	stop_go_controller.trial_key_pressed(direction)
+	$Player.change_player_state(1)
