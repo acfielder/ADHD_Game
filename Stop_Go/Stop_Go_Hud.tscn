@@ -58,6 +58,5 @@ texture = ExtResource("3_hnonr")
 
 [node name="cue_pop_up" type="Sprite2D" parent="."]
 position = Vector2(936, 582)
-scale = Vector2(0.2, 0.2)
 
 [connection signal="pressed" from="top_bar/ColorRect/BeginSession" to="." method="_on_begin_session_pressed"]

@@ -58,6 +58,7 @@ func timeout_check_timer():
 		model.set_successful(false)
 	else:
 		model.set_successful(true)
+	end_trial()
 	
 func end_trial(): 
 	view.clear_trial()
@@ -74,7 +75,7 @@ func check_for_next_trial():
 
 func end_session():
 	print("its over")
-	pass
+	view.end_session()
 
 func get_current_trial_type():
 	return model.get_current_trial_type()

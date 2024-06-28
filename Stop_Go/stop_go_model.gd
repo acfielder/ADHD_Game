@@ -40,6 +40,7 @@ func setup_session():
 #sets up a basic trial by calling models functions that tell trial to set particular parts
 func setup_trial():
 	var trial = StopGoTrial.new(create_trial_type())
+	session_trials.append(trial)
 	if !trial:
 		determine_next_ssd(trial) #updates session_last_ssd
 		trial.ssd = session_last_ssd
@@ -48,7 +49,7 @@ func setup_trial():
 	current_trial += 1
 	trial.trial_num = current_trial
 	#maybe determine how long the allowed RT is
-	session_trials.append(trial)
+	
 
 #chooses between stop and go trials and makes a trial objects
 func create_trial_type():

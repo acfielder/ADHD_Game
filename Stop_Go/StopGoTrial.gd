@@ -12,7 +12,7 @@ var stop_rt: float #rt for stop trial - higher level calculations
 var successful: bool #whether or not the trial was successfully completed
 var ssd: float #stop signal delay time 
 var direction: int #left is 1, right is 2 (center is 0 but doesnt need to be set)
-var pressed: bool #to know whether or not the player responded in a trial (should or shouldnt have)
+var pressed: bool = false #to know whether or not the player responded in a trial (should or shouldnt have)
 
 
 

@@ -15,8 +15,8 @@ func _ready():
 	user = User_Data_Manager.load_resource()
 	stop_go_controller = StopGoController.new(self,user)
 	
-	evidence_files = load_cues("res://Art/stop_go/go_evidence")
-	stop_signals = load_cues("res://Art/stop_go/stop_signals")
+	evidence_files = load_cues("res://Art/stop_go/go_evidence/")
+	stop_signals = load_cues("res://Art/stop_go/stop_signals/")
 	
 
 
@@ -68,7 +68,6 @@ func on_interval_timeout():
 func on_go_rt_timeout():
 	$Player.change_player_state(1)
 	if !stop_go_controller.get_if_pressed():
-		stop_go_controller.missed_go_cue()
 		stop_go_controller.timeout_check_timer()
 	
 #when go cue ends and stop needs to begin
@@ -99,6 +98,9 @@ func begin_stop_visuals():
 #clears visual trial from hud
 func clear_trial():
 	$StopGoHud.clear_trial()
+
+func end_session():
+	$Player.change_player_state(0)
 
 
 func on_trial_key_press(direction: int):
