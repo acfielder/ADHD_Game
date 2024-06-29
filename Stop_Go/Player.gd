@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 
-const SPEED = 5.0
+var SPEED = 5.0
 enum State {MOVE, TRIAL}
 var stop_go_player_state = State.TRIAL
 
@@ -27,5 +27,7 @@ func _physics_process(delta):
 func change_player_state(state: int):
 	if state == 0:
 		stop_go_player_state = State.TRIAL
+		SPEED = 0
 	else:
 		stop_go_player_state = State.MOVE
+		SPEED = 5.0

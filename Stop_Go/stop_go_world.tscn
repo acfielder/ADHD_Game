@@ -34,3 +34,6 @@ shadow_enabled = true
 [node name="TerrainController" parent="." instance=ExtResource("2_6ls17")]
 
 [node name="StopGoHud" parent="." instance=ExtResource("3_ryd15")]
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true

@@ -8,7 +8,9 @@ var user : UserModel
 var evidence_files: Array = []
 var stop_signals: Array = []
 
-var current_timer: SceneTreeTimer = null
+
+var timer : Timer
+var last_connection = null
 
 
 # Called when the node enters the scene tree for the first time.
@@ -21,7 +23,7 @@ func _ready():
 	evidence_files = load_cues("res://Art/stop_go/go_evidence/")
 	stop_signals = load_cues("res://Art/stop_go/stop_signals/")
 	
-
+	timer = $Timer
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -48,8 +50,12 @@ func on_session_begin():
 	
 #create and run a timer to create walking intervals, reaction time timers, and view timers
 func run_timer(timer_type: int, duration: float):
-	if current_timer:
-		current_timer = null
+	if last_connection != null:
+		timer.disconnect("timeout",last_connection)
+	#if current_timer:
+		#current_timer = null
+	if timer.time_left > 0:
+		timer.stop()
 	var to_call: Callable
 	match timer_type:
 		0: #interval timer
@@ -62,11 +68,15 @@ func run_timer(timer_type: int, duration: float):
 			to_call = on_stop_timeout
 		_:
 			print("unable to create timer")
-	current_timer = Utilities.start_timer(self,duration,to_call)
+	last_connection = to_call
+	timer.set_wait_time(duration)
+	timer.timeout.connect(to_call)
+	timer.start()
+	#Utilities.start_timer(self,duration,to_call)
 	
 #when the trial's walking interval ends - begins actual trial
 func on_interval_timeout():
-	current_timer = null
+	#current_timer = null
 	print("interval timer ended")
 	$Player.change_player_state(0)
 	stop_go_controller.begin_visual_trial()
@@ -74,7 +84,7 @@ func on_interval_timeout():
 #when allotted time to respond runs out and trial will come to an end
 func on_go_rt_timeout():
 	if !stop_go_controller.get_if_pressed():
-		current_timer = null
+		#current_timer = null
 		print("there wasnt a press - timer timeout " + str(stop_go_controller.model.current_trial))
 		$Player.change_player_state(1)
 		stop_go_controller.timeout_check_timer()
@@ -113,8 +123,9 @@ func end_session():
 
 
 func on_trial_key_press(direction: int):
-	if current_timer:
-		current_timer = null
+	#if current_timer:
+	#	current_timer = null
+	timer.stop()
 	print("a key was pressed, not set yet")
 	stop_go_controller.trial_key_pressed(direction)
 	$Player.change_player_state(1)
