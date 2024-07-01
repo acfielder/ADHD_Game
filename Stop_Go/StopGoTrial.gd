@@ -23,10 +23,9 @@ func _init(trial_type_in: bool):
 	
 #based on successful and trial's ssd, only if this is a stop trial
 func determine_ssd(previous_ssd: float, last_success: bool): #need to know if it was successful or not
-	
 	if !last_success && previous_ssd > 0.3:
 		ssd = previous_ssd - 0.05
-	elif last_success && previous_ssd < 1:
+	elif last_success && previous_ssd < 1.2:
 		ssd = previous_ssd + 0.05
 	else: ssd = previous_ssd
 	return snappedf(ssd,0.01)

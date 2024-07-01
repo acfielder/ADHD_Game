@@ -4,7 +4,7 @@ var user: UserModel
 
 var session_trials: Array[StopGoTrial] = [] #list of all trials completed in this session
 
-var session_length: int = 5 #number of trials in a session //maybe like 40?
+var session_length: int = 15 #number of trials in a session //maybe like 40?
 var current_trial : int = 0
 
 var rng = RandomNumberGenerator.new()
@@ -12,14 +12,14 @@ var rng = RandomNumberGenerator.new()
 var session_last_ssd: float = 0.1 #tracking of the current ssd
 var session_last_ssd_score: bool #0 or 1 for whether or not successful
 
-var min_interval : int = 5 #min time to allow walking before trial
+var min_interval : int = 3 #min time to allow walking before trial
 var max_interval : int = 5 #max time to allow walking before trial
 
 var session_go_rt_avg: float
 var session_prob_signal_response: float
 var session_stop_signal_rt: float
 
-var allowed_max_rt: float = 3 #put it back as like 1
+var allowed_max_rt: float = 1.5 
 
 var start_rt_time: float #times to subtract from one another to know actual rt
 var final_rt_time: float
