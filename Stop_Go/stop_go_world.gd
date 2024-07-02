@@ -48,6 +48,14 @@ func on_session_begin():
 	$Player.change_player_state(1)
 	stop_go_controller.begin_session()
 	
+#updates the info presented to the user about the session
+func update_visual_info():
+	var score = stop_go_controller.get_current_score()
+	var current_trial = stop_go_controller.get_current_trial_num()
+	var best_RT = stop_go_controller.get_best_RT()
+	var level = stop_go_controller.get_current_level()
+	$StopGoHud.update_visual_info(score,current_trial,best_RT,level)
+	
 #create and run a timer to create walking intervals, reaction time timers, and view timers
 func run_timer(timer_type: int, duration: float):
 	if last_connection != null:

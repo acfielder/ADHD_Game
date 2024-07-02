@@ -2,6 +2,9 @@ extends CharacterBody3D
 
 
 var SPEED = 5.0
+const JUMP_VELOCITY = 4.25
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
 enum State {MOVE, TRIAL}
 var stop_go_player_state = State.TRIAL
 
@@ -10,6 +13,12 @@ func _ready():
 	set_process_input(false)
 
 func _physics_process(delta):
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	
+	if Input.is_action_just_pressed("ui_up") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+	
 	if stop_go_player_state == State.MOVE:
 		velocity.z = -SPEED #maybe change back, maybe not
 		var input_dir = Vector2(Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),Input.get_action_strength("ui_up"))

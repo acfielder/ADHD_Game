@@ -47,6 +47,13 @@ func setup_trial(path: String, direction: int):
 	hud_state = State.TRIAL
 	display_evidence(path,direction)
 	highlight_direction(direction)
+	
+#updates session specific info in the hud
+func update_visual_info(score: int, current_trial: int, best_rt: float, level: int):
+	$top_bar/InfoBox_Score/ScoreNum.text = str(score)
+	$top_bar/InfoBox_Trial/TrialNum.text = str(current_trial)
+	$top_bar/InfoBox_RT/RTLabel.text = str(best_rt)
+	$top_bar/InfoBox_Level/LevelNum.text = str(level)
 
 #displays the evidence cue on the correct side
 #0-center for stop, 1-left, 2-right

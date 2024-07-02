@@ -25,6 +25,7 @@ func begin_session():
 #builds trial
 func begin_trial():
 	model.setup_trial()
+	view.update_visual_info()
 	view.run_timer(0,model.get_interval_time())
 	
 #starts the trial itself for the player to interact with
@@ -52,6 +53,7 @@ func trial_key_pressed(direction: int):
 	if model.get_current_trial_type():
 		if model.get_current_direction() == direction:
 			model.set_successful(true)
+			model.record_check_response()
 	else:
 		model.set_successful(false)
 	end_trial()
@@ -62,9 +64,11 @@ func timeout_check_timer():
 		model.set_successful(false)
 	else:
 		model.set_successful(true)
+	model.timer_ended_trial()
 	end_trial()
 	
 func end_trial(): 
+	view.update_visual_info()
 	view.clear_trial()
 	model.end_trial()
 	#mmmmm reaction time
@@ -87,3 +91,15 @@ func get_current_trial_type():
 	
 func get_if_pressed():
 	return model.get_if_pressed()
+
+func get_current_score():
+	return model.session_score
+	
+func get_current_trial_num():
+	return model.current_trial
+	
+func get_current_level():
+	return model.current_level
+	
+func get_best_RT():
+	return model.session_best_rt

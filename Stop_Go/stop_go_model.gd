@@ -5,7 +5,8 @@ var user: UserModel
 var session_trials: Array[StopGoTrial] = [] #list of all trials completed in this session
 
 var session_length: int = 15 #number of trials in a session //maybe like 40?
-var current_trial : int = 0
+var current_trial : int = 0 #current trial within the session
+var current_level : int = 1 #level of the current session
 
 var rng = RandomNumberGenerator.new()
 
@@ -15,14 +16,20 @@ var session_last_ssd_score: bool #0 or 1 for whether or not successful
 var min_interval : int = 3 #min time to allow walking before trial
 var max_interval : int = 5 #max time to allow walking before trial
 
+#calculations for performance
 var session_go_rt_avg: float
 var session_prob_signal_response: float
 var session_stop_signal_rt: float
 
-var allowed_max_rt: float = 1.5 
+var allowed_max_rt: float = 1.5 #maximum time to respond to go cue
 
-var start_rt_time: float #times to subtract from one another to know actual rt
+#times to subtract from one another to know actual rt
+var start_rt_time: float 
 var final_rt_time: float
+
+var session_score: int = 0 #calculation of how many trials done correctly through the current session
+
+var session_best_rt: float #the quickest reaction time within the current session
 
 
 func _init():
@@ -74,31 +81,44 @@ func determine_interval():
 func choose_direction(trial: StopGoTrial):
 	return trial.choose_direction()
 	
-#ends trial when player presses a key within the trial
-func record_check_response(direction: int, r_t: float):
+#ends trial when player presses a key within the trial // actually just updates best_rt and session score
+func record_check_response():
 	var trial = session_trials[-1]
-	trial.pressed = true
-	trial.go_rt = r_t
-	if trial.trial_type && trial.direction == direction:
-		trial.set_successful(true)
-		return true
-	else:
-		trial.set_successful(false)
-		return false
+	#trial.pressed = true
+	#trial.go_rt = r_t
+	#if trial.trial_type && trial.direction == direction:
+		#trial.set_successful(true)
+	if current_trial == 1 || trial.go_rt < session_best_rt:
+		session_best_rt = trial.go_rt
+	session_score += 1
+		#return true
+	#else:
+		#trial.set_successful(false)
+		#return false
 	
 #ends trial when player fails to/successfully doesnt respond
-func timer_ended_trial(timer_type: int):
+func timer_ended_trial():
 	var trial = session_trials[-1]
-	match timer_type:
-		0:
-			trial.set_successful(true)
-			return true
-		1:
-			trial.set_successful(false)
-			trial.go_rt = -1
-			return false
-		_:
-			print("unable to end trial on timer timeout")
+	if trial.trial_type:
+		#session_score += 1
+		return true
+	else:
+		trial.go_rt = -1
+		session_score += 1
+		return false
+		
+		
+	#match trial.trial_type:
+	#	0:
+	#		trial.set_successful(true)
+	#		session_score += 1
+	#		return true
+	#	1:
+	#		trial.set_successful(false)
+	#		trial.go_rt = -1
+	#		return false
+	#	_:
+	#		print("unable to end trial on timer timeout")
 	
 #updates any final information for a now completed trial
 func end_trial(): #should this be different depending on which calls it?

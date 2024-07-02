@@ -17,7 +17,6 @@ var pressed: bool = false #to know whether or not the player responded in a tria
 
 
 
-
 func _init(trial_type_in: bool):
 	trial_type = trial_type_in
 	

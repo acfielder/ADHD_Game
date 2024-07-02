@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjjbtl4kawdaq"]
+[gd_scene load_steps=5 format=3 uid="uid://bjjbtl4kawdaq"]
 
 [ext_resource type="Script" path="res://Stop_Go/Player.gd" id="1_hp2uk"]
+[ext_resource type="Script" path="res://Stop_Go/CharacterBody3D.gd" id="2_s5wep"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fukwa"]
 
@@ -18,3 +19,6 @@ mesh = SubResource("CapsuleMesh_6etbu")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.724054, 0.250611)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+script = ExtResource("2_s5wep")
