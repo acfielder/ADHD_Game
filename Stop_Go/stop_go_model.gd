@@ -4,9 +4,10 @@ var user: UserModel
 
 var session_trials: Array[StopGoTrial] = [] #list of all trials completed in this session
 
-var session_length: int = 15 #number of trials in a session //maybe like 40?
+var session_length: int = 15 #number of trials in a session //maybe like 40? no 70
 var current_trial : int = 0 #current trial within the session
 var current_level : int = 1 #level of the current session
+var level_length : int = 90
 
 var rng = RandomNumberGenerator.new()
 
@@ -40,9 +41,23 @@ func set_user(user_in: UserModel):
 	
 #setup things for this session like what level they're on and later down line, their scores to start their difficulty correctly all around
 func setup_session():
-	#this could be very related to the ssd and ssRT, as then it will become more difficult with growth(levels wahaha)
-	#alter the min and max interval based on user previous session
-	pass
+	current_level = user.current_SG_level
+	session_last_ssd = user.critical_ssd
+	update_session_length(user.prev_SG_sess_score)
+	
+func update_session_length(prev_sess_score: Array): #60-70
+	if user.session_count_SG > 0:
+		session_length = prev_sess_score[1]
+		var performance = float(prev_sess_score[0]/float(prev_sess_score[1]))
+		if performance < 0.5 && prev_sess_score[1] > 60:
+			session_length -= 5
+		elif performance > 0.5 && performance < 0.7:
+			session_length = prev_sess_score[1]
+		elif performance > 0.7 && prev_sess_score[1] < 70:
+			session_length += 5
+	else: session_length = 70
+	user.prev_SG_sess_score[1] = session_length
+	return session_length
 
 #sets up a basic trial by calling models functions that tell trial to set particular parts
 func setup_trial():
@@ -121,13 +136,34 @@ func timer_ended_trial():
 	#		print("unable to end trial on timer timeout")
 	
 #updates any final information for a now completed trial
-func end_trial(): #should this be different depending on which calls it?
-	#if ssd was successful, note that as 1 or 0
-	#save the rt
-	#increase trials completed type of var, this is to know when to stop running more trials
+func end_trial(): 
+	#update_session_performance() just say that the first one is session_score
 	pass
 	
+func update_session_performance():
+	#just say that the first one is session_score - just update session score, if can be done in user in end session
+		#if trial_history[-1].score == trial_history[-1].answer_order.size():
+		#current_session_performance += 1
+		#user.sequence_session_performance_level[0] = current_session_performance
+		#user.completed_of_level += 1
+	pass
+
+
 #**session end**#
+	
+func end_session():
+	determine_session_results()
+	if user.comp_of_level_SG >= level_length: 
+		user.increase_SG_level()
+	#add individual trials to user 
+	
+	for trial in range(session_trials.size()):
+		user.add_to_SG_trial_level_data(session_trials[trial].trial_type, session_trials[trial].successful)
+	user.add_to_SG_session_level_data(session_go_rt_avg,session_prob_signal_response,session_stop_signal_rt)
+
+	user.critical_ssd = calc_ssd_avg()
+	
+	User_Data_Manager.save(user)
 	
 #calls functions to calculate the sessions performance for the three major measurements
 func determine_session_results():
@@ -161,6 +197,10 @@ func calc_session_prob_signal_response():
 	
 #calculates the stop signal reaction time - needs much more research
 func calc_session_stop_signal_rt(go_rt_avg: float):
+	var ssd_avg = calc_ssd_avg()
+	return go_rt_avg - ssd_avg
+	
+func calc_ssd_avg():
 	var ssd_sum : float = 0
 	var ssd_count : float = 0
 	for trial in session_trials:
@@ -168,8 +208,7 @@ func calc_session_stop_signal_rt(go_rt_avg: float):
 			ssd_count += 1
 			ssd_sum += trial.ssd
 	var ssd_avg = ssd_sum / ssd_count
-	return go_rt_avg - ssd_avg
-	
+	return ssd_avg
 	
 #may not need now with the on timer end and the other one
 #tells if chosen direction in go trial is corrent or not

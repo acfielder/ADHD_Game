@@ -187,7 +187,7 @@ func next_level() -> bool:
 
 #change session length based on previous session performance
 func update_session_length(session_count: int, performance: Array):
-	if session_count > 100: #ession_count > 0
+	if session_count > 0: #ession_count > 0
 		session_length = performance[1]
 		var performance_last_session = float(performance[0]) / float(performance[1])
 		if performance_last_session < 0.5 && performance[1] > 5: #should be 15

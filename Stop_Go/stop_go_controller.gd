@@ -19,7 +19,7 @@ func _init(view_in: StopGoWorld, user_in: UserModel):
 	
 #begins the session
 func begin_session():
-	model.setup_session()
+	#model.setup_session()
 	begin_trial()
 	
 #builds trial
@@ -70,7 +70,7 @@ func timeout_check_timer():
 func end_trial(): 
 	view.update_visual_info()
 	view.clear_trial()
-	model.end_trial()
+	#model.end_trial()
 	#mmmmm reaction time
 	check_for_next_trial()
 	
@@ -84,6 +84,7 @@ func check_for_next_trial():
 
 func end_session():
 	print("its over")
+	#model.end_session()
 	view.end_session()
 
 func get_current_trial_type():
