@@ -98,6 +98,12 @@ func reset_highlights():
 	$top_bar/left_arrow.texture = left_default_arrow
 	$top_bar/right_arrow.texture = right_default_arrow
 
+func display_feedback_text(feedback: String):
+	$bottom_bar.show()
+	$bottom_bar/feedbackText.text = feedback
+	await get_tree().create_timer(2.5).timeout
+	$bottom_bar.hide()
+
 
 #when the first start button is pressed and the session begins
 func _on_begin_session_pressed():

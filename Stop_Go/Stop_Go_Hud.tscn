@@ -18,6 +18,24 @@
 [node name="StopGoHud" type="Node2D"]
 script = ExtResource("1_r6tlx")
 
+[node name="bottom_bar" type="Polygon2D" parent="."]
+visible = false
+position = Vector2(1144, 655)
+rotation = 3.14159
+scale = Vector2(1, 0.886179)
+color = Color(0.377804, 0.266309, 0.210021, 1)
+polygon = PackedVector2Array(77, 5, 135, 124, 1018, 126, 1083, 3)
+
+[node name="feedbackText" type="Label" parent="bottom_bar"]
+offset_left = 1015.0
+offset_top = 92.532
+offset_right = 1885.0
+offset_bottom = 148.532
+rotation = -3.14159
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="top_bar" type="Polygon2D" parent="."]
 position = Vector2(0, -5.65854)
 scale = Vector2(1, 0.886179)

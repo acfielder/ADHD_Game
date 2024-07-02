@@ -44,6 +44,11 @@ func increase_sequence_level():
 #resets all user data as though starting a new save
 func reset_user_data():
 	name = "" #this will need asked for at start of game
+	
+	#
+	
+	
+	#sequence data
 	current_level = 1
 	completed_of_level = 0
 	sequence_session_count = 0
@@ -54,3 +59,23 @@ func reset_user_data():
 	level_four_data = [[],[],[],[],[],[]]
 	level_five_data = [[],[],[],[],[],[]]
 	levels_data = {1:level_one_data, 2:level_two_data, 3:level_three_data, 4:level_four_data, 5:level_five_data}
+	
+	
+func reset_stop_go_data():
+	
+	pass
+	
+	
+func reset_cbtt_data():
+	name = "" #this will need asked for at start of game
+	current_level = 1
+	completed_of_level = 0
+	sequence_session_count = 0
+	sequence_session_performance_level = [10,10]
+	level_one_data = [[],[],[],[],[],[]]
+	level_two_data = [[],[],[],[],[],[]]
+	level_three_data = [[],[],[],[],[],[]]
+	level_four_data = [[],[],[],[],[],[]]
+	level_five_data = [[],[],[],[],[],[]]
+	levels_data = {1:level_one_data, 2:level_two_data, 3:level_three_data, 4:level_four_data, 5:level_five_data}
+

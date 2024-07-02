@@ -88,7 +88,7 @@ func record_check_response():
 	#trial.go_rt = r_t
 	#if trial.trial_type && trial.direction == direction:
 		#trial.set_successful(true)
-	if current_trial == 1 || trial.go_rt < session_best_rt:
+	if session_best_rt == 0 || trial.go_rt < session_best_rt:
 		session_best_rt = trial.go_rt
 	session_score += 1
 		#return true

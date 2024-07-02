@@ -112,6 +112,10 @@ func on_stop_timeout():
 	
 # MyUtility.start_timer(self, 2.0, callable(self, "_on_timer_timeout"))
 
+#calls for hud to display feedback text
+func display_feedback(feedback: String):
+	$StopGoHud.display_feedback_text(feedback)
+	
 #if becomes triggered by things in world it would take in that obj to save its texture
 #side 0-stopcenter left 1 right 2
 func begin_trial_view(side: int):
