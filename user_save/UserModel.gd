@@ -15,17 +15,19 @@ class_name UserModel
 @export var overall_go_rt : float
 @export var overall_prob_signal_response : float
 
-@export var critical_ssd : float
+@export var critical_ssd : float = 0.3 #starts out really low
 @export var prev_SG_sess_score : Array = [70,70]
 
 #history
 @export var lev_one_SG_sessions : Array = []
+@export var lev_two_SG_sessions : Array = []
 #more levels
 @export var levs_data_SG_sessions : Dictionary = {1:lev_one_SG_sessions}
 
-@export var lev_one_SG_trials : Dictionary = {"stop": [], "go": []}
+@export var lev_one_SG_trials : Dictionary = {1: [],0: []}
+@export var lev_two_SG_trials : Dictionary = {1: [],0: []}
 #more levels
-@export var levs_data_SG_trials : Dictionary = {1:lev_one_SG_trials}
+@export var levs_data_SG_trials : Dictionary = {1:lev_one_SG_trials,2:lev_two_SG_trials}
 
 
 #~END STOP_GO VARS~
@@ -50,16 +52,17 @@ class_name UserModel
 
 
 #~BEGIN STOP-GO FUNCS~
-func create_SG_trial_save(trial_type: bool, score: bool):
-	var trial_dict = {"trial_type": trial_type, "score": score}
+#this should also eventually MAYBE collect rt and such - but thats mostly covered in the session averages
+func create_SG_trial_save(score: bool):
+	var trial_dict = {"score": score}
 	return trial_dict
 	
 func add_to_SG_trial_level_data(trial_type: bool, score: bool):
-	var trial_dict = create_SG_trial_save(trial_type, score)
+	var trial_dict = create_SG_trial_save(score)
 	if trial_type:
-		levs_data_SG_trials.get(current_level).get("go").append(trial_dict)
+		levs_data_SG_trials.get(current_SG_level).get(1).append(trial_dict)
 	else:
-		levs_data_SG_trials.get(current_level).get("stop").append(trial_dict)
+		levs_data_SG_trials.get(current_SG_level).get(0).append(trial_dict)
 
 func create_SG_session_save(go_rt: float, prob_signal_response: float, stop_signal_rt: float):
 	var session_dict = {"go_rt_avg": go_rt, "prob_signal_response": prob_signal_response, "stop_signal_rt": stop_signal_rt}
@@ -68,6 +71,7 @@ func create_SG_session_save(go_rt: float, prob_signal_response: float, stop_sign
 func add_to_SG_session_level_data(go_rt: float, prob_signal_response: float, stop_signal_rt: float):
 	var session_dict = create_SG_session_save(go_rt, prob_signal_response, stop_signal_rt)
 	levs_data_SG_sessions.get(current_SG_level).append(session_dict)
+	print(levs_data_SG_sessions)
 	
 #should take in the overall using the players saved results -- not using right now but graph for levels may
 func update_SG_overalls(stop_signal_rt: float, go_rt: float, prob_signal_response: float):
@@ -76,8 +80,10 @@ func update_SG_overalls(stop_signal_rt: float, go_rt: float, prob_signal_respons
 	overall_stop_signal_rt = stop_signal_rt
 	
 func increase_SG_level():
-	current_SG_level += 1
-	comp_of_level_SG = 0
+	#the if statement will become the highest level possible as they're implemented
+	if current_SG_level < 2:
+		current_SG_level += 1
+		comp_of_level_SG = 0
 
 #~END STOP GO FUNCS~
 
@@ -120,6 +126,17 @@ func reset_user_data():
 	name = "" #this will need asked for at start of game
 	
 	#stop go data
+	current_SG_level = 1
+	comp_of_level_SG = 0
+	session_count_SG = 0
+	critical_ssd = 0.1
+	prev_SG_sess_score = [70,70]
+	lev_one_SG_sessions = []
+	lev_two_SG_sessions = []
+	levs_data_SG_sessions = {1:lev_one_SG_sessions,2:lev_two_SG_sessions}
+	lev_one_SG_trials = {1: [], 0: []}
+	lev_two_SG_trials = {1: [], 0: []}
+	levs_data_SG_trials = {1:lev_one_SG_trials,2:lev_two_SG_trials}
 	
 	
 	#cbtt data
@@ -136,8 +153,17 @@ func reset_user_data():
 	
 	
 func reset_stop_go_data():
-	
-	pass
+	current_SG_level = 1
+	comp_of_level_SG = 0
+	session_count_SG = 0
+	critical_ssd = 0.1
+	prev_SG_sess_score = [70,70]
+	lev_one_SG_sessions = []
+	lev_two_SG_sessions = []
+	levs_data_SG_sessions = {1:lev_one_SG_sessions,2:lev_two_SG_sessions}
+	lev_one_SG_trials = {1: [], 0: []}
+	lev_two_SG_trials = {1: [], 0: []}
+	levs_data_SG_trials = {1:lev_one_SG_trials,2:lev_two_SG_trials}
 	
 	
 func reset_cbtt_data():

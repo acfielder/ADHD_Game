@@ -18,6 +18,9 @@ func _ready():
 	$StopGoHud.connect("begin_session",on_session_begin)
 	$StopGoHud.connect("key_press",on_trial_key_press)
 	user = User_Data_Manager.load_resource()
+	
+	user.reset_stop_go_data()
+	
 	stop_go_controller = StopGoController.new(self,user)
 	
 	evidence_files = load_cues("res://Art/stop_go/go_evidence/")

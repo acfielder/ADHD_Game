@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwldavlnvpiq3"]
+[gd_scene load_steps=11 format=3 uid="uid://cwldavlnvpiq3"]
 
 [ext_resource type="Script" path="res://Stop_Go/Stop_Go_Hud.gd" id="1_r6tlx"]
 [ext_resource type="Texture2D" uid="uid://djnxedxoxo2dc" path="res://Art/stop_go/arrow_cues/left_gray_arrow.png" id="2_nlg0n"]
 [ext_resource type="Texture2D" uid="uid://bn2ebfx6th3ek" path="res://Art/stop_go/arrow_cues/right_gray_arrow.png" id="3_hnonr"]
 [ext_resource type="Texture2D" uid="uid://bssbyfdgaog02" path="res://Art/Pins/default_pin.png" id="4_ke548"]
+[ext_resource type="Texture2D" uid="uid://byhghn7eho8en" path="res://Art/stop_go/feedback_box.png" id="5_r3mdh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jywmt"]
 
@@ -18,24 +19,6 @@
 [node name="StopGoHud" type="Node2D"]
 script = ExtResource("1_r6tlx")
 
-[node name="bottom_bar" type="Polygon2D" parent="."]
-visible = false
-position = Vector2(1144, 655)
-rotation = 3.14159
-scale = Vector2(1, 0.886179)
-color = Color(0.377804, 0.266309, 0.210021, 1)
-polygon = PackedVector2Array(77, 5, 135, 124, 1018, 126, 1083, 3)
-
-[node name="feedbackText" type="Label" parent="bottom_bar"]
-offset_left = 1015.0
-offset_top = 92.532
-offset_right = 1885.0
-offset_bottom = 148.532
-rotation = -3.14159
-theme_override_font_sizes/font_size = 24
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="top_bar" type="Polygon2D" parent="."]
 position = Vector2(0, -5.65854)
 scale = Vector2(1, 0.886179)
@@ -43,18 +26,18 @@ color = Color(0.377804, 0.266309, 0.210021, 1)
 polygon = PackedVector2Array(77, 5, 135, 124, 1018, 126, 1083, 3)
 
 [node name="ColorRect" type="ColorRect" parent="top_bar"]
-offset_left = 408.0
-offset_top = 252.385
-offset_right = 709.0
-offset_bottom = 481.385
+offset_left = 421.0
+offset_top = 220.789
+offset_right = 722.0
+offset_bottom = 449.789
 color = Color(0.376471, 0.262745, 0.207843, 1)
 
 [node name="BeginSession" type="Button" parent="top_bar/ColorRect"]
 layout_mode = 0
-offset_left = 6.0
-offset_top = 3.0
-offset_right = 294.0
-offset_bottom = 221.0
+offset_left = 22.0
+offset_top = 13.5416
+offset_right = 289.0
+offset_bottom = 214.542
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jywmt")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_c8nlw")
@@ -240,5 +223,20 @@ position = Vector2(744, 13)
 rotation = -0.30221
 scale = Vector2(0.075, 0.075)
 texture = ExtResource("4_ke548")
+
+[node name="Feedback_box" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(573, 550)
+scale = Vector2(0.793456, 0.57623)
+texture = ExtResource("5_r3mdh")
+
+[node name="feedback" type="Label" parent="Feedback_box"]
+offset_left = -519.0
+offset_top = -94.0
+offset_right = 513.0
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 40
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="top_bar/ColorRect/BeginSession" to="." method="_on_begin_session_pressed"]

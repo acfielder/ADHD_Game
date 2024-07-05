@@ -295,6 +295,7 @@ transform = Transform3D(0.999992, -3.33955e-13, 0.00390953, -3.33955e-13, 1, 1.7
 mesh = SubResource("CylinderMesh_pqsg2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0724413, 0.109589, 0.39736)
 shape = SubResource("CylinderShape3D_qnses")
 
 [node name="StaticBody3D4" type="StaticBody3D" parent="."]

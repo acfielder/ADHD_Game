@@ -19,7 +19,7 @@ func _init(view_in: StopGoWorld, user_in: UserModel):
 	
 #begins the session
 func begin_session():
-	#model.setup_session()
+	model.setup_session()
 	begin_trial()
 	
 #builds trial
@@ -52,9 +52,14 @@ func trial_key_pressed(direction: int):
 	model.calc_update_current_rt()
 	if model.get_current_trial_type():
 		if model.get_current_direction() == direction:
+			#view.display_feedback("Got it! Good work!")
 			model.set_successful(true)
 			model.record_check_response()
+		else: 
+			#view.display_feedback("Missed it! Make sure to look in the right direction")
+			model.set_successful(false)
 	else:
+		#view.display_feedback("Ah! Be careful! Almost blew your cover or got hurt!")
 		model.set_successful(false)
 	end_trial()
 	
@@ -62,15 +67,24 @@ func trial_key_pressed(direction: int):
 func timeout_check_timer():
 	if model.get_current_trial_type():
 		model.set_successful(false)
+		#view.display_feedback("You missed it, but we need to keep moving, we have to be quick")
 	else:
 		model.set_successful(true)
+		#view.display_feedback("Good work! it was unsafe to collect, but we can make note of it")
 	model.timer_ended_trial()
 	end_trial()
+	
+#calls for view to display feedback
+func give_feedback():
+	var feedback = model.select_feedback()
+	view.display_feedback(feedback)
+	pass
 	
 func end_trial(): 
 	view.update_visual_info()
 	view.clear_trial()
-	#model.end_trial()
+	give_feedback()
+	model.end_trial()
 	#mmmmm reaction time
 	check_for_next_trial()
 	
@@ -84,7 +98,7 @@ func check_for_next_trial():
 
 func end_session():
 	print("its over")
-	#model.end_session()
+	model.end_session()
 	view.end_session()
 
 func get_current_trial_type():

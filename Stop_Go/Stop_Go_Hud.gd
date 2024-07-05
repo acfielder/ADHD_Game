@@ -45,8 +45,17 @@ func _ready():
 #runs basic visuals of trial
 func setup_trial(path: String, direction: int):
 	hud_state = State.TRIAL
+	display_directions(direction)
 	display_evidence(path,direction)
 	highlight_direction(direction)
+	
+	
+func display_directions(feedback_type: int):
+	$Feedback_box.show()
+	if feedback_type == 1 || feedback_type == 2:
+		$Feedback_box/feedback.text = "Collect the evidence!"
+	elif feedback_type == 0:
+		$Feedback_box/feedback.text = "Stop! Evidence is unsafe to collect!"
 	
 #updates session specific info in the hud
 func update_visual_info(score: int, current_trial: int, best_rt: float, level: int):
@@ -78,6 +87,7 @@ func clear_trial():
 	$cue_pop_up.texture = null
 	$cue_pop_up.position = Vector2(0,0)
 	reset_highlights()
+	$Feedback_box.hide()
 	
 #highlight clearer arrow cue
 #0- stop, 1-left, 2-right
@@ -99,10 +109,10 @@ func reset_highlights():
 	$top_bar/right_arrow.texture = right_default_arrow
 
 func display_feedback_text(feedback: String):
-	$bottom_bar.show()
-	$bottom_bar/feedbackText.text = feedback
+	$Feedback_box.show()
+	$Feedback_box/feedback.text = feedback
 	await get_tree().create_timer(2.5).timeout
-	$bottom_bar.hide()
+	$Feedback_box.hide()
 
 
 #when the first start button is pressed and the session begins

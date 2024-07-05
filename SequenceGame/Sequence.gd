@@ -112,8 +112,11 @@ func display_delay_distraction():
 func display_session_over():
 	$session_over_display.visible = true
 	var report_load = load("res://Report/Report.tscn")
+	#breakpoint below
 	var report = report_load.instantiate()
+	report.set_game_type(0)
 	report.position = Vector2(-250,0)
+	report.setup_graph(sequence_controller.get_performances())
 	#report.setup_graph(sequence_controller.get_performances())
 	#get_performances should return an array of the performance arrays
 	#performance arrays are the stm, then updating/manipulating
