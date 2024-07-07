@@ -93,6 +93,7 @@ func end_session():
 	game_state = State_Type.MODEL
 	model.end_session()
 	view.display_session_over()
+	
 
 #below - used by view
 func get_current_trial() -> int:
@@ -104,6 +105,9 @@ func get_current_level() -> int:
 func get_sequence_type() -> Array:
 	return model.get_current_sequence_type()
 		
-func get_performances() -> Array:
+func get_performances() -> Dictionary:
 	return model.get_performances()
+	
+func get_scores() -> Array:
+	return model.get_scores()
 		

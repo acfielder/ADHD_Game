@@ -62,18 +62,18 @@ func create_answer_order() -> Array:
 #selects prompts for before and after the sequence is shown
 func select_prompts() -> Array:
 	if sequence_type[0] == 0 || sequence_type[1] == 0:
-		trial_prompt_before_sequence = "Repeat this sequence in the same order as presented"
+		trial_prompt_before_sequence = "Repeat sequence in the forward order"
 	elif sequence_type[0] == 1 || sequence_type[1] == 1:
-		trial_prompt_before_sequence = "Repeat this sequence in reverse order"
+		trial_prompt_before_sequence = "Repeat sequence in reverse order"
 	elif sequence_type[0] == 2 || sequence_type[1] == 2:
 		if sequence_type[0] == 2:
-			trial_prompt_before_sequence = "Repeat this sequence in the updated order described after the sequence is presented"
+			trial_prompt_before_sequence = "Manipulate sequence with following instruction"
 			if switched: trial_prompt_after_sequence = "The " + str(switched_values[0]+1) + " and " + str(switched_values[1]+1) + " events have been switched"
-			else: trial_prompt_after_sequence = "Repeat the sequence in forward order, choosing every other event,\nstarting with the first event presented"
+			else: trial_prompt_after_sequence = "Repeat sequence in forward order, choosing every other event,\nstarting with first event presented"
 		else:
-			trial_prompt_after_sequence = "Repeat the sequence in forward order, choosing every other event,\nstarting with the first event presented"
+			trial_prompt_after_sequence = "Repeat sequence in forward order, choosing every other event,\nstarting with first event presented"
 	if sequence_type[0] == 3:
-		trial_prompt_before_sequence = trial_prompt_before_sequence + "\n- there will be a delay before you can respond"
+		trial_prompt_before_sequence = trial_prompt_before_sequence + "will be a delay before you can respond"
 	return [trial_prompt_before_sequence,trial_prompt_after_sequence]
 	
 #calculate score of trial

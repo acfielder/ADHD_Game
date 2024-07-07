@@ -8,14 +8,22 @@ var tick_interval_x
 var tick_interval_y 
 
 
-var origin = Vector2(100,500)
+var origin = Vector2(20,215)
 
 func _ready():
-	#var o_p = Line2D.new()
-	#o_p.points = [origin, Vector2(110,510)]
-	#o_p.width = 5
-	#o_p.default_color = Color(0.36, 0.89, 0.10)
-	#add_child(o_p)	
+	#var colors = [Color(1,0,0),Color(0,1,0),Color(0,0,1)]
+	#var per_count = 0
+	#set_tick_vars(43,26)
+	#build_graph(3,9,0,1,1)
+	#var per = [4,5,3,0,2,0]
+	#var points = determine_line_points_sequence(per)
+	#if points != null:
+	#	create_line(points, colors[per_count])
+	#	per_count += 1
+	pass
+	
+#should create a key to stand to the side - should take color and name 
+func create_key(key_color: Color, key_name: String):
 	pass
 
 func set_tick_vars(x_tick_int: int, y_tick_int: int):
@@ -23,15 +31,15 @@ func set_tick_vars(x_tick_int: int, y_tick_int: int):
 	tick_interval_y = y_tick_int
 
 	
-func build_graph():
-	add_tick_lines()
+func build_graph(start_x_count: int, x_count_max: int, start_y_count: int, x_count_increase: int, y_count_increase: int):
+	add_tick_lines(start_x_count, x_count_max, start_y_count, x_count_increase, y_count_increase) 
 	create_axis_lines()
 	create_axis_labels("Sequence Length","Sequence Completed")
 
 	#tick_interval, counters-what counting by - need to figure out why those nums for sequence and what should be for stop go
-func add_tick_lines():
+func add_tick_lines(start_x_count: int, x_count_max: int, start_y_count: int, x_count_increase: int, y_count_increase: int):
 	#add ticks to x axis
-	var x_counter = 0
+	var x_counter = start_x_count
 	for x in range(65, 370, tick_interval_x):
 		var tick = Line2D.new()
 		tick.points = [Vector2(x, 215 - tick_length), Vector2(x, 215 + tick_length)]
@@ -39,18 +47,16 @@ func add_tick_lines():
 		tick.default_color = Color(0, 0, 0)
 		add_child(tick)
 		
-		if x_counter > 0 && x_counter < 9:
+		if x_counter <= x_count_max:
 			var label = Label.new()
 			label.text = str(x_counter)
-			x_counter += 1
+			x_counter += x_count_increase
 			label.set_position(Vector2(x - label.get_minimum_size().x / 2, 220))
 			label.set("theme_override_colors/font_color", Color(0,0,0))
 			add_child(label)
-		else:
-			x_counter = 3
 	
 	#add ticks to y axis
-	var y_counter = 0
+	var y_counter = start_y_count
 	for y in range(215, 35, -tick_interval_y):
 		var tick = Line2D.new()
 		tick.points = [Vector2(65 - tick_length, y), Vector2(65 + tick_length, y)]
@@ -63,7 +69,7 @@ func add_tick_lines():
 		label.set_position(Vector2(40,y - label.get_minimum_size().y / 2-3))
 		label.set("theme_override_colors/font_color", Color(0,0,0))
 		add_child(label)
-		y_counter += 1
+		y_counter += y_count_increase
 		
 	
 	
@@ -107,18 +113,22 @@ func create_axis_labels(x_label_in: String, y_label_in: String):
 
 func create_line(line_points: Array, color: Color):
 	var line = Line2D.new()
-	line.points = line_points
+	line.set_points(line_points)
 	line.width = 2
 	line.default_color = color
 	add_child(line)
 		
-
-#calling this fails bc sequence performance and the for loop send in an int, should be separated with arrays for the diff lines that will be made based on type played
-#essentially need forward performance, reverse, updating, manipulating, delay, etc - but only really the main forward, updating/manipulate, delay
 func determine_line_points_sequence(performance: Array):
-	var line_points = []
-	for length in range(performance.size()):
-		var x = origin.x + ((length + 1) * tick_interval_x)
-		var y = origin.y - (tick_interval_y * performance[length])
-		line_points.append(Vector2(x,y))
-	return line_points
+	if !all_zero(performance):
+		var line_points = []
+		for length in range(performance.size()):
+			var x = origin.x + ((length + 1) * tick_interval_x)
+			var y = origin.y - (tick_interval_y * performance[length])
+			line_points.append(Vector2(x,y))
+		return line_points
+
+func all_zero(array: Array):
+	for item in array:
+		if item != 0:
+			return false
+	return true

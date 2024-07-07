@@ -191,10 +191,13 @@ offset_bottom = 237.0
 text = "distraction."
 
 [node name="trial_prompt" type="Label" parent="."]
-offset_left = -191.0
-offset_top = -263.0
-offset_right = 114.0
-offset_bottom = -171.0
+offset_left = -340.0
+offset_top = -298.0
+offset_right = 304.0
+offset_bottom = -206.0
+theme_override_font_sizes/font_size = 20
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="session_over_display" type="Label" parent="."]
 visible = false

@@ -9,7 +9,10 @@ var increased_level : bool = false
 
 #session based
 var trial_history : Array = [] #holds SequenceTrialInfo objects for history of session's trials
-var overall_performance : Array = [0,0,0,0,0,0,0,0] #poor tracking of overall performance, needs to be reworked
+#var overall_performance : Array = [0,0,0,0,0,0,0,0] 
+var stm_performance : Array = [0,0,0,0,0,0]
+var update_performance : Array = [0,0,0,0,0,0]
+var delay_performance : Array = [0,0,0,0,0,0]
 var session_length : int = 10 #should be 20
 var current_session_performance : int = 0
 
@@ -163,13 +166,26 @@ func update_session_performance():
 		user.completed_of_level += 1
 	if user.completed_of_level >= level_length && increased_level == false && current_level < 5: # this needs moved elsewhere to where it belongs, maybe not idk?
 		increased_level = true
+		
+
+	
 	
 	
 func update_overall_performance(): #this may not need to exist or can be moved or combined with session performance, depends on how reports are created
-	var last_performance = trial_history[-1].get_response()
-	for i in range(last_performance.size()):
-		overall_performance[i] += last_performance[i]
-	return overall_performance
+	#var last_performance = trial_history[-1].get_response()
+	#for i in range(last_performance.size()):
+	#	overall_performance[i] += last_performance[i]
+	#	print(overall_performance)
+	#return overall_performance
+	if trial_history[-1].score == trial_history[-1].answer_order.size():
+		var sequence_type = trial_history[-1].sequence_type
+		if sequence_type[0] == 0:
+			stm_performance[trial_history[-1].mem_order.size()-3] += 1
+		elif sequence_type[0] == 1 || sequence_type[0] == 2:
+			update_performance[trial_history[-1].mem_order.size()-3] += 1
+		elif sequence_type[0] == 3:
+			delay_performance[trial_history[-1].mem_order.size()-3] += 1
+
 		
 #resets trial specific information for beginning next trial
 func reset_trial_info():
@@ -187,7 +203,7 @@ func next_level() -> bool:
 
 #change session length based on previous session performance
 func update_session_length(session_count: int, performance: Array):
-	if session_count > 0: #ession_count > 0
+	if session_count > 0: #session_count > 0
 		session_length = performance[1]
 		var performance_last_session = float(performance[0]) / float(performance[1])
 		if performance_last_session < 0.5 && performance[1] > 5: #should be 15
@@ -198,6 +214,7 @@ func update_session_length(session_count: int, performance: Array):
 			session_length += 5
 	else:
 		session_length = 4 #20 - was changed for testing purposes #ten for testing
+	user.sequence_session_performance_level[0] = 0
 	user.sequence_session_performance_level[1] = session_length
 	return session_length
 	
@@ -254,4 +271,20 @@ func get_answer_order() -> Array:
 	return trial_history[-1].answer_order
 	
 func get_performances():
-	return overall_performance
+	return {"Short term memory/ working memory": stm_performance,"update/manipulation": update_performance,"delayed response": delay_performance}
+	
+func get_scores() -> Array:
+	var sequences_completed = str(session_length)
+	var total_correct = str(user.sequence_session_performance_level[0]) + "/" + str(session_length)
+	var crimes_solved = str(int(user.sequence_session_performance_level[0]/2)) + "/" + str(session_length/2)#12??			#for every two correct, a crime is solved, should be like in a row or something
+	var op_1 = float(float(user.sequence_session_performance_level[0])/float(user.sequence_session_performance_level[1]))
+	var op_2 = float(int(user.sequence_session_performance_level[0]/2)/float(user.sequence_session_performance_level[0]))
+	var op_3 = op_1 + op_2
+	var op_4 = float(op_3 /2)
+	var op_5 = op_4 * 100
+	var overall_performance = str(int(op_5)) + "/100"
+	return [sequences_completed, total_correct, crimes_solved, overall_performance]
+
+#should reset all seeing as this will always be loaded when in showcase, should also be done in other games
+func reset_session():
+	pass

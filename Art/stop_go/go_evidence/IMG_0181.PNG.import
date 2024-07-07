@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ba7da4akx8qmx"
-path="res://.godot/imported/s_4.png-b9d732e960f239b520b24db2be8d83ed.ctex"
+uid="uid://ch7pigjp54vdq"
+path="res://.godot/imported/IMG_0181.PNG-62bd899752edaca281bbb976413d1f15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/stop_go/stop_signals/s_4.png"
-dest_files=["res://.godot/imported/s_4.png-b9d732e960f239b520b24db2be8d83ed.ctex"]
+source_file="res://Art/stop_go/go_evidence/IMG_0181.PNG"
+dest_files=["res://.godot/imported/IMG_0181.PNG-62bd899752edaca281bbb976413d1f15.ctex"]
 
 [params]
 

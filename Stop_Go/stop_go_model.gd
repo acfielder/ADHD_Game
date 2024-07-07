@@ -254,3 +254,8 @@ func get_interval_time():
 	
 func get_current_ssd():
 	return session_trials[-1].ssd
+	
+
+#should reset all seeing as this will always be loaded when in showcase, should also be done in other games
+func reset_session():
+	pass
