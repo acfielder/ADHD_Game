@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4tsq8qduuri3"]
+
+[ext_resource type="Script" path="res://WCST/wcst_view.gd" id="1_kjtxl"]
+[ext_resource type="PackedScene" uid="uid://opf7a7arsd0d" path="res://WCST/evidence_card.tscn" id="2_5hku3"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_kjtxl")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1157.0
+offset_bottom = 651.0
+color = Color(0.292946, 0.22045, 0.127207, 1)
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="base_card_1" parent="." instance=ExtResource("2_5hku3")]
+position = Vector2(213, 76)
+
+[node name="base_card_2" parent="." instance=ExtResource("2_5hku3")]
+position = Vector2(393, 74)
+
+[node name="base_card_3" parent="." instance=ExtResource("2_5hku3")]
+position = Vector2(575, 73)
+
+[node name="base_card_4" parent="." instance=ExtResource("2_5hku3")]
+position = Vector2(756, 72)

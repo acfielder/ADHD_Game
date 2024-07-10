@@ -179,4 +179,7 @@ func reset_cbtt_data():
 	level_five_data = [[],[],[],[],[],[]]
 	levels_data = {1:level_one_data, 2:level_two_data, 3:level_three_data, 4:level_four_data, 5:level_five_data}
 
+func reset_wcst_data():
+	pass
+
 #~END RESETING FUNCS~	
