@@ -32,7 +32,7 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_eqkiw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(98, 122)
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.23, 0.23)
 texture = ExtResource("2_r2fqe")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

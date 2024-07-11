@@ -5,6 +5,7 @@ var view : wcstView
 var user : UserModel
 var model : wcstModel
 
+enum State {WATCH,RESPOND}
 
 
 func _init(view_in: wcstView, user_in: UserModel):
@@ -26,7 +27,7 @@ func begin_phase_one():
 func begin_phase_two():
 	pass
 	
-func card_sort_attempt_detected():
+func card_sort_attempt_detected(card_info: Array):
 	pass
 
 func sort_timer_timeout():

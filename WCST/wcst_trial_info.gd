@@ -5,19 +5,19 @@ enum Colors {GREEN, BLUE, PURPLE}
 enum Shapes {CIRCLE, SQUARE, TRIANGLE}
 enum Counts {ONE, TWO, THREE, FOUR}
 
-var COLORS_STR = {
+const COLORS_STR = {
 	Colors.GREEN: "green",
 	Colors.BLUE: "blue",
 	Colors.PURPLE: "purple",
 }
 
-var SHAPES_STR = {
+const SHAPES_STR = {
 	Shapes.CIRCLE : "circle",
 	Shapes.SQUARE : "square",
 	Shapes.TRIANGLE : "triangle"
 }
 
-var COUNTS_STR = {
+const COUNTS_STR = {
 	Counts.ONE: "one",
 	Counts.TWO: "two",
 	Counts.THREE: "three",
@@ -38,10 +38,11 @@ var count : Counts
 var rng = RandomNumberGenerator.new()
 
 func _ready():
-	set_card_type(1)
-	print(get_card_info_string())
-	set_card_type(2)
-	print(get_card_info_string())
+	#set_card_type(1)
+	#print(get_card_info_string())
+	#set_card_type(2)
+	#print(get_card_info_string())
+	pass
 
 #select card type based on phase (1 or 2)
 func set_card_type(phase: int): 

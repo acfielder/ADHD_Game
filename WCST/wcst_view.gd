@@ -21,6 +21,8 @@ func _ready():
 	$base_card_2.connect("card_pressed",_card_press_detected)
 	$base_card_3.connect("card_pressed",_card_press_detected)
 	$base_card_4.connect("card_pressed",_card_press_detected)
+	
+	base_cards = [$base_card_1,$base_card_2,$base_card_3,$base_card_4]
 
 	user = User_Data_Manager.load_resource()
 	
@@ -31,7 +33,6 @@ func _ready():
 	timer = $Timer
 	
 	card_art = load_cards("res://Art/WCST/cards")
-	
 
 
 
@@ -43,31 +44,54 @@ func _process(delta):
 
 #starting point for when a card press is detected
 func _card_press_detected(card):
-	print("got that press!" + str(card))
-	#tell controller a card was chosen and which it was
+	wcst_controller.card_sort_attempt_detected(card.get_card_info_string())
 		
 	
 #choose the card arts to be passed to the base cards to set their textures
-func set_base_cards():
-	pass
+func set_base_cards(phase: int):
+	var vals
+	$base_card_1.choose_set_properties("one")
+	vals = $base_card_1.get_card_info_string()
+	$base_card_1.give_card_texture(create_art_string(vals))
 	
-#set the texture of the trial card, should select it at random here (so long as it fits with a base card with the current rule
-func set_trial_card_texture():
-	pass
+	$base_card_2.choose_set_properties("two")
+	vals = $base_card_2.get_card_info_string()
+	$base_card_2.give_card_texture(create_art_string(vals))
+	
+	$base_card_3.choose_set_properties("three")
+	vals = $base_card_3.get_card_info_string()
+	$base_card_3.give_card_texture(create_art_string(vals))
+	
+	if phase == 2:
+		$base_card_4.show()
+		$base_card_4.choose_set_properties("four")
+		vals = $base_card_4.get_card_info_string()
+		$base_card_4.give_card_texture(create_art_string(vals))
+
 	
 	
-#
-func setup_phase_one():
+func create_art_string(info: Array):
+	return "res://Art/WCST/cards/" + info[0] + "_" + info[1] + "_" + info[2] + ".png"
+	
+#set the texture of the trial card
+func set_trial_card_texture(info: Array):
+	var path = create_art_string(info)
+	$trial_card.set_texture(path)
+	return path
+	
+	
+func setup_phase_one(): #begin_session? but already call controllers begin session
+	#this can be anything specific to the phase
+	
 	#should not at this point set a trial card
-	#set the base cards
 	#call for displaying of initial instruction
 	#make sure base card 4 is hidden/not functional
 	pass
 	
 func end_phase_one():
-	#flip cards away
-	#any instructions for end of it
-	pass
+	for card in base_cards:
+		card.give_card_texture("res://Art/WCST/cards/card_back.png")
+	#display a feedback of sorts?
 	
 	#ideally cards would flip away at end of phase 1
 func setup_phase_two():
@@ -83,11 +107,26 @@ func end_phase_two():
 #may not be much here as end phase two covers a lot
 func end_session():
 	pass
-
+	
+func display_rule(rule: String):
+	$RuleCard/Label.text = "Rule:\n" + rule
 	
 #shows speech bubble and gives feedback in it
-func display_speech_feedback():
-	pass
+func display_speech_feedback(feedback_type: int):
+	$SpeechBubble.show()
+	match feedback_type:
+		0: #correctly sort card
+			$SpeechBubble/Feedback.text = "Good work!"
+		1: #incorrectly sort card
+			$SpeechBubble/Feedback.text = "Ah, wrong pile.\nCheck the rule"
+		2: #ran out of time to sort
+			$SpeechBubble/Feedback.text = "Need to sort quicker!"
+		3: #set aside, still needed it - incorrect
+			$SpeechBubble/Feedback.text = "Wait! we needed that!"
+		4: #correctly set aside
+			$SpeechBubble/Feedback.text = "Good work, we don't\nneed that right now"	
+	await get_tree().create_timer(2).timeout
+	$SpeechBubble.hide()
 	
 	
 func create_run_timer(duration: float):
