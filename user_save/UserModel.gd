@@ -3,6 +3,18 @@ class_name UserModel
 
 @export var name : String
 
+#~BEGIN WCST VARS
+@export var session_count_wcst : int = 0
+@export var accuracy_rate : float
+@export var avg_r_t : float
+@export var adaption_rate : float
+
+@export var phase_one_data : Array = []
+@export var phase_two_data : Array = []
+@export var all_block_data : Dictionary = {} #setup like {1:{1:[],2:[]},2:{1:[],2:[]},3:{1:[],2:[]},4:{1:[],2:[]}} where its each session and within there is phase one and two data
+
+#~END WCST VARS~
+
 #~BEGIN STOP_GO VARS
 #overall levels and session
 @export var current_SG_level : int = 1
@@ -29,7 +41,6 @@ class_name UserModel
 #more levels
 @export var levs_data_SG_trials : Dictionary = {1:lev_one_SG_trials,2:lev_two_SG_trials}
 
-
 #~END STOP_GO VARS~
 
 #~BEGIN CBTT VARS~
@@ -50,6 +61,10 @@ class_name UserModel
 @export var sequence_session_performance_level : Array = [10,10] #number of trials successful with total in last session
 #~END CBTT VARS~
 
+#~BEGIN WCST FUNCS
+
+
+#~END WCST FUNCS~
 
 #~BEGIN STOP-GO FUNCS~
 #this should also eventually MAYBE collect rt and such - but thats mostly covered in the session averages
