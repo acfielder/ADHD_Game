@@ -28,7 +28,7 @@ const COUNTS_STR = {
 var trial_num : int
 
 var successful : bool #whether or not the trial was successful
-var r_t : float #reaction time in sorting card
+var r_t : float = -1 #reaction time in sorting card
 var sort_press : bool = false #whether or not the player sorted the card
 
 var shape : Shapes

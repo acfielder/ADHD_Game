@@ -6,7 +6,7 @@ var user : UserModel
 
 var session_rule_blocks : Array[wcstRuleBlock] = [] # each holds all trials within that block of rules
 var current_trial : int = 0
-var current_phase : int = 1
+var current_phase : int = 0
 var phase_length : int = 5 #unsure how long each should be (theres two, not doing a full session length as both of these together tell you that)
 
 var rng = RandomNumberGenerator.new()
@@ -15,57 +15,89 @@ var accuracy_rate : float
 var avg_r_t : float
 var overall_adaption_rate : float
 
+var score : int = 0
+
 func set_user(user_in: UserModel):
 	user = user_in
 
 func setup_session():
+	#any updating of the game itself based on past results
 	pass
 	
 #will do thigns based on what the current phase is so that needs to make sure to increase when it needs to
 func setup_phase():
-	pass
+	current_phase += 1
+	
+#setup new rule block/end the old one
+func rule_change():
+	var rule_block = wcstRuleBlock.new()
+	rule_block.set_phase(current_phase)
+	rule_block.set_rule(session_rule_blocks[-1].get_rule())
+	session_rule_blocks.append(rule_block)
 	
 func setup_trial():
 	#will get the current block and call into that to create it
-	pass
+	var trial_info = session_rule_blocks[-1].setup_add_trial() #string of 3 properties
+
 
 #when a card is attempted to be sorted
 #the following two will need to go into the block to get the last trial
-func record_check_response():
-	pass
+func record_check_response(info: Array):
+	if session_rule_blocks[-1].record_check_response(info):
+		score += 1
 	
 func timer_ended_trial():
-	pass
+	session_rule_blocks[-1].timer_ended_trial()
 	
-
-func calc_current_rt():
-	pass
-
-func select_feedback():
-	pass
+func calc_current_rt(start_rt_time: float, final_rt_time: float):
+	var rt = final_rt_time - start_rt_time
+	session_rule_blocks[-1].update_trial_rt(rt)
 	
 
 func end_trial():
-	#also go into block to set things in the last trial
 	pass
 	
 	
+	
 func end_phase():
+	
 	pass
 	
 	
 func end_session():
-	pass
+	determine_session_results()
+	#save all graph data to user first
+	#User_Data_Manager.save(user)
+	
+func determine_session_results():
+	calc_accuracy_rate()
+	calc_avg_r_t()
+	calc_overall_adaption_rate()
 
 
 func calc_accuracy_rate():
-	pass
+	var tot_correct = 0
+	var total = 0
+	for rule_block in session_rule_blocks:
+		tot_correct += rule_block.get_accuracy()
+		total += rule_block.size() #or get_length works too
+	accuracy_rate = float(tot_correct)/float(total)
+	return accuracy_rate
 	
 func calc_avg_r_t():
-	pass
+	var tot_time = 0
+	var num_trials = 0
+	for rule_block in session_rule_blocks:
+		tot_time += rule_block.get_rts_total()
+		num_trials += rule_block.size()  #or get_length works too
+	avg_r_t = float(tot_time)/float(num_trials)
+	return avg_r_t
 	
 func calc_overall_adaption_rate():
-	pass
-
+	var a_rate_tot = 0
+	for rule_block in session_rule_blocks:
+		a_rate_tot += rule_block.adaption_rate
+	overall_adaption_rate = float(a_rate_tot)/float(session_rule_blocks.size())
+	return overall_adaption_rate
 
 #getters
