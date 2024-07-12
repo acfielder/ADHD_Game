@@ -72,6 +72,7 @@ func calc_adaption_rate():
 #when a card is attempted to be sorted
 #the following two will need to go into the block to get the last trial
 func record_check_response(info: Array): #color,shape,count
+	block_trials[-1].set_sort_press_true()
 	var trial_info = block_trials[-1].get_card_info_string()
 	match rule:
 		Rules.SHAPE:
@@ -116,3 +117,6 @@ func get_length():
 	
 func get_rule() -> Rules:
 	return rule
+	
+func get_if_pressed():
+	return block_trials[-1].sort_press

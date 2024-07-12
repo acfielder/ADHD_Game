@@ -79,6 +79,16 @@ func set_trial_card_texture(info: Array):
 	$trial_card.set_texture(path)
 	return path
 	
+func give_phase_instruction(phase: int):
+	$SpeechBubble.show()
+	match phase:
+		1: #phase one has three base cards
+			$SpeechBubble/Feedback.text = "Phase 1 only has 3\npiles to sort to"
+		2: #phase 2 has four base cards
+			$SpeechBubble/Feedback.text = "Phase 2 has 4\n piles to sort to"
+	await get_tree().create_timer(2).timeout
+	$SpeechBubble.hide()
+	
 	
 func setup_phase_one(): #begin_session? but already call controllers begin session
 	#this can be anything specific to the phase
@@ -89,8 +99,8 @@ func setup_phase_one(): #begin_session? but already call controllers begin sessi
 	pass
 	
 func end_phase_one():
-	for card in base_cards:
-		card.give_card_texture("res://Art/WCST/cards/card_back.png")
+	flip_cards_to_back()
+	$PhaseBegin.show()
 	#display a feedback of sorts?
 	
 	#ideally cards would flip away at end of phase 1
@@ -106,7 +116,12 @@ func end_phase_two():
 	
 #may not be much here as end phase two covers a lot
 func end_session():
+	flip_cards_to_back()
 	pass
+	
+func flip_cards_to_back():
+	for card in base_cards:
+		card.give_card_texture("res://Art/WCST/cards/card_back.png")
 	
 func display_rule(rule: String):
 	$RuleCard/Label.text = "Rule:\n" + rule

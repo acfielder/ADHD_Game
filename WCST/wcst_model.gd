@@ -17,6 +17,9 @@ var overall_adaption_rate : float
 
 var score : int = 0
 
+var start_rt
+var final_rt
+
 func set_user(user_in: UserModel):
 	user = user_in
 
@@ -45,12 +48,14 @@ func setup_trial():
 func record_check_response(info: Array):
 	if session_rule_blocks[-1].record_check_response(info):
 		score += 1
+		return true
+	else: return false
 	
 func timer_ended_trial():
 	session_rule_blocks[-1].timer_ended_trial()
 	
-func calc_current_rt(start_rt_time: float, final_rt_time: float):
-	var rt = final_rt_time - start_rt_time
+func calc_update_current_rt():
+	var rt = final_rt - start_rt
 	session_rule_blocks[-1].update_trial_rt(rt)
 	
 
@@ -101,3 +106,5 @@ func calc_overall_adaption_rate():
 	return overall_adaption_rate
 
 #getters
+func get_if_trial_pressed():
+	return session_rule_blocks[-1].get_if_pressed()

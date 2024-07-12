@@ -55,7 +55,7 @@ offset_bottom = 151.0
 theme_override_font_sizes/font_size = 25
 text = "Begin Session"
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="PhaseBegin" type="ColorRect" parent="."]
 visible = false
 offset_left = 402.0
 offset_top = 234.0
@@ -63,7 +63,7 @@ offset_right = 730.0
 offset_bottom = 401.0
 color = Color(0.612013, 0.465525, 0.332168, 1)
 
-[node name="BeginPhase" type="Button" parent="ColorRect2"]
+[node name="BeginPhase" type="Button" parent="PhaseBegin"]
 layout_mode = 0
 offset_left = 19.0
 offset_top = 16.0
@@ -112,4 +112,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="SessionBegin/Begin" to="." method="_on_begin_pressed"]
-[connection signal="pressed" from="ColorRect2/BeginPhase" to="." method="_on_begin_phase_pressed"]
+[connection signal="pressed" from="PhaseBegin/BeginPhase" to="." method="_on_begin_phase_pressed"]
