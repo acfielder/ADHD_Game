@@ -4,13 +4,16 @@ class_name UserModel
 @export var name : String
 
 #~BEGIN WCST VARS
+#overall
 @export var session_count_wcst : int = 0
 @export var accuracy_rate : float
 @export var avg_r_t : float
 @export var adaption_rate : float
 
+#phases
 @export var phase_one_data : Array = []
 @export var phase_two_data : Array = []
+#all phase data
 @export var all_block_data : Dictionary = {} #setup like {1:{1:[],2:[]},2:{1:[],2:[]},3:{1:[],2:[]},4:{1:[],2:[]}} where its each session and within there is phase one and two data
 
 #~END WCST VARS~
@@ -62,7 +65,8 @@ class_name UserModel
 #~END CBTT VARS~
 
 #~BEGIN WCST FUNCS
-
+func create_wcst_trial_save():
+	pass
 
 #~END WCST FUNCS~
 

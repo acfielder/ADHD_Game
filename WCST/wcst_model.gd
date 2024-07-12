@@ -6,8 +6,11 @@ var user : UserModel
 
 var session_rule_blocks : Array[wcstRuleBlock] = [] # each holds all trials within that block of rules
 var current_trial : int = 0
+var current_rule : int = 0
 var current_phase : int = 0
-var phase_length : int = 5 #unsure how long each should be (theres two, not doing a full session length as both of these together tell you that)
+var phase_length : int = 6 #unsure how long each should be (theres two, not doing a full session length as both of these together tell you that)
+var rule_length : int = 10
+var current_trial_in_rule : int = 0
 
 var rng = RandomNumberGenerator.new()
 
@@ -29,17 +32,26 @@ func setup_session():
 	
 #will do thigns based on what the current phase is so that needs to make sure to increase when it needs to
 func setup_phase():
+	current_trial = 1
 	current_phase += 1
+	match current_phase:
+		1:
+			rule_length = 10
+		2:
+			rule_length = 7
 	
 #setup new rule block/end the old one
 func rule_change():
+	current_rule += 1
 	var rule_block = wcstRuleBlock.new()
 	rule_block.set_phase(current_phase)
 	rule_block.set_rule(session_rule_blocks[-1].get_rule())
 	session_rule_blocks.append(rule_block)
+	current_trial_in_rule += 1
 	
 func setup_trial():
 	#will get the current block and call into that to create it
+	current_trial_in_rule += 1
 	var trial_info = session_rule_blocks[-1].setup_add_trial() #string of 3 properties
 
 
@@ -70,14 +82,16 @@ func end_phase():
 	
 	
 func end_session():
-	determine_session_results()
+	#determine_session_results()
+	pass
+	
 	#save all graph data to user first
 	#User_Data_Manager.save(user)
 	
-func determine_session_results():
-	calc_accuracy_rate()
-	calc_avg_r_t()
-	calc_overall_adaption_rate()
+#unc determine_phase_results():
+#	calc_accuracy_rate()
+#	calc_avg_r_t()
+#	calc_overall_adaption_rate()
 
 
 func calc_accuracy_rate():

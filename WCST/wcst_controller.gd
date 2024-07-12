@@ -20,6 +20,7 @@ func _init(view_in: wcstView, user_in: UserModel):
 
 func begin_session():
 	model.setup_session()
+	await view.give_instructions() #needs drawn out
 	begin_phase_one()
 	
 func begin_trial():
@@ -29,12 +30,14 @@ func begin_trial():
 	pass
 	
 func begin_phase_one():
-	view.give_phase_instruction(1)
-	pass
+	model.setup_phase() #increase phase on - starts at 0
+	await view.setup_phase_one()
+	begin_trial()
 	
 func begin_phase_two():
-	view.give_phase_instruction(2)
-	pass
+	model.setup_phase() #increase phase on
+	await view.setup_phase_two()
+	begin_trial()
 	
 func card_sort_attempt_detected(card_info: Array):
 	if state == State.RESPOND:
@@ -59,26 +62,38 @@ func give_feedback(feedback_type: int):
 func end_trial():
 	pass
 	
-#returns whether or not there is a next trial in this phase
-func check_for_next_trial() -> bool:
-	if model.current_trial >= model.phase_length:
-		return false
-	else: return true
-	
-#moves onto next pahse if there is one or ends session
-func check_for_next_phase():
-	if model.current_phase < 2:
-		begin_phase_two()
+#moves into a trial or ends session once determines where at in process
+func check_for_next_trial():
+	if model.current_trial_in_rule < model.rule_length:
+		begin_trial()
 	else:
-		end_session()
+		if model.current_rule < model.phase_length:
+			next_rule()
+		else:
+			if model.current_phase < 2:
+				end_phase_one()
+			else:
+				end_session()
+	update_visuals()
+	
+	
+func next_rule():
+	model.rule_change()
+	
 	
 	#the end phases may be the same
 func end_phase_one():
 	view.end_phase_one()
-	pass
+	model.end_phase()
+
 	
 func end_phase_two():
+	view.end_phase_two()
+	model.end_phase()
+	
+func update_visuals():
 	pass
+
 	
 func end_session():
 	print("session ended")

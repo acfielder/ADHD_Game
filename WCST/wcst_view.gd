@@ -68,8 +68,6 @@ func set_base_cards(phase: int):
 		vals = $base_card_4.get_card_info_string()
 		$base_card_4.give_card_texture(create_art_string(vals))
 
-	
-	
 func create_art_string(info: Array):
 	return "res://Art/WCST/cards/" + info[0] + "_" + info[1] + "_" + info[2] + ".png"
 	
@@ -90,13 +88,11 @@ func give_phase_instruction(phase: int):
 	$SpeechBubble.hide()
 	
 	
-func setup_phase_one(): #begin_session? but already call controllers begin session
+func setup_phase_one():
 	#this can be anything specific to the phase
-	
-	#should not at this point set a trial card
-	#call for displaying of initial instruction
-	#make sure base card 4 is hidden/not functional
-	pass
+	$base_card_4.hide()
+	flip_cards_to_back()
+	await give_phase_instruction(1)
 	
 func end_phase_one():
 	flip_cards_to_back()
@@ -105,14 +101,13 @@ func end_phase_one():
 	
 	#ideally cards would flip away at end of phase 1
 func setup_phase_two():
-	#set base cards including showing the 4th one
-	#initial instruction
-	#flip the cards back over ^
-	pass
+	$base_card_4.show()
+	flip_cards_to_back()
+	await give_phase_instruction(2)
 
 #ends the second phase 
 func end_phase_two():
-	pass
+	flip_cards_to_back()
 	
 #may not be much here as end phase two covers a lot
 func end_session():
@@ -172,11 +167,22 @@ func response_timer_timeout():
 	if !wcst_controller.get_if_pressed():
 		wcst_controller.sort_timer_timeout()
 
+#give game instructions
+func give_instructions():
+	$game_instructions.show()
+	await get_tree().create_timer(4).timeout
+	$game_instructions.hide()
+
 
 func _on_begin_pressed():
 	wcst_controller.begin_session()
 	$SessionBegin.hide()
 	
 
-func _on_begin_phase_pressed():
+func _on_begin_phase_pressed(): #pphase 2
 	wcst_controller.begin_phase_two()
+	$PhaseBegin2.hide()
+	
+func _on_begin_phase_1_pressed(): #phase 1
+	wcst_controller.begin_phase_one()
+	$PhaseBegin1.hide()
