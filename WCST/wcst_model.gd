@@ -14,9 +14,12 @@ var current_trial_in_rule : int = 0
 
 var rng = RandomNumberGenerator.new()
 
-var accuracy_rate : float
-var avg_r_t : float
-var overall_adaption_rate : float
+var accuracy_rate_phase_one : float
+var avg_r_t_phase_one : float
+var overall_adaption_rate_phase_one : float
+var accuracy_rate_phase_two : float
+var avg_r_t_phase_two : float
+var overall_adaption_rate_phase_two : float
 
 var score : int = 0
 
@@ -73,20 +76,36 @@ func calc_update_current_rt():
 
 func end_trial():
 	pass
-	
-	
-	
+
+
 func end_phase():
-	
-	pass
-	
+	match current_phase:
+		1:
+			accuracy_rate_phase_one = calc_accuracy_rate()
+			avg_r_t_phase_one = calc_avg_r_t()
+			overall_adaption_rate_phase_one = calc_overall_adaption_rate()
+		2:
+			accuracy_rate_phase_two = calc_accuracy_rate()
+			avg_r_t_phase_two = calc_avg_r_t()
+			overall_adaption_rate_phase_two = calc_overall_adaption_rate()
 	
 func end_session():
-	#determine_session_results()
-	pass
 	
-	#save all graph data to user first
-	#User_Data_Manager.save(user)
+	#save session data to user
+	var phase_one_rules = []
+	var phase_two_rules = []
+	for rule_block in session_rule_blocks:
+		var trials = []
+		for trial in rule_block.block_trials:
+			trials.append(user.create_wcst_trial_save(trial.r_t, trial.successful))
+		match rule_block.phase:
+			1:
+				phase_one_rules.append(user.create_rule_dict(rule_block.adaption_rate,trials))
+			2:
+				phase_two_rules.append(user.create_rule_dict(rule_block.adaption_rate,trials))
+	var p_one_dict = user.create_phase_dict(phase_one_rules,accuracy_rate_phase_one,avg_r_t_phase_one,overall_adaption_rate_phase_one)
+	var p_two_dict = user.create_phase_dict(phase_two_rules,accuracy_rate_phase_two,avg_r_t_phase_two,overall_adaption_rate_phase_two)
+	user.save_phase_data(p_one_dict,p_two_dict)
 	
 #unc determine_phase_results():
 #	calc_accuracy_rate()
@@ -100,7 +119,7 @@ func calc_accuracy_rate():
 	for rule_block in session_rule_blocks:
 		tot_correct += rule_block.get_accuracy()
 		total += rule_block.size() #or get_length works too
-	accuracy_rate = float(tot_correct)/float(total)
+	var accuracy_rate = float(tot_correct)/float(total)
 	return accuracy_rate
 	
 func calc_avg_r_t():
@@ -109,14 +128,14 @@ func calc_avg_r_t():
 	for rule_block in session_rule_blocks:
 		tot_time += rule_block.get_rts_total()
 		num_trials += rule_block.size()  #or get_length works too
-	avg_r_t = float(tot_time)/float(num_trials)
+	var avg_r_t = float(tot_time)/float(num_trials)
 	return avg_r_t
 	
 func calc_overall_adaption_rate():
 	var a_rate_tot = 0
 	for rule_block in session_rule_blocks:
 		a_rate_tot += rule_block.adaption_rate
-	overall_adaption_rate = float(a_rate_tot)/float(session_rule_blocks.size())
+	var overall_adaption_rate = float(a_rate_tot)/float(session_rule_blocks.size())
 	return overall_adaption_rate
 
 #getters

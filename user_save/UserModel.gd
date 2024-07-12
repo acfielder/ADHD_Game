@@ -6,15 +6,13 @@ class_name UserModel
 #~BEGIN WCST VARS
 #overall
 @export var session_count_wcst : int = 0
-@export var accuracy_rate : float
-@export var avg_r_t : float
-@export var adaption_rate : float
+@export var accuracy_rate : float = -1
+@export var avg_r_t : float = -1
+@export var adaption_rate : float = -1
 
 #phases
 @export var phase_one_data : Array = []
 @export var phase_two_data : Array = []
-#all phase data
-@export var all_block_data : Dictionary = {} #setup like {1:{1:[],2:[]},2:{1:[],2:[]},3:{1:[],2:[]},4:{1:[],2:[]}} where its each session and within there is phase one and two data
 
 #~END WCST VARS~
 
@@ -65,9 +63,21 @@ class_name UserModel
 #~END CBTT VARS~
 
 #~BEGIN WCST FUNCS
-func create_wcst_trial_save():
-	pass
-
+func create_wcst_trial_save(r_t: float, successful: bool):
+	var trial_dict = {"reaction time": r_t, "successful": int(successful)}
+	return trial_dict
+	
+func create_rule_dict(adaption_rate: float, trials: Array):
+	var rule_dict = {"adaption rate": adaption_rate, "trials": trials}
+	return rule_dict
+	
+func create_phase_dict(rule_blocks: Array, accuracy_rate: float, avg_r_t: float, adaption_rate: float):
+	var phase_dict = {"rule blocks": rule_blocks, "accuracy rate": accuracy_rate, "avg_r_t": avg_r_t, "adaption rate": adaption_rate}
+	return phase_dict
+	
+func save_phase_data(phase_one: Dictionary, phase_two: Dictionary):
+	phase_one_data.append(phase_one)
+	phase_two_data.append(phase_two)
 #~END WCST FUNCS~
 
 #~BEGIN STOP-GO FUNCS~
@@ -199,6 +209,11 @@ func reset_cbtt_data():
 	levels_data = {1:level_one_data, 2:level_two_data, 3:level_three_data, 4:level_four_data, 5:level_five_data}
 
 func reset_wcst_data():
-	pass
+	session_count_wcst = 0
+	accuracy_rate = -1
+	avg_r_t = -1
+	adaption_rate = -1
+	phase_one_data = []
+	phase_two_data = []
 
 #~END RESETING FUNCS~	

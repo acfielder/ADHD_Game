@@ -42,6 +42,9 @@ func _process(delta):
 	pass
 
 
+func update_visual_info():
+	pass
+
 #starting point for when a card press is detected
 func _card_press_detected(card):
 	wcst_controller.card_sort_attempt_detected(card.get_card_info_string())

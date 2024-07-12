@@ -73,7 +73,7 @@ func check_for_next_trial():
 			if model.current_phase < 2:
 				end_phase_one()
 			else:
-				end_session()
+				end_phase_two()
 	update_visuals()
 	
 	
@@ -90,6 +90,7 @@ func end_phase_one():
 func end_phase_two():
 	view.end_phase_two()
 	model.end_phase()
+	end_session()
 	
 func update_visuals():
 	pass
