@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ea52hs05k8av"
-path="res://.godot/imported/card_back.png-477d6a464dd25a8b74a6a66aa6f8235d.ctex"
+uid="uid://o1rg3vqr2ox8"
+path="res://.godot/imported/blue_circle_three.png-e1cc3f70ede7f0b4fe00949fb71b2a41.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/WCST/cards/card_back.png"
-dest_files=["res://.godot/imported/card_back.png-477d6a464dd25a8b74a6a66aa6f8235d.ctex"]
+source_file="res://Art/WCST/cards/blue_circle_three.png"
+dest_files=["res://.godot/imported/blue_circle_three.png-e1cc3f70ede7f0b4fe00949fb71b2a41.ctex"]
 
 [params]
 

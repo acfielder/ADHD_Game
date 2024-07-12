@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wqc06x36tqee"
-path="res://.godot/imported/notecard.png-9357509c02673f469910a10dfcf81c6d.ctex"
+uid="uid://b8oo16hmfckbk"
+path="res://.godot/imported/purple_circle_one.png-cd0137e047e2ae13dc3ba9522a61bfd2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/WCST/notecard.png"
-dest_files=["res://.godot/imported/notecard.png-9357509c02673f469910a10dfcf81c6d.ctex"]
+source_file="res://Art/WCST/cards/purple_circle_one.png"
+dest_files=["res://.godot/imported/purple_circle_one.png-cd0137e047e2ae13dc3ba9522a61bfd2.ctex"]
 
 [params]
 

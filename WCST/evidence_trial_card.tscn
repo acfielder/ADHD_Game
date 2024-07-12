@@ -1,7 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://0kilfxylb0sh"]
 
 [ext_resource type="Script" path="res://evidence_trial_card.gd" id="1_6ipae"]
-[ext_resource type="Texture2D" uid="uid://ea52hs05k8av" path="res://Art/WCST/cards/card_back.png" id="2_bugbj"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pm7iq"]
+load_path = "res://.godot/imported/card_back.png-477d6a464dd25a8b74a6a66aa6f8235d.ctex"
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_6ipae")
@@ -9,4 +11,4 @@ script = ExtResource("1_6ipae")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(91, 119)
 scale = Vector2(0.23, 0.23)
-texture = ExtResource("2_bugbj")
+texture = SubResource("CompressedTexture2D_pm7iq")

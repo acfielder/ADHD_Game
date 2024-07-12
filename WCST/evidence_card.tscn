@@ -1,7 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://opf7a7arsd0d"]
 
 [ext_resource type="Script" path="res://WCST/evidence_card.gd" id="1_nfmdb"]
-[ext_resource type="Texture2D" uid="uid://ea52hs05k8av" path="res://Art/WCST/cards/card_back.png" id="2_r2fqe"]
 
 [sub_resource type="Theme" id="Theme_6uwnr"]
 
@@ -14,6 +13,9 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hp4ev"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eqkiw"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pm7iq"]
+load_path = "res://.godot/imported/card_back.png-477d6a464dd25a8b74a6a66aa6f8235d.ctex"
 
 [node name="EvidenceCard" type="Node2D"]
 script = ExtResource("1_nfmdb")
@@ -33,6 +35,6 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_eqkiw")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(98, 122)
 scale = Vector2(0.23, 0.23)
-texture = ExtResource("2_r2fqe")
+texture = SubResource("CompressedTexture2D_pm7iq")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

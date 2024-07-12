@@ -12,5 +12,5 @@ func give_card_texture(png_path: String):
 	#this may need to be more complex so that the base are dynamic but always fit certain requirements
 
 func flip_card_face_down():
-	var texture = ResourceLoader.load("res://Art/WCST/cards/card_back.png")
+	var texture = ResourceLoader.load("res://Art/WCST/card_back.png")
 	$Sprite2D.texture = texture

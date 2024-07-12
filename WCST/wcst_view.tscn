@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dm4kiniqp4tys" path="res://Art/WCST/side_of_table.png" id="2_kqyw4"]
 [ext_resource type="PackedScene" uid="uid://0kilfxylb0sh" path="res://WCST/evidence_trial_card.tscn" id="3_p7hyo"]
 [ext_resource type="Texture2D" uid="uid://bcc31wbdp4r00" path="res://Art/WCST/speech_bubble.png" id="4_d3xx7"]
-[ext_resource type="Texture2D" uid="uid://wqc06x36tqee" path="res://Art/WCST/notecard.png" id="6_oam6v"]
+[ext_resource type="Texture2D" uid="uid://wqc06x36tqee" path="res://Art/WCST/cards/notecard.png" id="6_oam6v"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_kjtxl")

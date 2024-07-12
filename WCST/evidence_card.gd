@@ -78,3 +78,5 @@ func get_card_info_string() -> Array:
 
 func _on_button_pressed():
 	emit_signal("card_pressed",self)
+	
+
