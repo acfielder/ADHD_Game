@@ -6,9 +6,14 @@ class_name UserModel
 #~BEGIN WCST VARS
 #overall
 @export var session_count_wcst : int = 0
-@export var accuracy_rate : float = -1
-@export var avg_r_t : float = -1
-@export var adaption_rate : float = -1
+#@export var accuracy_rate : float = -1
+#@export var avg_r_t : float = -1
+#@export var adaption_rate : float = -1
+
+@export var accuracy_rate : Dictionary = {"all rates": 0, "total phases": 0, "overall accuracy rate": 0}
+@export var avg_r_t : Dictionary = {"all averages": 0, "total phases": 0, "overall average RT": 0}
+@export var adaption_rate : Dictionary = {"all rates": 0, "total phases": 0, "overall adaption rate": 0}
+#trials can still save overall pieces, but these are the entire history overalls
 
 #phases
 @export var phase_one_data : Array = []
@@ -78,6 +83,23 @@ func create_phase_dict(rule_blocks: Array, accuracy_rate: float, avg_r_t: float,
 func save_phase_data(phase_one: Dictionary, phase_two: Dictionary):
 	phase_one_data.append(phase_one)
 	phase_two_data.append(phase_two)
+	
+func update_accuracy_rate(phase_accuracy_rate: float):
+	accuracy_rate["all rates"] += phase_accuracy_rate
+	accuracy_rate["total phases"] += 1
+	accuracy_rate["overall accuracy rate"] = float(accuracy_rate.get("all rates"))/float(accuracy_rate.get("total phases"))
+	
+func update_avg_rt(phase_avg_rt: float):
+	avg_r_t["all averages"] += phase_avg_rt
+	avg_r_t["total phases"] += 1
+	avg_r_t["overall average RT"] = float(avg_r_t.get("all averages")) / float(avg_r_t.get("total phases"))
+
+func update_adaption_rate(phase_adaption_rate: float):
+	adaption_rate["all rates"] += phase_adaption_rate
+	adaption_rate["total phases"] += 1
+	adaption_rate["overall adaption rate"] = float(accuracy_rate.get("all rates")) / float(accuracy_rate.get("total phases"))
+	
+
 #~END WCST FUNCS~
 
 #~BEGIN STOP-GO FUNCS~
@@ -210,9 +232,9 @@ func reset_cbtt_data():
 
 func reset_wcst_data():
 	session_count_wcst = 0
-	accuracy_rate = -1
-	avg_r_t = -1
-	adaption_rate = -1
+	accuracy_rate = {"all rates": 0, "total phases": 0, "overall accuracy rate": 0}
+	avg_r_t = {"all averages": 0, "total phases": 0, "overall average RT": 0}
+	adaption_rate = {"correct": 0, "adaption sorts": 0, "overall adaption rate": 0}
 	phase_one_data = []
 	phase_two_data = []
 

@@ -3,8 +3,8 @@ class_name evidence_card
 
 signal card_pressed
 
-enum Colors {GREEN, BLUE, PURPLE}
-enum Shapes {CIRCLE, SQUARE, TRIANGLE}
+enum Colors {GREEN, BLUE, PURPLE, ORANGE}
+enum Shapes {CIRCLE, SQUARE, TRIANGLE, STAR}
 enum Counts {ONE, TWO, THREE, FOUR}
 
 const COLORS_STR = {
@@ -43,10 +43,10 @@ func _ready():
 		flip_card_face_down()
 		await get_tree().create_timer(.5).timeout
 		count -= 1
-	while count > -5:
-		choose_set_properties("three")
-		print(get_card_info_string())
-		count -= 1
+	#while count > -5:
+	#	choose_set_properties("three")
+	#	print(get_card_info_string())
+	#	count -= 1
 	
 
 
@@ -59,7 +59,8 @@ func flip_card_face_down():
 	var texture = ResourceLoader.load("res://Art/WCST/cards/card_back.png")
 	$Sprite2D.texture = texture
 
-func choose_set_properties(count_in: String):
+#update to use parameters
+func choose_set_properties(count_in: String, shape_in: String, color_in: String):
 	count = COUNTS_STR.find_key(count_in)
 	var shape_keys = SHAPES_STR.keys()
 	shape = shape_keys.pick_random()

@@ -107,11 +107,16 @@ func end_session():
 	var p_two_dict = user.create_phase_dict(phase_two_rules,accuracy_rate_phase_two,avg_r_t_phase_two,overall_adaption_rate_phase_two)
 	user.save_phase_data(p_one_dict,p_two_dict)
 	
-#unc determine_phase_results():
-#	calc_accuracy_rate()
-#	calc_avg_r_t()
-#	calc_overall_adaption_rate()
-
+	user.update_accuracy_rate(accuracy_rate_phase_one)
+	user.update_accuracy_rate(accuracy_rate_phase_two)
+	user.update_adaption_rate(overall_adaption_rate_phase_one)
+	user.update_adaption_rate(overall_adaption_rate_phase_two)
+	user.update_avg_rt(avg_r_t_phase_one)
+	user.update_avg_rt(avg_r_t_phase_two)
+	
+	
+	User_Data_Manager.save(user)
+	
 
 func calc_accuracy_rate():
 	var tot_correct = 0

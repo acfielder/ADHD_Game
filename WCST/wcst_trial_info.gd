@@ -1,20 +1,22 @@
 extends Node
 class_name wcstTrialInfo
 
-enum Colors {GREEN, BLUE, PURPLE}
-enum Shapes {CIRCLE, SQUARE, TRIANGLE}
+enum Colors {GREEN, BLUE, PURPLE, ORANGE}
+enum Shapes {CIRCLE, SQUARE, TRIANGLE, STAR}
 enum Counts {ONE, TWO, THREE, FOUR}
 
 const COLORS_STR = {
 	Colors.GREEN: "green",
 	Colors.BLUE: "blue",
 	Colors.PURPLE: "purple",
+	Colors.ORANGE: "orange"
 }
 
 const SHAPES_STR = {
 	Shapes.CIRCLE : "circle",
 	Shapes.SQUARE : "square",
-	Shapes.TRIANGLE : "triangle"
+	Shapes.TRIANGLE : "triangle",
+	Shapes.STAR : "star"
 }
 
 const COUNTS_STR = {
@@ -55,8 +57,8 @@ func set_card_type(phase: int):
 			rand_color = rng.randi_range(0, 2)
 			rand_count = rng.randi_range(0, 2)	
 		2:
-			rand_shape = rng.randi_range(0, 2)
-			rand_color = rng.randi_range(0, 2)
+			rand_shape = rng.randi_range(0, 3)#become 3
+			rand_color = rng.randi_range(0, 3)#become 3
 			rand_count = rng.randi_range(0, 3)
 	shape = Shapes.values()[rand_shape]
 	print(shape)

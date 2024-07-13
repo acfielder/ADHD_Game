@@ -52,24 +52,56 @@ func _card_press_detected(card):
 	
 #choose the card arts to be passed to the base cards to set their textures
 func set_base_cards(phase: int):
-	var vals
-	$base_card_1.choose_set_properties("one")
-	vals = $base_card_1.get_card_info_string()
-	$base_card_1.give_card_texture(create_art_string(vals))
-	
-	$base_card_2.choose_set_properties("two")
-	vals = $base_card_2.get_card_info_string()
-	$base_card_2.give_card_texture(create_art_string(vals))
-	
-	$base_card_3.choose_set_properties("three")
-	vals = $base_card_3.get_card_info_string()
-	$base_card_3.give_card_texture(create_art_string(vals))
-	
+	if phase == 1:
+		var vals
+		$base_card_1.choose_set_properties("one","circle","green")
+		vals = $base_card_1.get_card_info_string()
+		$base_card_1.give_card_texture(create_art_string(vals))
+		
+		$base_card_2.choose_set_properties("two","square","blue")
+		vals = $base_card_2.get_card_info_string()
+		$base_card_2.give_card_texture(create_art_string(vals))
+		
+		$base_card_3.choose_set_properties("three","triangle","purple")
+		vals = $base_card_3.get_card_info_string()
+		$base_card_3.give_card_texture(create_art_string(vals))
+		
 	if phase == 2:
-		$base_card_4.show()
-		$base_card_4.choose_set_properties("four")
+		var vals
+		$base_card_1.choose_set_properties("one","square","green")
+		vals = $base_card_1.get_card_info_string()
+		$base_card_1.give_card_texture(create_art_string(vals))
+		
+		$base_card_2.choose_set_properties("two","star","blue")
+		vals = $base_card_2.get_card_info_string()
+		$base_card_2.give_card_texture(create_art_string(vals))
+		
+		$base_card_3.choose_set_properties("three","circle","orange")
+		vals = $base_card_3.get_card_info_string()
+		$base_card_3.give_card_texture(create_art_string(vals))
+		
+		$base_card_4.choose_set_properties("four","triangle","purple")
 		vals = $base_card_4.get_card_info_string()
 		$base_card_4.give_card_texture(create_art_string(vals))
+	
+	#var vals
+	#$base_card_1.choose_set_properties("one")
+	#vals = $base_card_1.get_card_info_string()
+	#$base_card_1.give_card_texture(create_art_string(vals))
+	
+	#$base_card_2.choose_set_properties("two")
+	#vals = $base_card_2.get_card_info_string()
+	#$base_card_2.give_card_texture(create_art_string(vals))
+	
+	#$base_card_3.choose_set_properties("three")
+	#vals = $base_card_3.get_card_info_string()
+	#$base_card_3.give_card_texture(create_art_string(vals))
+	
+	#if phase == 2:
+	#	$base_card_4.show()
+	#	$base_card_4.choose_set_properties("four")
+	#	vals = $base_card_4.get_card_info_string()
+	#	$base_card_4.give_card_texture(create_art_string(vals))
 
 func create_art_string(info: Array):
 	return "res://Art/WCST/cards/" + info[0] + "_" + info[1] + "_" + info[2] + ".png"
