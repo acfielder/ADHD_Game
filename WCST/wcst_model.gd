@@ -8,8 +8,9 @@ var session_rule_blocks : Array[wcstRuleBlock] = [] # each holds all trials with
 var current_trial : int = 0
 var current_rule : int = 0
 var current_phase : int = 0
-var phase_length : int = 6 #unsure how long each should be (theres two, not doing a full session length as both of these together tell you that)
-var rule_length : int = 10
+var phase_length : int = 2 #should depend on how many blocks are in the phase and based on trials
+#above was 6, notes above may also change it
+var rule_length : int = 11
 var current_trial_in_rule : int = 0
 
 var rng = RandomNumberGenerator.new()
@@ -22,6 +23,7 @@ var avg_r_t_phase_two : float
 var overall_adaption_rate_phase_two : float
 
 var score : int = 0
+var best_rt : float = -1
 
 var start_rt
 var final_rt
@@ -31,11 +33,22 @@ func set_user(user_in: UserModel):
 
 func setup_session():
 	#any updating of the game itself based on past results
-	pass
+	update_rule_block_phase_length()
+
+	
+func update_rule_block_phase_length():
+	if user.prev_overall_adaption_rate < 0.50 && rule_length > 5:
+		rule_length = user.prev_rule_block_length - 3
+	elif user.prev_overall_adaption_rate > 0.50 && user.prev_overall_adaption_rate < 0.70:
+		rule_length = user.prev_rule_block_length
+	else:
+		rule_length = user.prev_rule_block_length + 3
+	#phase_length = int(60 / rule_length / 2) #this should be uncommented for the actual game
+	#60 is the number of trials roughly that should be in this session
 	
 #will do thigns based on what the current phase is so that needs to make sure to increase when it needs to
 func setup_phase():
-	current_trial = 1
+	current_trial = 0
 	current_phase += 1
 	match current_phase:
 		1:
@@ -48,19 +61,24 @@ func rule_change():
 	current_rule += 1
 	var rule_block = wcstRuleBlock.new()
 	rule_block.set_phase(current_phase)
-	rule_block.set_rule(session_rule_blocks[-1].get_rule())
+	if current_trial == 0:
+		rule_block.set_rule()
+	else:
+		rule_block.set_rule(session_rule_blocks[-1].get_rule())
 	session_rule_blocks.append(rule_block)
-	current_trial_in_rule += 1
+	current_trial_in_rule = 0
 	
 func setup_trial():
 	#will get the current block and call into that to create it
+	current_trial += 1
 	current_trial_in_rule += 1
 	var trial_info = session_rule_blocks[-1].setup_add_trial() #string of 3 properties
-
+	return trial_info
 
 #when a card is attempted to be sorted
 #the following two will need to go into the block to get the last trial
 func record_check_response(info: Array):
+	calc_update_current_rt()
 	if session_rule_blocks[-1].record_check_response(info):
 		score += 1
 		return true
@@ -72,6 +90,8 @@ func timer_ended_trial():
 func calc_update_current_rt():
 	var rt = final_rt - start_rt
 	session_rule_blocks[-1].update_trial_rt(rt)
+	if rt < best_rt || best_rt == -1:
+		best_rt = rt
 	
 
 func end_trial():
@@ -114,6 +134,9 @@ func end_session():
 	user.update_avg_rt(avg_r_t_phase_one)
 	user.update_avg_rt(avg_r_t_phase_two)
 	
+	var overall_adaption_rate = snappedf(float((float(overall_adaption_rate_phase_one)+float(overall_adaption_rate_phase_two)))/2,0.01)
+	user.update_prev_adaption_rate(overall_adaption_rate)
+	user.prev_rule_block_length = rule_length
 	
 	User_Data_Manager.save(user)
 	
@@ -123,7 +146,7 @@ func calc_accuracy_rate():
 	var total = 0
 	for rule_block in session_rule_blocks:
 		tot_correct += rule_block.get_accuracy()
-		total += rule_block.size() #or get_length works too
+		total += rule_block.block_trials.size() 
 	var accuracy_rate = float(tot_correct)/float(total)
 	return accuracy_rate
 	
@@ -132,7 +155,7 @@ func calc_avg_r_t():
 	var num_trials = 0
 	for rule_block in session_rule_blocks:
 		tot_time += rule_block.get_rts_total()
-		num_trials += rule_block.size()  #or get_length works too
+		num_trials += rule_block.block_trials.size()  
 	var avg_r_t = float(tot_time)/float(num_trials)
 	return avg_r_t
 	
@@ -140,9 +163,12 @@ func calc_overall_adaption_rate():
 	var a_rate_tot = 0
 	for rule_block in session_rule_blocks:
 		a_rate_tot += rule_block.adaption_rate
-	var overall_adaption_rate = float(a_rate_tot)/float(session_rule_blocks.size())
+	var overall_adaption_rate = float(a_rate_tot)/float(phase_length)
 	return overall_adaption_rate
 
 #getters
 func get_if_trial_pressed():
 	return session_rule_blocks[-1].get_if_pressed()
+	
+func get_current_rule_string():
+	return session_rule_blocks[-1].get_rule_string()

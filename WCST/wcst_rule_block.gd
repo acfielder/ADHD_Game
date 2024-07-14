@@ -6,6 +6,8 @@ var block_trials : Array = []
 enum Rules {SHAPE,COLOR,COUNT}
 var rule : Rules
 
+const RULES_STR : Dictionary = {Rules.SHAPE: "Shape", Rules.COLOR: "Color", Rules.COUNT: "Count"}
+
 var adaption_rate : float
 
 var phase : int
@@ -44,7 +46,7 @@ func _ready():
 func set_phase(phase_in: int):
 	phase = phase_in
 
-func set_rule(prev_rule: Rules):
+func set_rule(prev_rule : Rules = Rules.SHAPE):
 	rule = prev_rule
 	while rule == prev_rule:
 		var rule_num = rng.randi_range(0, 2)
@@ -117,6 +119,9 @@ func get_length():
 	
 func get_rule() -> Rules:
 	return rule
+	
+func get_rule_string():
+	return RULES_STR[rule]
 	
 func get_if_pressed():
 	return block_trials[-1].sort_press

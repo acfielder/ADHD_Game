@@ -11,12 +11,14 @@ const COLORS_STR = {
 	Colors.GREEN: "green",
 	Colors.BLUE: "blue",
 	Colors.PURPLE: "purple",
+	Colors.ORANGE: "orange"
 }
 
 const SHAPES_STR = {
 	Shapes.CIRCLE : "circle",
 	Shapes.SQUARE : "square",
-	Shapes.TRIANGLE : "triangle"
+	Shapes.TRIANGLE : "triangle",
+	Shapes.STAR : "star"
 }
 
 const COUNTS_STR = {
@@ -34,20 +36,20 @@ var count: Counts
 func _ready():
 	
 	#visual testing
-	var count = 4
-	while count >2:
-		give_card_texture("res://Art/WCST/cards/card_blue_circle_two.png")
-		await get_tree().create_timer(.5).timeout
-		give_card_texture("res://Art/WCST/cards/card_purple_square_three.png")
-		await get_tree().create_timer(.5).timeout
-		flip_card_face_down()
-		await get_tree().create_timer(.5).timeout
-		count -= 1
+	#var count = 4
+	#while count >2:
+	#	give_card_texture("res://Art/WCST/cards/blue_circle_two.png")
+	#	await get_tree().create_timer(.5).timeout
+	#	give_card_texture("res://Art/WCST/cards/purple_square_three.png")
+	#	await get_tree().create_timer(.5).timeout
+	#	flip_card_face_down()
+	#	await get_tree().create_timer(.5).timeout
+	#	count -= 1
 	#while count > -5:
 	#	choose_set_properties("three")
 	#	print(get_card_info_string())
 	#	count -= 1
-	
+	pass
 
 
 func give_card_texture(png_path: String):
@@ -56,16 +58,18 @@ func give_card_texture(png_path: String):
 	#save the enum for what the card is	
 
 func flip_card_face_down():
-	var texture = ResourceLoader.load("res://Art/WCST/cards/card_back.png")
+	var texture = ResourceLoader.load("res://Art/WCST/card_back.png")
 	$Sprite2D.texture = texture
 
 #update to use parameters
 func choose_set_properties(count_in: String, shape_in: String, color_in: String):
 	count = COUNTS_STR.find_key(count_in)
-	var shape_keys = SHAPES_STR.keys()
-	shape = shape_keys.pick_random()
-	var color_keys = COLORS_STR.keys()
-	color = color_keys.pick_random()
+	shape = SHAPES_STR.find_key(shape_in)
+	color = COLORS_STR.find_key(color_in)
+	#var shape_keys = SHAPES_STR.keys()
+	#shape = shape_keys.pick_random()
+	#var color_keys = COLORS_STR.keys()
+	#color = color_keys.pick_random()
 
 #string of 3 info about physical card - color, shape, count
 func get_card_info_string() -> Array: 

@@ -61,7 +61,6 @@ func set_card_type(phase: int):
 			rand_color = rng.randi_range(0, 3)#become 3
 			rand_count = rng.randi_range(0, 3)
 	shape = Shapes.values()[rand_shape]
-	print(shape)
 	color = Colors.values()[rand_color]
 	count = Counts.values()[rand_count]
 

@@ -33,17 +33,27 @@ func _ready():
 	timer = $Timer
 	
 	card_art = load_cards("res://Art/WCST/cards")
-
-
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+	
+	var to_call: Callable = response_timer_timeout
+	timer.timeout.connect(to_call)
 
 
 func update_visual_info():
-	pass
+	$session_info/Score.text = "Score: " + str(wcst_controller.get_score())
+	$session_info/Phase.text = "Phase: " + str(wcst_controller.get_phase())
+	$session_info2/Trial.text = "Trial: " + str(wcst_controller.get_trial())
+	$session_info2/BestRT.text = "Best RT: " + str(wcst_controller.get_best_rt())
+	
+func update_rule():
+	var rule_text = wcst_controller.get_current_rule_string()
+	$RuleCard/Label.text = rule_text
+	match rule_text:
+		"Shape":
+			$RuleCard/RuleIcon.texture = load("res://Art/WCST/shape_outline.png")
+		"Color":
+			$RuleCard/RuleIcon.texture = load("res://Art/WCST/color_splat.png")
+		"Count":
+			$RuleCard/RuleIcon.texture = load("res://Art/WCST/number_symbol.png")
 
 #starting point for when a card press is detected
 func _card_press_detected(card):
@@ -109,7 +119,7 @@ func create_art_string(info: Array):
 #set the texture of the trial card
 func set_trial_card_texture(info: Array):
 	var path = create_art_string(info)
-	$trial_card.set_texture(path)
+	$trial_card.give_card_texture(path)
 	return path
 	
 func give_phase_instruction(phase: int):
@@ -122,16 +132,18 @@ func give_phase_instruction(phase: int):
 	await get_tree().create_timer(2).timeout
 	$SpeechBubble.hide()
 	
+func prompt_phase_one():
+	$PhaseBegin1.show()
 	
 func setup_phase_one():
 	#this can be anything specific to the phase
 	$base_card_4.hide()
-	flip_cards_to_back()
+	set_base_cards(1)
 	await give_phase_instruction(1)
 	
 func end_phase_one():
 	flip_cards_to_back()
-	$PhaseBegin.show()
+	$PhaseBegin2.show()
 	#display a feedback of sorts?
 	
 	#ideally cards would flip away at end of phase 1
@@ -139,6 +151,7 @@ func setup_phase_two():
 	$base_card_4.show()
 	flip_cards_to_back()
 	await give_phase_instruction(2)
+	set_base_cards(2)
 
 #ends the second phase 
 func end_phase_two():
@@ -147,11 +160,12 @@ func end_phase_two():
 #may not be much here as end phase two covers a lot
 func end_session():
 	flip_cards_to_back()
-	pass
+
 	
 func flip_cards_to_back():
 	for card in base_cards:
-		card.give_card_texture("res://Art/WCST/cards/card_back.png")
+		card.give_card_texture("res://Art/WCST/card_back.png")
+	$trial_card.give_card_texture("res://Art/WCST/card_back.png")
 	
 func display_rule(rule: String):
 	$RuleCard/Label.text = "Rule:\n" + rule
@@ -170,16 +184,16 @@ func display_speech_feedback(feedback_type: int):
 			$SpeechBubble/Feedback.text = "Wait! we needed that!"
 		4: #correctly set aside
 			$SpeechBubble/Feedback.text = "Good work, we don't\nneed that right now"	
-	await get_tree().create_timer(2).timeout
+	await get_tree().create_timer(1).timeout
 	$SpeechBubble.hide()
 	
 	
 func create_run_timer(duration: float):
 	if timer.time_left > 0:
 		timer.stop()
-	var to_call: Callable = response_timer_timeout
+	#var to_call: Callable = response_timer_timeout
 	timer.set_wait_time(duration)
-	timer.timeout.connect(to_call)
+	#timer.timeout.connect(to_call)
 	timer.start()
 
 

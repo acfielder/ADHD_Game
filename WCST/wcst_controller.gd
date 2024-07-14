@@ -21,22 +21,36 @@ func _init(view_in: wcstView, user_in: UserModel):
 func begin_session():
 	model.setup_session()
 	await view.give_instructions() #needs drawn out
-	begin_phase_one()
+	#begin_phase_one()
+	view.prompt_phase_one()
+
 	
 func begin_trial():
+	var trial_card_info = model.setup_trial()
+	view.set_trial_card_texture(trial_card_info)
+	view.update_visual_info()
+	state = State.RESPOND
+	if model.current_phase == 1:
+		view.create_run_timer(8)
+	elif model.current_phase == 2:
+		view.create_run_timer(6)
+	model.start_rt = Time.get_ticks_msec()
 	#at end when crd is shown start rt and allow response
 	#at end state = State.RESPOND
 	#model.start_rt = Timer.get_ticks_msec()
-	pass
 	
 func begin_phase_one():
 	model.setup_phase() #increase phase on - starts at 0
 	await view.setup_phase_one()
+	model.rule_change()
+	view.update_rule()
 	begin_trial()
 	
 func begin_phase_two():
 	model.setup_phase() #increase phase on
 	await view.setup_phase_two()
+	model.rule_change()
+	view.update_rule()
 	begin_trial()
 	
 func card_sort_attempt_detected(card_info: Array):
@@ -60,7 +74,8 @@ func give_feedback(feedback_type: int):
 	await view.display_speech_feedback(feedback_type) #should this be await?
 	
 func end_trial():
-	pass
+	view.update_visual_info()
+	check_for_next_trial()
 	
 #moves into a trial or ends session once determines where at in process
 func check_for_next_trial():
@@ -69,6 +84,8 @@ func check_for_next_trial():
 	else:
 		if model.current_rule < model.phase_length:
 			next_rule()
+			view.update_rule()
+			begin_trial()
 		else:
 			if model.current_phase < 2:
 				end_phase_one()
@@ -102,5 +119,21 @@ func end_session():
 	view.end_session()
 
 
+func get_current_rule_string():
+	var rule = model.get_current_rule_string()
+	return rule
+
 func get_if_pressed():
 	return model.get_if_trial_pressed()
+	
+func get_score():
+	return model.score
+	
+func get_phase():
+	return model.current_phase
+	
+func get_trial():
+	return model.current_trial
+	
+func get_best_rt():
+	return model.best_rt

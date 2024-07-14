@@ -6,6 +6,8 @@ class_name UserModel
 #~BEGIN WCST VARS
 #overall
 @export var session_count_wcst : int = 0
+@export var prev_overall_adaption_rate : float = .65
+@export var prev_rule_block_length : int = 11
 #@export var accuracy_rate : float = -1
 #@export var avg_r_t : float = -1
 #@export var adaption_rate : float = -1
@@ -72,12 +74,12 @@ func create_wcst_trial_save(r_t: float, successful: bool):
 	var trial_dict = {"reaction time": r_t, "successful": int(successful)}
 	return trial_dict
 	
-func create_rule_dict(adaption_rate: float, trials: Array):
-	var rule_dict = {"adaption rate": adaption_rate, "trials": trials}
+func create_rule_dict(adaption_rate_in: float, trials: Array):
+	var rule_dict = {"adaption rate": adaption_rate_in, "trials": trials}
 	return rule_dict
 	
-func create_phase_dict(rule_blocks: Array, accuracy_rate: float, avg_r_t: float, adaption_rate: float):
-	var phase_dict = {"rule blocks": rule_blocks, "accuracy rate": accuracy_rate, "avg_r_t": avg_r_t, "adaption rate": adaption_rate}
+func create_phase_dict(rule_blocks: Array, accuracy_rate_in: float, avg_r_t_in: float, adaption_rate_in: float):
+	var phase_dict = {"rule blocks": rule_blocks, "accuracy rate": accuracy_rate_in, "avg_r_t": avg_r_t_in, "adaption rate": adaption_rate_in}
 	return phase_dict
 	
 func save_phase_data(phase_one: Dictionary, phase_two: Dictionary):
@@ -99,6 +101,9 @@ func update_adaption_rate(phase_adaption_rate: float):
 	adaption_rate["total phases"] += 1
 	adaption_rate["overall adaption rate"] = float(accuracy_rate.get("all rates")) / float(accuracy_rate.get("total phases"))
 	
+func update_prev_adaption_rate(prev_ar: float):
+	prev_overall_adaption_rate = prev_ar
+
 
 #~END WCST FUNCS~
 
@@ -234,7 +239,7 @@ func reset_wcst_data():
 	session_count_wcst = 0
 	accuracy_rate = {"all rates": 0, "total phases": 0, "overall accuracy rate": 0}
 	avg_r_t = {"all averages": 0, "total phases": 0, "overall average RT": 0}
-	adaption_rate = {"correct": 0, "adaption sorts": 0, "overall adaption rate": 0}
+	adaption_rate = {"all rates": 0, "total phases": 0, "overall adaption rate": 0}
 	phase_one_data = []
 	phase_two_data = []
 
