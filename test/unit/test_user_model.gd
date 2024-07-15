@@ -88,4 +88,74 @@ func test_increase_SG_level():
 
 #~END STOP GO TESTS~
 
+#~WCST TESTS~
+func test_create_wcst_trial_save():
+	var user = User_Data_Manager.load_resource()
+	user.reset_wcst_data()
+	assert_eq(user.create_wcst_trial_save(456.34,true),{"reaction time": 456.34, "successful": 1})
+	
+func test_create_rule_dict():
+	var user = User_Data_Manager.load_resource()
+	user.reset_wcst_data()
+	assert_eq(user.create_rule_dict(.75,[2,3,4,5]),{"adaption rate": .75,"trials":[2,3,4,5]})#fake trial objs
+	
+func test_create_phase_dict():
+	var user = User_Data_Manager.load_resource()
+	user.reset_wcst_data()
+	assert_eq(user.create_phase_dict([1,2,3,4],0.78,543.6,.46),{"rule blocks": [1,2,3,4], "accuracy rate": 0.78, "avg_r_t": 543.6, "adaption rate": .46})#fake rule blocks
 
+	
+func test_save_phase_data():
+	var user = User_Data_Manager.load_resource()
+	user.reset_wcst_data()
+	user.save_phase_data({"rule blocks": [1,2,3,4], "accuracy rate": 0.78, "avg_r_t": 543.6, "adaption rate": .46},{"rule blocks": [4,3,2,1], "accuracy rate": 0.52, "avg_r_t": 243.7, "adaption rate": .92})
+	assert_eq(user.phase_one_data, [{"rule blocks": [1,2,3,4], "accuracy rate": 0.78, "avg_r_t": 543.6, "adaption rate": .46}])
+	assert_eq(user.phase_two_data, [{"rule blocks": [4,3,2,1], "accuracy rate": 0.52, "avg_r_t": 243.7, "adaption rate": .92}])
+	
+func test_update_accuracy_rate():
+	var user = User_Data_Manager.load_resource()
+	user.reset_wcst_data()
+	user.update_accuracy_rate(.98)
+	assert_eq(user.accuracy_rate["all rates"],.98)
+	assert_eq(user.accuracy_rate["total phases"], 1)
+	assert_eq(user.accuracy_rate["overall accuracy rate"],.98)
+
+	user.update_accuracy_rate(0.72)
+	assert_eq(user.accuracy_rate["all rates"],1.7)
+	assert_eq(user.accuracy_rate["total phases"], 2)
+	assert_eq(user.accuracy_rate["overall accuracy rate"],.85)
+	
+func test_update_avg_rt():
+	var user = User_Data_Manager.load_resource()
+	user.reset_wcst_data()
+	user.update_avg_rt(.45)
+	assert_eq(user.avg_r_t["all averages"],.45)
+	assert_eq(user.avg_r_t["total phases"],1)
+	assert_eq(user.avg_r_t["overall average RT"],.45)
+	
+	user.update_avg_rt(.63)
+	assert_eq(user.avg_r_t["all averages"],1.08)
+	assert_eq(user.avg_r_t["total phases"],2)
+	assert_eq(user.avg_r_t["overall average RT"],.54)
+
+func test_update_adaption_rate():
+	var user = User_Data_Manager.load_resource()
+	user.reset_wcst_data()
+	user.update_adaption_rate(.64)
+	assert_eq(user.adaption_rate["all rates"],.64)
+	assert_eq(user.adaption_rate["total phases"],1)
+	assert_eq(user.adaption_rate["overall adaption rate"],.64)
+	
+	user.update_adaption_rate(.72)
+	assert_eq(user.adaption_rate["all rates"],1.36)
+	assert_eq(user.adaption_rate["total phases"],2)
+	assert_eq(user.adaption_rate["overall adaption rate"],.68)
+	
+func test_update_prev_adaption_rate():
+	var user = User_Data_Manager.load_resource()
+	user.reset_wcst_data()
+	assert_eq(user.prev_overall_adaption_rate,.65)
+	user.update_prev_adaption_rate(.78)
+	assert_eq(user.prev_overall_adaption_rate,.78)
+
+#~END WCST TESTS~

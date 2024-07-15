@@ -89,7 +89,7 @@ func save_phase_data(phase_one: Dictionary, phase_two: Dictionary):
 func update_accuracy_rate(phase_accuracy_rate: float):
 	accuracy_rate["all rates"] += phase_accuracy_rate
 	accuracy_rate["total phases"] += 1
-	accuracy_rate["overall accuracy rate"] = float(accuracy_rate.get("all rates"))/float(accuracy_rate.get("total phases"))
+	accuracy_rate["overall accuracy rate"] = snappedf(float(accuracy_rate.get("all rates"))/float(accuracy_rate.get("total phases")),0.01)
 	
 func update_avg_rt(phase_avg_rt: float):
 	avg_r_t["all averages"] += phase_avg_rt
@@ -99,7 +99,8 @@ func update_avg_rt(phase_avg_rt: float):
 func update_adaption_rate(phase_adaption_rate: float):
 	adaption_rate["all rates"] += phase_adaption_rate
 	adaption_rate["total phases"] += 1
-	adaption_rate["overall adaption rate"] = float(accuracy_rate.get("all rates")) / float(accuracy_rate.get("total phases"))
+	adaption_rate["overall adaption rate"] = snappedf(float(adaption_rate.get("all rates")) / float(adaption_rate.get("total phases")),0.01)
+
 	
 func update_prev_adaption_rate(prev_ar: float):
 	prev_overall_adaption_rate = prev_ar
