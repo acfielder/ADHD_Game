@@ -160,6 +160,12 @@ func end_phase_two():
 #may not be much here as end phase two covers a lot
 func end_session():
 	flip_cards_to_back()
+	var report_load = load("res://Report/Report.tscn")
+	#breakpoint below
+	#var report = report_load.instantiate()
+	#report.position = Vector2(-250,0)
+	#report.setup_report(2,sequence_controller.get_performances(),sequence_controller.get_scores())
+	
 
 	
 func flip_cards_to_back():

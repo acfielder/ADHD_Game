@@ -6,7 +6,8 @@ var game_type : Report_Type
 
 #text info for report, could be in a dict with user so the whole dict is passed and has everything
 var sequence_tracking : Array = ["Sequences completed", "Total correct", "Crimes solved", "Overall Performance"]
-var stop_go : Array = []
+var stop_go_tracking : Array = ["Probability of successful inhibition","Average reaction time", "Stop signal reaction time", "Evidence collected"]
+var wcst_tracking : Array = []
 
 var chosen_texts : Array
 
@@ -31,9 +32,9 @@ func _ready(): #maybe init - takes in values needed for report
 	#take in the above mentioned dict
 	pass
 
-func setup_report(game_type_in: int, performances: Dictionary, scores: Array):
+func setup_report(game_type_in: int, performances: Dictionary, scores: Array, controller):
 	set_game_type(game_type_in)
-	var key = setup_graph(performances)
+	var key = setup_graph(performances,controller)
 	set_tracking_texts()
 	set_scores(scores)
 	setup_graph_key(key)
@@ -66,24 +67,35 @@ func set_scores(scores: Array):
 		position_track_y += 70
 	
 #graph updating logic
-func setup_graph(performances: Dictionary):
-	var colors = [Color(1,0,0),Color(0,1,0),Color(0,0,1)]
-	var per_count = 0
-	var key = {}
+func setup_graph(performances: Dictionary, controller): #controller will come in as whatever game controller it is
+	
 	if game_type == Report_Type.CBTT:
+		var colors = [Color(1,0,0),Color(0,1,0),Color(0,0,1)]
+		var per_count = 0
+		var key = {}
 		$Page2/graph_cont/GraphReport.set_tick_vars(43,26)
-		$Page2/graph_cont/GraphReport.build_graph(3,9,0,1,1)
+		$Page2/graph_cont/GraphReport.build_graph(3,9,0,1,1,"Sequence Length","Sequence Completed")
 		for per in performances:
 			var points = $Page2/graph_cont/GraphReport.determine_line_points_sequence(performances[per])
 			if points != null:
 				$Page2/graph_cont/GraphReport.create_line(points, colors[per_count])
 				key[per] = colors[per_count]
 				per_count += 1
+		return key
 	elif game_type == Report_Type.SG:
-		pass
+		var key = {}
+		$Page2/graph_cont/GraphReport.set_tick_vars((305/controller.get_session_length()),8)
+		$Page2/graph_cont/GraphReport.build_graph(1,controller.get_session_length(),0,1,50, "Stop Go Trials", "Reaction Time")
+		for per in performances:
+			var points = $Page2/graph_cont/GraphReport.determine_line_points_stop_go(performances[per])
+			if points != null:
+				$Page2/graph_cont/GraphReport.create_line(points,Color(0,0,0))
+				key[per] = Color(0,0,0)
+		key["Unsuccessful stop trial"] = Color(1,0,0)#this should be the x
+		return key	
 	elif game_type == Report_Type.WCST:
 		pass
-	return key
+	
 
 func setup_graph_key(keys: Dictionary):
 	var y_coord_counter = 30

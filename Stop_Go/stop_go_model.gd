@@ -32,6 +32,7 @@ var session_score: int = 0 #calculation of how many trials done correctly throug
 
 var session_best_rt: float #the quickest reaction time within the current session
 
+var rt_performances: Array = []
 
 func _init():
 	pass
@@ -149,6 +150,8 @@ func end_trial():
 	update_session_performance()
 	if !session_trials[-1].trial_type:
 		session_last_ssd_score = session_trials[-1].successful
+	if session_trials[-1].go_rt != -1:
+		rt_performances.append(session_trials[-1].go_rt)
 
 	
 func update_session_performance():
@@ -255,6 +258,11 @@ func get_interval_time():
 func get_current_ssd():
 	return session_trials[-1].ssd
 	
+func get_performances():
+	return {"Reaction Times": rt_performances}
+	
+func get_scores():
+	return [session_prob_signal_response,session_go_rt_avg,session_stop_signal_rt,session_score]
 
 #should reset all seeing as this will always be loaded when in showcase, should also be done in other games
 func reset_session():

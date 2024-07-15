@@ -118,3 +118,13 @@ func get_current_level():
 	
 func get_best_RT():
 	return model.session_best_rt
+	
+func get_session_length():
+	return model.session_length
+	
+#report
+func get_performances():
+	return model.get_performances()
+	
+func get_scores():
+	return model.get_scores()

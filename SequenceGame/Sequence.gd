@@ -116,7 +116,7 @@ func display_session_over():
 	var report = report_load.instantiate()
 	#report.set_game_type(0)
 	report.position = Vector2(-250,0)
-	report.setup_report(0,sequence_controller.get_performances(),sequence_controller.get_scores())
+	report.setup_report(0,sequence_controller.get_performances(),sequence_controller.get_scores(),sequence_controller)
 	#report.setup_graph(sequence_controller.get_performances())
 	#report.setup_report()
 	#report.setup_graph(sequence_controller.get_performances())

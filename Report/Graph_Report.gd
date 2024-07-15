@@ -31,10 +31,10 @@ func set_tick_vars(x_tick_int: int, y_tick_int: int):
 	tick_interval_y = y_tick_int
 
 	
-func build_graph(start_x_count: int, x_count_max: int, start_y_count: int, x_count_increase: int, y_count_increase: int):
+func build_graph(start_x_count: int, x_count_max: int, start_y_count: int, x_count_increase: int, y_count_increase: int, x_axis_label: String, y_axis_label: String):
 	add_tick_lines(start_x_count, x_count_max, start_y_count, x_count_increase, y_count_increase) 
 	create_axis_lines()
-	create_axis_labels("Sequence Length","Sequence Completed")
+	create_axis_labels(x_axis_label,y_axis_label)
 
 	#tick_interval, counters-what counting by - need to figure out why those nums for sequence and what should be for stop go
 func add_tick_lines(start_x_count: int, x_count_max: int, start_y_count: int, x_count_increase: int, y_count_increase: int):
@@ -126,6 +126,9 @@ func determine_line_points_sequence(performance: Array):
 			var y = origin.y - (tick_interval_y * performance[length])
 			line_points.append(Vector2(x,y))
 		return line_points
+		
+func determine_line_points_stop_go(performance: Array):
+	pass
 
 func all_zero(array: Array):
 	for item in array:
