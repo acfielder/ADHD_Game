@@ -1,7 +1,7 @@
 extends Node
 class_name wcstRuleBlock
 
-var block_trials : Array = []
+var block_trials : Array = [wcstTrialInfo]
 
 enum Rules {SHAPE,COLOR,COUNT}
 var rule : Rules
@@ -65,10 +65,10 @@ func setup_add_trial():
 #adaption rate for this block - adaption period of 5 trials
 func calc_adaption_rate():
 	var sorted = 0
-	for i in range(3):
+	for i in range(4):
 		if block_trials[i].successful:
 			sorted += 1
-	adaption_rate = float(sorted)/float(4)#correct/adaption period length
+	adaption_rate = float(sorted)/float(5)#correct/adaption period length
 	return adaption_rate
 	
 #when a card is attempted to be sorted

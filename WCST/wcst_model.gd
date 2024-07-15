@@ -50,11 +50,11 @@ func update_rule_block_phase_length():
 func setup_phase():
 	current_trial = 0
 	current_phase += 1
-	match current_phase:
-		1:
-			rule_length = 10
-		2:
-			rule_length = 7
+#	match current_phase:
+#		1:
+#			rule_length = 10
+#		2:
+#			rule_length = 7
 	
 #setup new rule block/end the old one
 func rule_change():
