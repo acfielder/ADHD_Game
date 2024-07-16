@@ -4,7 +4,7 @@ var user: UserModel
 
 var session_trials: Array[StopGoTrial] = [] #list of all trials completed in this session
 
-var session_length: int = 10 #number of trials in a session //maybe like 40? no 70
+var session_length: int = 6 #number of trials in a session //maybe like 40? no 70
 var current_trial : int = 0 #current trial within the session
 var current_level : int = 1 #level of the current session
 var level_length : int = 15 #90
@@ -262,7 +262,14 @@ func get_performances():
 	return {"Reaction Times": rt_performances}
 	
 func get_scores():
-	return [session_prob_signal_response,session_go_rt_avg,session_stop_signal_rt,session_score]
+	var stop_score = 0
+	var go_score = 0
+	for trial in session_trials:
+		if trial.trial_type && trial.successful:
+			go_score += 1
+		elif !trial.trial_type && trial.successful:
+			stop_score += 1
+	return [session_prob_signal_response,session_go_rt_avg,session_stop_signal_rt,go_score,stop_score]
 
 #should reset all seeing as this will always be loaded when in showcase, should also be done in other games
 func reset_session():

@@ -6,7 +6,7 @@ var game_type : Report_Type
 
 #text info for report, could be in a dict with user so the whole dict is passed and has everything
 var sequence_tracking : Array = ["Sequences completed", "Total correct", "Crimes solved", "Overall Performance"]
-var stop_go_tracking : Array = ["Probability of successful inhibition","Average reaction time", "Stop signal reaction time", "Evidence collected"]
+var stop_go_tracking : Array = ["Probability of successful inhibition","Average reaction time", "Stop signal reaction time", "Evidence collected", "Accidents avoided"]
 var wcst_tracking : Array = []
 
 var chosen_texts : Array
@@ -59,7 +59,7 @@ func set_scores(scores: Array):
 	for score in scores:
 		var label = Label.new()
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		label.text = score
+		label.text = str(score)
 		label.position = Vector2(position_track_x,position_track_y)
 		label.set("theme_override_colors/font_color",Color(1,0,0))
 		label.set("theme_override_font_sizes/font_size",20)
@@ -84,14 +84,15 @@ func setup_graph(performances: Dictionary, controller): #controller will come in
 		return key
 	elif game_type == Report_Type.SG:
 		var key = {}
-		$Page2/graph_cont/GraphReport.set_tick_vars((305/controller.get_session_length()),8)
-		$Page2/graph_cont/GraphReport.build_graph(1,controller.get_session_length(),0,1,50, "Stop Go Trials", "Reaction Time")
+		$Page2/graph_cont/GraphReport.set_tick_vars((305/controller.get_performances().size()),8)
+		$Page2/graph_cont/GraphReport.build_graph(1,controller.get_performances().size(),0,1,50, "Stop Go Trials", "Reaction Time")
 		for per in performances:
 			var points = $Page2/graph_cont/GraphReport.determine_line_points_stop_go(performances[per])
 			if points != null:
 				$Page2/graph_cont/GraphReport.create_line(points,Color(0,0,0))
 				key[per] = Color(0,0,0)
 		key["Unsuccessful stop trial"] = Color(1,0,0)#this should be the x
+		key["Incorrect go trial"] = Color(1,1,0)
 		return key	
 	elif game_type == Report_Type.WCST:
 		pass

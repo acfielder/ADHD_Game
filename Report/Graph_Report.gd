@@ -128,7 +128,12 @@ func determine_line_points_sequence(performance: Array):
 		return line_points
 		
 func determine_line_points_stop_go(performance: Array):
-	pass
+	var line_points = []
+	for i in range(performance.size()):
+		var x = origin.x + ((i+1) * tick_interval_x)
+		var y = origin.y - (tick_interval_y * performance[i])
+		line_points.append(Vector2(x,y))
+	return line_points
 
 func all_zero(array: Array):
 	for item in array:
