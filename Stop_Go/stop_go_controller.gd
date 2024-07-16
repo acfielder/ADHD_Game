@@ -126,5 +126,8 @@ func get_session_length():
 func get_performances():
 	return model.get_performances()
 	
+func get_graph_trial_types():
+	return model.get_graph_trial_types()
+	
 func get_scores():
 	return model.get_scores()

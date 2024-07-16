@@ -137,8 +137,8 @@ func end_session():
 	$Player.change_player_state(0)
 	var report_load = load("res://Report/Report.tscn")
 	var report = report_load.instantiate()
-	report.position = Vector2(250,200)
-	report.setup_report(1,stop_go_controller.get_performances(),stop_go_controller.get_scores(),stop_go_controller)
+	report.position = Vector2(325,325)
+	report.setup_report(1,stop_go_controller.get_performances(),stop_go_controller.get_scores(),stop_go_controller,stop_go_controller.get_graph_trial_types())
 	$StopGoHud.add_child(report)
 
 func on_trial_key_press(direction: int):

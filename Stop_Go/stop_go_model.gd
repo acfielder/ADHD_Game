@@ -33,6 +33,8 @@ var session_score: int = 0 #calculation of how many trials done correctly throug
 var session_best_rt: float #the quickest reaction time within the current session
 
 var rt_performances: Array = []
+var rt_trial_types: Dictionary = {}
+var index_rt_trial_types : int = 0
 
 func _init():
 	pass
@@ -152,7 +154,8 @@ func end_trial():
 		session_last_ssd_score = session_trials[-1].successful
 	if session_trials[-1].go_rt != -1:
 		rt_performances.append(session_trials[-1].go_rt)
-
+		rt_trial_types[index_rt_trial_types] = [session_trials[-1].trial_type,session_trials[-1].successful]
+		index_rt_trial_types += 1
 	
 func update_session_performance():
 	if session_trials[-1].successful:
@@ -261,15 +264,30 @@ func get_current_ssd():
 func get_performances():
 	return {"Reaction Times": rt_performances}
 	
+func get_graph_trial_types():
+	return rt_trial_types
+	
 func get_scores():
+	var spsr_percent = snappedf(session_prob_signal_response * 100,0.01)
+	var spsr = str(spsr_percent) + "%"
+	var sg_rt_avg = str(snappedf(session_go_rt_avg,0.01)) + "ms"
+	var sss_rt = str(snappedf(session_stop_signal_rt,0.01)) + "ms"
 	var stop_score = 0
+	var num_stop_trials = 0
 	var go_score = 0
+	var num_go_trials = 0
 	for trial in session_trials:
-		if trial.trial_type && trial.successful:
-			go_score += 1
-		elif !trial.trial_type && trial.successful:
-			stop_score += 1
-	return [session_prob_signal_response,session_go_rt_avg,session_stop_signal_rt,go_score,stop_score]
+		if trial.trial_type:
+			num_go_trials += 1
+			if trial.successful:
+				go_score += 1
+		elif !trial.trial_type:
+			num_stop_trials += 1 
+			if trial.successful:
+				stop_score += 1
+	var go_score_string = str(go_score) + "/" + str(num_go_trials)
+	var stop_score_string = str(stop_score) + "/" + str(num_stop_trials)
+	return [spsr,sg_rt_avg,sss_rt,go_score_string,stop_score_string]
 
 #should reset all seeing as this will always be loaded when in showcase, should also be done in other games
 func reset_session():

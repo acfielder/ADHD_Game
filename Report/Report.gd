@@ -6,7 +6,7 @@ var game_type : Report_Type
 
 #text info for report, could be in a dict with user so the whole dict is passed and has everything
 var sequence_tracking : Array = ["Sequences completed", "Total correct", "Crimes solved", "Overall Performance"]
-var stop_go_tracking : Array = ["Probability of successful inhibition","Average reaction time", "Stop signal reaction time", "Evidence collected", "Accidents avoided"]
+var stop_go_tracking : Array = ["Probability of \nsuccessful inhibition","Average reaction time", "Stop signal reaction time", "Evidence collected", "Accidents avoided"]
 var wcst_tracking : Array = []
 
 var chosen_texts : Array
@@ -19,8 +19,10 @@ func set_game_type(game_type_in: int):
 			chosen_texts = sequence_tracking
 		1:
 			game_type = Report_Type.SG
+			chosen_texts = stop_go_tracking
 		2:
 			game_type = Report_Type.WCST
+			chosen_texts = wcst_tracking
 		_:
 			pass
 
@@ -32,9 +34,9 @@ func _ready(): #maybe init - takes in values needed for report
 	#take in the above mentioned dict
 	pass
 
-func setup_report(game_type_in: int, performances: Dictionary, scores: Array, controller):
+func setup_report(game_type_in: int, performances: Dictionary, scores: Array, controller,trial_types):
 	set_game_type(game_type_in)
-	var key = setup_graph(performances,controller)
+	var key = setup_graph(performances,controller,trial_types)
 	set_tracking_texts()
 	set_scores(scores)
 	setup_graph_key(key)
@@ -59,7 +61,7 @@ func set_scores(scores: Array):
 	for score in scores:
 		var label = Label.new()
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-		label.text = str(score)
+		label.text = score
 		label.position = Vector2(position_track_x,position_track_y)
 		label.set("theme_override_colors/font_color",Color(1,0,0))
 		label.set("theme_override_font_sizes/font_size",20)
@@ -67,7 +69,7 @@ func set_scores(scores: Array):
 		position_track_y += 70
 	
 #graph updating logic
-func setup_graph(performances: Dictionary, controller): #controller will come in as whatever game controller it is
+func setup_graph(performances: Dictionary, controller, trial_types): #controller will come in as whatever game controller it is
 	
 	if game_type == Report_Type.CBTT:
 		var colors = [Color(1,0,0),Color(0,1,0),Color(0,0,1)]
@@ -84,15 +86,21 @@ func setup_graph(performances: Dictionary, controller): #controller will come in
 		return key
 	elif game_type == Report_Type.SG:
 		var key = {}
-		$Page2/graph_cont/GraphReport.set_tick_vars((305/controller.get_performances().size()),8)
-		$Page2/graph_cont/GraphReport.build_graph(1,controller.get_performances().size(),0,1,50, "Stop Go Trials", "Reaction Time")
+		$Page2/graph_cont/GraphReport.set_tick_vars((305/controller.get_performances()["Reaction Times"].size()),15)
+		$Page2/graph_cont/GraphReport.build_graph(0,controller.get_performances()["Reaction Times"].size(),0,1,100, "Stop Go Trials", "Reaction Time")
 		for per in performances:
-			var points = $Page2/graph_cont/GraphReport.determine_line_points_stop_go(performances[per])
-			if points != null:
-				$Page2/graph_cont/GraphReport.create_line(points,Color(0,0,0))
-				key[per] = Color(0,0,0)
-		key["Unsuccessful stop trial"] = Color(1,0,0)#this should be the x
-		key["Incorrect go trial"] = Color(1,1,0)
+			var points = $Page2/graph_cont/GraphReport.determine_line_points_stop_go(performances[per],trial_types)
+			if points[0] != []:
+				$Page2/graph_cont/GraphReport.create_line(points[0],Color(0, 0.392157, 0))
+				key[per] = Color(0, 0.392157, 0)
+			if !points[1].is_empty():
+				for point in points[1]: #stop points
+					$Page2/graph_cont/GraphReport.add_image(point,"res://Art/report/stop_signal.png")
+			if !points[2].is_empty():
+				for point in points[2]: #incorrect direction go points
+					$Page2/graph_cont/GraphReport.add_image(point,"res://Art/report/yield_signal.png")
+		key["Unsuccessful stop trial"] = Color(0.862745, 0.0784314, 0.235294)#this should be the x
+		key["Incorrect go trial"] = Color(0.854902, 0.647059, 0.12549)
 		return key	
 	elif game_type == Report_Type.WCST:
 		pass

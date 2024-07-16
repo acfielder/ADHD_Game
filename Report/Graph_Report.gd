@@ -4,8 +4,8 @@ extends Node2D
 const tick_length = 5
 
 
-var tick_interval_x 
-var tick_interval_y 
+var tick_interval_x : int
+var tick_interval_y : int 
 
 
 var origin = Vector2(20,215)
@@ -42,7 +42,8 @@ func add_tick_lines(start_x_count: int, x_count_max: int, start_y_count: int, x_
 	var x_counter = start_x_count
 	for x in range(65, 370, tick_interval_x):
 		var tick = Line2D.new()
-		tick.points = [Vector2(x, 215 - tick_length), Vector2(x, 215 + tick_length)]
+		tick.points = [Vector2(x, 215 - tick_length), Vector2(x, 215 + tick_length)] #the x values were literally just x
+		print(tick.points)
 		tick.width = 2
 		tick.default_color = Color(0, 0, 0)
 		add_child(tick)
@@ -53,6 +54,7 @@ func add_tick_lines(start_x_count: int, x_count_max: int, start_y_count: int, x_
 			x_counter += x_count_increase
 			label.set_position(Vector2(x - label.get_minimum_size().x / 2, 220))
 			label.set("theme_override_colors/font_color", Color(0,0,0))
+			label.set("theme_override_font_sizes/font_size", 12)
 			add_child(label)
 	
 	#add ticks to y axis
@@ -68,6 +70,7 @@ func add_tick_lines(start_x_count: int, x_count_max: int, start_y_count: int, x_
 		label.text = str(y_counter)
 		label.set_position(Vector2(40,y - label.get_minimum_size().y / 2-3))
 		label.set("theme_override_colors/font_color", Color(0,0,0))
+		label.set("theme_override_font_sizes/font_size", 12)
 		add_child(label)
 		y_counter += y_count_increase
 		
@@ -127,16 +130,33 @@ func determine_line_points_sequence(performance: Array):
 			line_points.append(Vector2(x,y))
 		return line_points
 		
-func determine_line_points_stop_go(performance: Array):
+func determine_line_points_stop_go(performance: Array, trial_types: Dictionary):
 	var line_points = []
+	var stop_points = []
+	var direction_points = []
 	for i in range(performance.size()):
-		var x = origin.x + ((i+1) * tick_interval_x)
-		var y = origin.y - (tick_interval_y * performance[i])
+		var x = origin.x + ((i+1) * tick_interval_x) + (tick_interval_x)
+		var y = origin.y - (tick_interval_y * (performance[i]/100))
 		line_points.append(Vector2(x,y))
-	return line_points
+		var trial = trial_types[i]
+		if trial[0] && !trial[1]:
+			direction_points.append(Vector2(x,y))
+		elif !trial[0] && !trial[1]:
+			stop_points.append(Vector2(x,y))
+		print(line_points)
+		print(stop_points)
+		print(direction_points)
+	return [line_points, stop_points, direction_points]
 
 func all_zero(array: Array):
 	for item in array:
 		if item != 0:
 			return false
 	return true
+	
+func add_image(point: Vector2,path: String):
+	var image = Sprite2D.new()
+	image.texture = load(path)
+	image.position = point
+	image.scale = Vector2(0.01, 0.01)
+	add_child(image)
