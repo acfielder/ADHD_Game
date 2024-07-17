@@ -1,0 +1,124 @@
+[gd_scene load_steps=5 format=3 uid="uid://cuq3u4jbmy4a8"]
+
+[ext_resource type="Texture2D" uid="uid://cbgqlpnc7rjnu" path="res://Art/demonstration/cbtt_thumbnail.jpeg" id="1_8bqqn"]
+[ext_resource type="Script" path="res://mini_game_demonstration/mini_game_demonstration.gd" id="1_h0elr"]
+[ext_resource type="Texture2D" uid="uid://cjt5kepgac3q3" path="res://Art/demonstration/stop_go_thumbnail.jpeg" id="2_yeij7"]
+[ext_resource type="Texture2D" uid="uid://bu1ch3fxc3l53" path="res://Art/demonstration/wcst_thumbnail.jpeg" id="3_7bgto"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_h0elr")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1160.0
+offset_bottom = 655.0
+color = Color(0.696871, 0.552061, 0.369059, 1)
+
+[node name="CBTT_Image" type="Sprite2D" parent="."]
+position = Vector2(213, 322)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_8bqqn")
+
+[node name="CBTT_Title" type="Label" parent="."]
+offset_left = 79.0
+offset_top = 113.0
+offset_right = 351.0
+offset_bottom = 200.0
+theme_override_font_sizes/font_size = 30
+text = "Corsi Block
+Tapping Task"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CBTT_Button_Back" type="ColorRect" parent="."]
+offset_left = 95.0
+offset_top = 453.0
+offset_right = 335.0
+offset_bottom = 571.0
+
+[node name="CBTT_StartGame" type="Button" parent="CBTT_Button_Back"]
+offset_left = 11.0
+offset_top = 12.0
+offset_right = 229.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Start Game"
+
+[node name="Stop_Go_Button_Back" type="ColorRect" parent="."]
+offset_left = 458.0
+offset_top = 361.0
+offset_right = 698.0
+offset_bottom = 479.0
+
+[node name="Stop_Go_StartGame" type="Button" parent="Stop_Go_Button_Back"]
+offset_left = 11.0
+offset_top = 12.0
+offset_right = 229.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Start Game"
+
+[node name="WCST_Button_Back" type="ColorRect" parent="."]
+offset_left = 847.0
+offset_top = 451.0
+offset_right = 1087.0
+offset_bottom = 569.0
+
+[node name="WCST_StartGame" type="Button" parent="WCST_Button_Back"]
+offset_left = 11.0
+offset_top = 12.0
+offset_right = 229.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/icon_hover_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Start Game"
+
+[node name="Stop_Go_Image" type="Sprite2D" parent="."]
+position = Vector2(583, 220)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_yeij7")
+
+[node name="Stop_Go_Title" type="Label" parent="."]
+offset_left = 479.0
+offset_top = 39.0
+offset_right = 673.0
+offset_bottom = 81.0
+theme_override_font_sizes/font_size = 30
+text = "Stop Go Task"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WCST_Image" type="Sprite2D" parent="."]
+position = Vector2(959, 321)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_7bgto")
+
+[node name="WCST_Title" type="Label" parent="."]
+offset_left = 863.0
+offset_top = 114.0
+offset_right = 1084.0
+offset_bottom = 201.0
+theme_override_font_sizes/font_size = 30
+text = "Wisconsin Card
+Sorting Task"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Reser_User_Cont" type="ColorRect" parent="."]
+offset_left = 422.0
+offset_top = 521.0
+offset_right = 745.0
+offset_bottom = 623.0
+color = Color(0.263399, 0.39817, 0.252766, 1)
+
+[node name="Reset_User" type="Button" parent="Reser_User_Cont"]
+offset_left = 9.0
+offset_top = 11.0
+offset_right = 316.0
+offset_bottom = 93.0
+theme_override_font_sizes/font_size = 25
+text = "Reset User"

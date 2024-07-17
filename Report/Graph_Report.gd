@@ -8,7 +8,7 @@ var tick_interval_x : int
 var tick_interval_y : int 
 
 
-var origin = Vector2(20,215)
+var origin = Vector2(65,215) #x was 20
 
 func _ready():
 	#var colors = [Color(1,0,0),Color(0,1,0),Color(0,0,1)]
@@ -43,7 +43,6 @@ func add_tick_lines(start_x_count: int, x_count_max: int, start_y_count: int, x_
 	for x in range(65, 370, tick_interval_x):
 		var tick = Line2D.new()
 		tick.points = [Vector2(x, 215 - tick_length), Vector2(x, 215 + tick_length)] #the x values were literally just x
-		print(tick.points)
 		tick.width = 2
 		tick.default_color = Color(0, 0, 0)
 		add_child(tick)
@@ -135,7 +134,7 @@ func determine_line_points_stop_go(performance: Array, trial_types: Dictionary):
 	var stop_points = []
 	var direction_points = []
 	for i in range(performance.size()):
-		var x = origin.x + ((i+1) * tick_interval_x) + (tick_interval_x)
+		var x = origin.x + ((i+1) * tick_interval_x) 
 		var y = origin.y - (tick_interval_y * (performance[i]/100))
 		line_points.append(Vector2(x,y))
 		var trial = trial_types[i]
@@ -155,7 +154,7 @@ func determine_line_points_wcst(performance: Array, trial_info: Dictionary): #tr
 	var prev_rule = -1
 	for i in range(performance.size()):
 		var x = origin.x + ((i+1) * tick_interval_x) #+ (tick_interval_x)
-		var y = origin.y - (tick_interval_y * (performance[i]/100))
+		var y = origin.y - (tick_interval_y * (performance[i]/500))
 		line_points.append(Vector2(x,y))
 		var trial = trial_info[i]
 		if trial[0] != prev_rule:
@@ -163,9 +162,9 @@ func determine_line_points_wcst(performance: Array, trial_info: Dictionary): #tr
 			prev_rule = trial[0]
 		if !trial[1]:
 			incorrect_points.append(Vector2(x,y))
-		print(line_points)
-		print(incorrect_points)
-		print(rule_change_points)
+		#print(line_points)
+		#print(incorrect_points)
+		#print(rule_change_points)
 	return [line_points, incorrect_points, rule_change_points]
 	
 func add_rule_line(point: Vector2, color: Color):
@@ -187,5 +186,5 @@ func add_image(point: Vector2,path: String):
 	var image = Sprite2D.new()
 	image.texture = load(path)
 	image.position = point
-	image.scale = Vector2(0.01, 0.01)
+	image.scale = Vector2(0.02, 0.02)
 	add_child(image)

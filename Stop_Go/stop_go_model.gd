@@ -195,7 +195,11 @@ func calc_session_go_rt(): #go trial successful, stop unsuccessful
 		if (trial.trial_type && trial.successful) || (!trial.trial_type && !trial.successful):
 			go_rt_count += 1
 			time_sum += trial.go_rt
-	return snappedf(time_sum/go_rt_count,0.001)
+	if time_sum != 0:
+		var to_return = snappedf(time_sum/go_rt_count,0.001)
+		return to_return
+	else:
+		return -1
 	#	elif !trial.trial_type && !trial.successful:
 	#		time_sum += trial.go_rt
 	

@@ -42,7 +42,7 @@ func begin_visual_trial():
 #once ssd timer is over, will then switch to the stop visuals
 func begin_stop_half():
 	view.begin_stop_visuals()
-	view.run_timer(3,2)#change second one to be something model holds that determines how long the stop signal is shown for
+	view.run_timer(3,1.25)#change second one to be something model holds that determines how long the stop signal is shown for
 	#bro dont touch that
 	
 func trial_key_pressed(direction: int): 

@@ -31,7 +31,7 @@ func begin_trial():
 	view.update_visual_info()
 	state = State.RESPOND
 	if model.current_phase == 1:
-		view.create_run_timer(8)
+		view.create_run_timer(9)
 	elif model.current_phase == 2:
 		view.create_run_timer(6)
 	model.start_rt = Time.get_ticks_msec()
@@ -88,13 +88,28 @@ func check_for_next_trial():
 			begin_trial()
 		else:
 			if model.current_phase < 2:
+				model.end_rule_block()
 				end_phase_one()
 			else:
+				model.end_rule_block()
 				end_phase_two()
 	update_visuals()
 	
+	#if model.current_trial_in_rule < model.rule_length:
+	#	begin_trial()
+	#elif model.current_rule < model.phase_length:
+	#	next_rule()
+	#	view.update_rule()
+	#	begin_trial()
+	#else:
+	#	if model.current_phase <2:
+	#		end_phase_one()
+	#	else:
+	#		end_phase_two()
+	
 	
 func next_rule():
+	model.end_rule_block()
 	model.rule_change()
 	
 	

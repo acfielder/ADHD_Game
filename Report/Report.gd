@@ -7,7 +7,7 @@ var game_type : Report_Type
 #text info for report, could be in a dict with user so the whole dict is passed and has everything
 var sequence_tracking : Array = ["Sequences completed", "Total correct", "Crimes solved", "Overall Performance"]
 var stop_go_tracking : Array = ["Probability of \nsuccessful inhibition","Average reaction time", "Stop signal reaction time", "Evidence collected", "Accidents avoided"]
-var wcst_tracking : Array = []
+var wcst_tracking : Array = ["Overall accuracy", "Average reaction time", "Overall adaption rate", "Crimes solved"]
 
 var chosen_texts : Array
 
@@ -71,12 +71,14 @@ func set_scores(scores: Array):
 #graph updating logic
 func setup_graph(performances: Dictionary, controller, trial_types): #controller will come in as whatever game controller it is
 	
+	#build_graph(start_x_count: int, x_count_max: int, start_y_count: int, x_count_increase: int, y_count_increase: int, x_axis_label: String, y_axis_label: String):
+	
 	if game_type == Report_Type.CBTT:
 		var colors = [Color(1,0,0),Color(0,1,0),Color(0,0,1)]
 		var per_count = 0
 		var key = {}
 		$Page2/graph_cont/GraphReport.set_tick_vars(43,26)
-		$Page2/graph_cont/GraphReport.build_graph(3,9,0,1,1,"Sequence Length","Sequence Completed")
+		$Page2/graph_cont/GraphReport.build_graph(2,9,0,1,1,"Sequence Length","Sequence Completed")
 		for per in performances:
 			var points = $Page2/graph_cont/GraphReport.determine_line_points_sequence(performances[per])
 			if points != null:
@@ -104,8 +106,8 @@ func setup_graph(performances: Dictionary, controller, trial_types): #controller
 		return key	
 	elif game_type == Report_Type.WCST:
 		var key = {}
-		$Page2/graph_cont/GraphReport.set_tick_vars((305/controller.get_performances()["Reaction Time"].size()),15)
-		$Page2/graph_cont/GraphReport.build_graph(0,controller.get_performances()["Reaction Time"].size(),0,1,250, "WCST Trials", "Reaction Time")
+		$Page2/graph_cont/GraphReport.set_tick_vars((305/controller.get_performances()["Reaction Time"].size()),16)
+		$Page2/graph_cont/GraphReport.build_graph(0,-1,0,0,500, "WCST Trials", "Reaction Time")
 		for per in performances:
 			var points = $Page2/graph_cont/GraphReport.determine_line_points_wcst(performances[per],trial_types)
 			if !points[2].is_empty():
@@ -122,7 +124,7 @@ func setup_graph(performances: Dictionary, controller, trial_types): #controller
 			#	for point in points[2]: #incorrect direction go points
 			#		$Page2/graph_cont/GraphReport.add_image(point,"res://Art/report/yield_signal.png")
 		key["Rule Change"] = Color(.50,.74,0.0)#this should be the x
-		key["Incorrect Sorts"] = Color(.50,.74,0.09)
+		key["Incorrect Sorts"] = Color(1,0,0)
 		return key
 	
 

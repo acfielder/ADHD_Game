@@ -78,3 +78,9 @@ func set_sort_press_true():
 	
 func set_r_t(r_t_in: float):
 	r_t = r_t_in
+
+func get_successful() -> bool:
+	return successful
+	
+func get_r_t() -> float:
+	return r_t

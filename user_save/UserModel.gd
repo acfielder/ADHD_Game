@@ -243,5 +243,9 @@ func reset_wcst_data():
 	adaption_rate = {"all rates": 0, "total phases": 0, "overall adaption rate": 0}
 	phase_one_data = []
 	phase_two_data = []
+	
+	session_count_wcst = 0
+	prev_overall_adaption_rate = .65
+	prev_rule_block_length = 11
 
 #~END RESETING FUNCS~	
