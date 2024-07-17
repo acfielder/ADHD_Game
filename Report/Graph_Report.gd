@@ -143,10 +143,39 @@ func determine_line_points_stop_go(performance: Array, trial_types: Dictionary):
 			direction_points.append(Vector2(x,y))
 		elif !trial[0] && !trial[1]:
 			stop_points.append(Vector2(x,y))
-		print(line_points)
-		print(stop_points)
-		print(direction_points)
+		#print(line_points)
+		#print(stop_points)
+		#print(direction_points)
 	return [line_points, stop_points, direction_points]
+	
+func determine_line_points_wcst(performance: Array, trial_info: Dictionary): #trial info - 
+	var line_points = []
+	var incorrect_points = []
+	var rule_change_points = []
+	var prev_rule = -1
+	for i in range(performance.size()):
+		var x = origin.x + ((i+1) * tick_interval_x) #+ (tick_interval_x)
+		var y = origin.y - (tick_interval_y * (performance[i]/100))
+		line_points.append(Vector2(x,y))
+		var trial = trial_info[i]
+		if trial[0] != prev_rule:
+			rule_change_points.append(Vector2(x,y))
+			prev_rule = trial[0]
+		if !trial[1]:
+			incorrect_points.append(Vector2(x,y))
+		print(line_points)
+		print(incorrect_points)
+		print(rule_change_points)
+	return [line_points, incorrect_points, rule_change_points]
+	
+func add_rule_line(point: Vector2, color: Color):
+	var line = Line2D.new()
+	var points = [point, Vector2(point.x,origin.y)]
+	line.set_points(points)
+	line.width = 2
+	line.default_color = color
+	add_child(line)
+
 
 func all_zero(array: Array):
 	for item in array:

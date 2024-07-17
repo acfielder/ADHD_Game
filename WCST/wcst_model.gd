@@ -28,6 +28,10 @@ var best_rt : float = -1
 var start_rt
 var final_rt
 
+var reaction_times : Array = []
+var rt_info : Dictionary = {}
+var index_rt : int = 0
+
 func set_user(user_in: UserModel):
 	user = user_in
 
@@ -90,8 +94,14 @@ func timer_ended_trial():
 func calc_update_current_rt():
 	var rt = final_rt - start_rt
 	session_rule_blocks[-1].update_trial_rt(rt)
+
+	reaction_times.append(rt)
+	rt_info[index_rt] = [int(session_rule_blocks[-1].rule),session_rule_blocks[-1].block_trials[-1].successful] #sending rule to compare ig
+	index_rt += 1
+	
 	if rt < best_rt || best_rt == -1:
 		best_rt = rt
+	return rt
 	
 
 func end_trial():
@@ -172,3 +182,16 @@ func get_if_trial_pressed():
 	
 func get_current_rule_string():
 	return session_rule_blocks[-1].get_rule_string()
+
+func get_performances():
+	return {"Reaction Time": reaction_times}
+	
+func get_scores():
+	var overall_accuracy = str((accuracy_rate_phase_one + accuracy_rate_phase_two)/2) + "/" + str(phase_length*rule_length*2)
+	var overall_avg_rt = str(snappedf((avg_r_t_phase_one+avg_r_t_phase_two)/2,0.01))
+	var overall_adaption_rate = str(snappedf(((overall_adaption_rate_phase_one+overall_adaption_rate_phase_two)/2),0.01))
+	var crimes_solved = str(int(score/2))
+	return [overall_accuracy,overall_avg_rt,overall_adaption_rate,crimes_solved]
+
+func get_rt_info():
+	return rt_info

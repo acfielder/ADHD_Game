@@ -137,3 +137,12 @@ func get_trial():
 	
 func get_best_rt():
 	return model.best_rt
+
+func get_performances():
+	return model.get_performances()
+	
+func get_scores():
+	return model.get_scores()
+	
+func get_rt_info():
+	return model.get_rt_info()

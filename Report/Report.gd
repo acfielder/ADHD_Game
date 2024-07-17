@@ -34,7 +34,7 @@ func _ready(): #maybe init - takes in values needed for report
 	#take in the above mentioned dict
 	pass
 
-func setup_report(game_type_in: int, performances: Dictionary, scores: Array, controller,trial_types):
+func setup_report(game_type_in: int, performances: Dictionary, scores: Array, controller,trial_types = {}):
 	set_game_type(game_type_in)
 	var key = setup_graph(performances,controller,trial_types)
 	set_tracking_texts()
@@ -103,7 +103,27 @@ func setup_graph(performances: Dictionary, controller, trial_types): #controller
 		key["Incorrect go trial"] = Color(0.854902, 0.647059, 0.12549)
 		return key	
 	elif game_type == Report_Type.WCST:
-		pass
+		var key = {}
+		$Page2/graph_cont/GraphReport.set_tick_vars((305/controller.get_performances()["Reaction Time"].size()),15)
+		$Page2/graph_cont/GraphReport.build_graph(0,controller.get_performances()["Reaction Time"].size(),0,1,250, "WCST Trials", "Reaction Time")
+		for per in performances:
+			var points = $Page2/graph_cont/GraphReport.determine_line_points_wcst(performances[per],trial_types)
+			if !points[2].is_empty():
+				for point in points[2]:
+					$Page2/graph_cont/GraphReport.add_rule_line(point, Color(.50,.74,0.07))
+			if points[0] != []:
+				$Page2/graph_cont/GraphReport.create_line(points[0],Color(0, 0.392157, 0))
+				key[per] = Color(0, 0.392157, 0)
+			if !points[1].is_empty():
+				for point in points[1]: #incorrect points
+					$Page2/graph_cont/GraphReport.add_image(point,"res://Art/report/x_out.png")
+			#if !points[2].is_empty():
+			#	pass #create like behind graph, may need to happen first
+			#	for point in points[2]: #incorrect direction go points
+			#		$Page2/graph_cont/GraphReport.add_image(point,"res://Art/report/yield_signal.png")
+		key["Rule Change"] = Color(.50,.74,0.0)#this should be the x
+		key["Incorrect Sorts"] = Color(.50,.74,0.09)
+		return key
 	
 
 func setup_graph_key(keys: Dictionary):

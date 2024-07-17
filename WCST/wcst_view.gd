@@ -160,11 +160,17 @@ func end_phase_two():
 #may not be much here as end phase two covers a lot
 func end_session():
 	flip_cards_to_back()
-	var report_load = load("res://Report/Report.tscn")
+	#var report_load = load("res://Report/Report.tscn")
 	#breakpoint below
 	#var report = report_load.instantiate()
 	#report.position = Vector2(-250,0)
 	#report.setup_report(2,sequence_controller.get_performances(),sequence_controller.get_scores())
+	
+	var report_load = load("res://Report/Report.tscn")
+	var report = report_load.instantiate()
+	report.position = Vector2(325,325)
+	report.setup_report(2,wcst_controller.get_performances(),wcst_controller.get_scores(), wcst_controller,wcst_controller.get_rt_info())
+	add_child(report)
 	
 
 	
