@@ -12,11 +12,13 @@ var stop_signals: Array = []
 var timer : Timer
 var last_connection = null
 
+signal mini_game_finished
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$StopGoHud.connect("begin_session",on_session_begin)
 	$StopGoHud.connect("key_press",on_trial_key_press)
+	$StopGoHud.connect("exit_game", on_exit_game)
 	user = User_Data_Manager.load_resource()
 	
 	user.reset_stop_go_data()
@@ -148,3 +150,7 @@ func on_trial_key_press(direction: int):
 	print("a key was pressed, not set yet")
 	stop_go_controller.trial_key_pressed(direction)
 	$Player.change_player_state(1)
+
+func on_exit_game():
+	emit_signal("mini_game_finished")
+	pass

@@ -11,6 +11,7 @@ var base_cards : Array
 
 var card_art : Array
 
+signal mini_game_finished
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -247,3 +248,7 @@ func _on_begin_phase_pressed(): #pphase 2
 func _on_begin_phase_1_pressed(): #phase 1
 	wcst_controller.begin_phase_one()
 	$PhaseBegin1.hide()
+
+
+func _on_exit_game_pressed():
+	emit_signal("mini_game_finished")

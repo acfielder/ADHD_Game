@@ -13,6 +13,7 @@ var red_x: Texture
 enum State {MOVE, TRIAL}
 var hud_state = State.MOVE
 
+signal exit_game
 
 
 # Called when the node enters the scene tree for the first time.
@@ -129,3 +130,7 @@ func _input(event):
 				elif event.keycode == KEY_D:
 					emit_signal("key_press",2)
 #signal needs connected to stop_go_world which will then call the controller's trial_key_pressed() which would take the response and see if its right based on the model
+
+
+func _on_exit_game_pressed():
+	emit_signal("exit_game")

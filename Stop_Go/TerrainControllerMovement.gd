@@ -7,14 +7,18 @@ var current_terrain : Array[MeshInstance3D] = [] #terrain blocks currently rende
 @export_dir var terrain_blocks_path = "res://Stop_Go/Hall_Terrain" #directory path holding the terrain block scenes
 @export var terrain_length : int = 20 #length/y of mesh obj of terrain floor
 var player: CharacterBody3D = null
+var ready_to_start : bool = false
 
 func _ready() -> void:
 	player = get_node("/root/Stop_Go_World/Player")
 	_load_terrain_scenes(terrain_blocks_path)
 	_init_blocks(num_terrain_blocks)
+	if player && current_terrain:
+		ready_to_start = true
 	
 func _physics_process(delta: float) -> void:
-	_process_terrain(delta)
+	if ready_to_start:
+		_process_terrain(delta)
 	
 func _process_terrain(delta: float) -> void:
 	var current_block = current_terrain[0]

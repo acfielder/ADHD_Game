@@ -3,7 +3,7 @@ extends Node2D
 
 var Sequence = load("res://SequenceGame/Sequence.tscn")
 
-
+signal mini_game_finished
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,3 +29,7 @@ func _process(delta):
 
 
 	
+
+
+func _on_exit_game_pressed():
+	emit_signal("mini_game_finished")

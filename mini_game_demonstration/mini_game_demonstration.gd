@@ -1,11 +1,39 @@
 extends Node2D
 
+var user : UserModel
 
-# Called when the node enters the scene tree for the first time.
+@export var CBTT: PackedScene = preload("res://SequenceGame/InvestigationBoardGame.tscn")
+@export var Stop_Go: PackedScene = preload("res://Stop_Go/stop_go_world.tscn")
+@export var WCST: PackedScene = preload("res://WCST/wcst_view.tscn")
+
 func _ready():
-	pass # Replace with function body.
+	user = User_Data_Manager.load_resource()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _on_cbtt_start_game_pressed():
+	load_game(CBTT)
+
+func _on_stop_go_start_game_pressed():
+	load_game(Stop_Go)
+
+func _on_wcst_start_game_pressed():
+	load_game(WCST)
+
+
+func _on_reset_user_pressed():
+	user.reset_user_data()
+	User_Data_Manager.save(user)
+
+
+func load_game(game: PackedScene):
+	var game_instance = game.instantiate()
+	add_child(game_instance)
+	game_instance.connect("mini_game_finished", Callable(self, "_on_game_finished"))
+	
+	
+func _on_game_finished():
+	for child in get_children():
+		if child is Node and child.has_signal("mini_game_finished"):
+			remove_child(child)
+			child.queue_free()
+			break

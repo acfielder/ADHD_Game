@@ -26,3 +26,22 @@ offset_right = 960.0
 offset_bottom = 565.0
 color = Color(0.898039, 0.741176, 0.6, 1)
 metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 15.0
+offset_top = 526.0
+offset_right = 179.0
+offset_bottom = 616.0
+color = Color(0.79795, 0.577153, 0.530935, 1)
+
+[node name="ExitGame" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 5.0
+offset_right = 158.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 20
+text = "Exit
+Game"
+
+[connection signal="pressed" from="ColorRect/ExitGame" to="." method="_on_exit_game_pressed"]

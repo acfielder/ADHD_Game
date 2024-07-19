@@ -36,6 +36,7 @@ offset_right = 335.0
 offset_bottom = 571.0
 
 [node name="CBTT_StartGame" type="Button" parent="CBTT_Button_Back"]
+layout_mode = 0
 offset_left = 11.0
 offset_top = 12.0
 offset_right = 229.0
@@ -52,6 +53,7 @@ offset_right = 698.0
 offset_bottom = 479.0
 
 [node name="Stop_Go_StartGame" type="Button" parent="Stop_Go_Button_Back"]
+layout_mode = 0
 offset_left = 11.0
 offset_top = 12.0
 offset_right = 229.0
@@ -68,6 +70,7 @@ offset_right = 1087.0
 offset_bottom = 569.0
 
 [node name="WCST_StartGame" type="Button" parent="WCST_Button_Back"]
+layout_mode = 0
 offset_left = 11.0
 offset_top = 12.0
 offset_right = 229.0
@@ -113,12 +116,18 @@ offset_left = 422.0
 offset_top = 521.0
 offset_right = 745.0
 offset_bottom = 623.0
-color = Color(0.263399, 0.39817, 0.252766, 1)
+color = Color(0.436329, 0.225713, 0.145057, 1)
 
 [node name="Reset_User" type="Button" parent="Reser_User_Cont"]
+layout_mode = 0
 offset_left = 9.0
 offset_top = 11.0
 offset_right = 316.0
 offset_bottom = 93.0
 theme_override_font_sizes/font_size = 25
 text = "Reset User"
+
+[connection signal="pressed" from="CBTT_Button_Back/CBTT_StartGame" to="." method="_on_cbtt_start_game_pressed"]
+[connection signal="pressed" from="Stop_Go_Button_Back/Stop_Go_StartGame" to="." method="_on_stop_go_start_game_pressed"]
+[connection signal="pressed" from="WCST_Button_Back/WCST_StartGame" to="." method="_on_wcst_start_game_pressed"]
+[connection signal="pressed" from="Reser_User_Cont/Reset_User" to="." method="_on_reset_user_pressed"]

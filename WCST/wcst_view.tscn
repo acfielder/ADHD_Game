@@ -204,6 +204,23 @@ offset_right = 562.0
 offset_bottom = 271.0
 text = "instructions for game"
 
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 27.0
+offset_top = 549.0
+offset_right = 158.0
+offset_bottom = 624.0
+color = Color(0.806148, 0.606684, 0.535621, 1)
+
+[node name="ExitGame" type="Button" parent="ColorRect"]
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 126.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 20
+text = "Exit
+Game"
+
 [connection signal="pressed" from="SessionBegin/Begin" to="." method="_on_begin_pressed"]
 [connection signal="pressed" from="PhaseBegin2/BeginPhase" to="." method="_on_begin_phase_pressed"]
 [connection signal="pressed" from="PhaseBegin1/BeginPhase1" to="." method="_on_begin_phase_1_pressed"]
+[connection signal="pressed" from="ColorRect/ExitGame" to="." method="_on_exit_game_pressed"]
