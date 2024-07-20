@@ -4,7 +4,7 @@ var rng = RandomNumberGenerator.new()
 
 #game based 
 var pins : int = 8 #num pins in view, will need changed with UI
-var level_length : int = 5 #should be roughly 50 - check notes - maybe less when im only taking the correct ones
+var level_length : int = 7 #should be roughly 50 - check notes - maybe less when im only taking the correct ones
 var increased_level : bool = false
 
 #session based
@@ -206,14 +206,14 @@ func update_session_length(session_count: int, performance: Array):
 	if session_count > 0: #session_count > 0
 		session_length = performance[1]
 		var performance_last_session = float(performance[0]) / float(performance[1])
-		if performance_last_session < 0.5 && performance[1] > 5: #should be 15
-			session_length -= 5
+		if performance_last_session < 0.5 && performance[1] > 3: #5should be 15
+			session_length -= 2#5
 		elif performance_last_session > 0.5 && performance_last_session <= 0.7:
 			session_length = performance[1]
-		elif performance_last_session > 0.7 && performance[1] < 15: #should be 25
-			session_length += 5
+		elif performance_last_session > 0.7 && performance[1] < 9: #15should be 25
+			session_length += 2#5
 	else:
-		session_length = 4 #20 - was changed for testing purposes #ten for testing
+		session_length = 5 #20 - was changed for testing purposes #ten for testing
 	user.sequence_session_performance_level[0] = 0
 	user.sequence_session_performance_level[1] = session_length
 	return session_length

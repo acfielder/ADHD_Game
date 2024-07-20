@@ -27,7 +27,11 @@ func _ready():
 
 	user = User_Data_Manager.load_resource()
 	
-	user.reset_wcst_data()
+	
+	
+	#user.reset_wcst_data()
+	
+	
 	
 	wcst_controller = wcstController.new(self,user)
 	

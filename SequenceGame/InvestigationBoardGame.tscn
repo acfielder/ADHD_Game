@@ -27,6 +27,64 @@ offset_bottom = 565.0
 color = Color(0.898039, 0.741176, 0.6, 1)
 metadata/_edit_use_anchors_ = true
 
+[node name="game_instructions" type="ColorRect" parent="."]
+visible = false
+offset_right = 1152.0
+offset_bottom = 647.0
+color = Color(0.105882, 0.513726, 0.411765, 1)
+
+[node name="Label" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 29.0
+offset_right = 455.0
+offset_bottom = 84.0
+theme_override_font_sizes/font_size = 35
+text = "Corsi Block Tapping Task"
+
+[node name="Label2" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 104.0
+offset_right = 516.0
+offset_bottom = 266.0
+theme_override_font_sizes/font_size = 25
+text = "For each trial a sequence of events will
+be presented and further instructions 
+will tell you how to reacreate the
+sequence."
+
+[node name="Label3" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 275.0
+offset_right = 591.0
+offset_bottom = 462.0
+theme_override_font_sizes/font_size = 25
+text = "Click the push pins to reacreate the 
+sequence. The pin will highlight green if
+correct and orange if incorrect. If your
+order is wrong, you can continue from
+that point to try for the rest of the
+sequence."
+
+[node name="Label4" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 564.0
+offset_top = 102.0
+offset_right = 1134.0
+offset_bottom = 441.0
+theme_override_font_sizes/font_size = 25
+text = "Each level contains different ways to work with
+the sequence of events. These types you will
+come across as you progress:
+- repeat in same, forward order
+- repeat in reverse order
+- repeat every other event
+- repeat with 2 events switched in the order
+- repeat in instructed order with a delay before
+you can respond"
+
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 15.0
 offset_top = 526.0

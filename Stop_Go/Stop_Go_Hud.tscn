@@ -239,6 +239,60 @@ theme_override_font_sizes/font_size = 40
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="game_instructions" type="ColorRect" parent="."]
+offset_top = -1.0
+offset_right = 1154.0
+offset_bottom = 651.0
+color = Color(0.105882, 0.513726, 0.411765, 1)
+
+[node name="Label4" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 594.0
+offset_top = 241.0
+offset_right = 1123.0
+offset_bottom = 399.0
+theme_override_font_sizes/font_size = 25
+text = "Beware! Evidence may be deemed unsafe
+soon after finding it. A 'stop signal' will be
+presented and you should NOT collect that
+piece of evidence and wait to move on."
+
+[node name="Label3" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 290.0
+offset_right = 684.0
+offset_bottom = 515.0
+theme_override_font_sizes/font_size = 25
+text = "As you come across evidence it will appear
+on either the left or right of your screen.
+Collect the evidence as quickly as possible 
+by using the S key to collect evidence to
+the left and the D key for evidence to your
+right."
+
+[node name="Label" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 84.0
+offset_right = 570.0
+offset_bottom = 271.0
+theme_override_font_sizes/font_size = 25
+text = "As you begin the session you will be tailing
+a suspect and collecting evidence as you go.
+Move through this world with the left and 
+right arrow keys and jump over obstables 
+with the up arrow key."
+
+[node name="Label2" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 39.0
+offset_top = 19.0
+offset_right = 270.0
+offset_bottom = 74.0
+theme_override_font_sizes/font_size = 35
+text = "Stop Go Task"
+
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 15.0
 offset_top = 540.0

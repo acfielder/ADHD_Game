@@ -21,7 +21,11 @@ func _ready():
 	$StopGoHud.connect("exit_game", on_exit_game)
 	user = User_Data_Manager.load_resource()
 	
-	user.reset_stop_go_data()
+	
+	
+	#user.reset_stop_go_data()
+	
+	
 	
 	stop_go_controller = StopGoController.new(self,user)
 	
