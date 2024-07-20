@@ -152,5 +152,5 @@ func on_trial_key_press(direction: int):
 	$Player.change_player_state(1)
 
 func on_exit_game():
-	emit_signal("mini_game_finished")
-	pass
+	#emit_signal("mini_game_finished")
+	get_tree().change_scene_to_file("res://Stop_Go/stop_go_world.tscn")

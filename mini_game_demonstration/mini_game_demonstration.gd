@@ -14,7 +14,12 @@ func _on_cbtt_start_game_pressed():
 	load_game(CBTT)
 
 func _on_stop_go_start_game_pressed():
-	load_game(Stop_Go)
+	get_tree().change_scene_to_file("res://Stop_Go/stop_go_world.tscn")
+	#var game = load("res://Stop_Go/stop_go_world.tscn")
+	#var game_instance = game.instantiate()
+	#add_child(game_instance)
+	#game_instance.connect("mini_game_finished", Callable(self, "_on_game_finished"))
+	#load_game(Stop_Go)
 
 func _on_wcst_start_game_pressed():
 	load_game(WCST)
