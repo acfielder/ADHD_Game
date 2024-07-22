@@ -118,8 +118,15 @@ func display_feedback_text(feedback: String):
 
 #when the first start button is pressed and the session begins
 func _on_begin_session_pressed():
-	emit_signal("begin_session")
+	#emit_signal("begin_session")
+	show_game_instructions()
 	$top_bar/ColorRect.hide()
+	
+func show_game_instructions():
+	$game_instructions.show()
+	
+
+	
 	
 func _input(event):
 	if hud_state == State.TRIAL:
@@ -134,3 +141,8 @@ func _input(event):
 
 func _on_exit_game_pressed():
 	emit_signal("exit_game")
+
+
+func _on_button_pressed():
+	emit_signal("begin_session")
+	$game_instructions.hide()

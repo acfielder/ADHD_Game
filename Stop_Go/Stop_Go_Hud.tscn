@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwldavlnvpiq3"]
+[gd_scene load_steps=13 format=3 uid="uid://cwldavlnvpiq3"]
 
 [ext_resource type="Script" path="res://Stop_Go/Stop_Go_Hud.gd" id="1_r6tlx"]
 [ext_resource type="Texture2D" uid="uid://djnxedxoxo2dc" path="res://Art/stop_go/arrow_cues/left_gray_arrow.png" id="2_nlg0n"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bssbyfdgaog02" path="res://Art/Pins/default_pin.png" id="4_ke548"]
 [ext_resource type="Texture2D" uid="uid://byhghn7eho8en" path="res://Art/stop_go/feedback_box.png" id="5_r3mdh"]
 [ext_resource type="Texture2D" uid="uid://dffqohtn8rlxf" path="res://Art/demonstration/Screen Shot 2024-07-17 at 5.01.59 PM.jpeg" id="6_alnaf"]
+[ext_resource type="Texture2D" uid="uid://cjt5kepgac3q3" path="res://Art/demonstration/stop_go_thumbnail.jpeg" id="7_1he85"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jywmt"]
 
@@ -296,11 +297,31 @@ theme_override_font_sizes/font_size = 35
 text = "Stop Go Task"
 
 [node name="CautionStop" type="Sprite2D" parent="game_instructions"]
-position = Vector2(833, 517)
-scale = Vector2(0.308411, 0.308411)
+position = Vector2(764, 517)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("6_alnaf")
 
 [node name="KeyRight" type="Sprite2D" parent="game_instructions"]
+position = Vector2(768, 125)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("7_1he85")
+
+[node name="ColorRect" type="ColorRect" parent="game_instructions"]
+layout_mode = 0
+offset_left = 983.0
+offset_top = 543.0
+offset_right = 1129.0
+offset_bottom = 631.0
+color = Color(0.857055, 0.643705, 0.572056, 1)
+
+[node name="Button" type="Button" parent="game_instructions/ColorRect"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 141.0
+offset_bottom = 83.0
+theme_override_font_sizes/font_size = 20
+text = "Play Game"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 15.0
@@ -320,4 +341,5 @@ text = "Exit
 Game"
 
 [connection signal="pressed" from="top_bar/ColorRect/BeginSession" to="." method="_on_begin_session_pressed"]
+[connection signal="pressed" from="game_instructions/ColorRect/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ColorRect/ExitGame" to="." method="_on_exit_game_pressed"]

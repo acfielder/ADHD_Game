@@ -236,12 +236,13 @@ func response_timer_timeout():
 #give game instructions
 func give_instructions():
 	$game_instructions.show()
-	await get_tree().create_timer(4).timeout
-	$game_instructions.hide()
+	#await get_tree().create_timer(4).timeout
+	#$game_instructions.hide()
 
 
 func _on_begin_pressed():
-	wcst_controller.begin_session()
+	give_instructions()
+	#wcst_controller.begin_session()
 	$SessionBegin.hide()
 	
 
@@ -256,3 +257,10 @@ func _on_begin_phase_1_pressed(): #phase 1
 
 func _on_exit_game_pressed():
 	emit_signal("mini_game_finished")
+
+
+func _on_button_pressed():
+	#when done with instructions
+	$game_instructions.hide()
+	wcst_controller.begin_session()
+	

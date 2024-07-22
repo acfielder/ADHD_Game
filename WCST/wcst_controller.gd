@@ -20,7 +20,7 @@ func _init(view_in: wcstView, user_in: UserModel):
 
 func begin_session():
 	model.setup_session()
-	await view.give_instructions() #needs drawn out
+	#await view.give_instructions() #needs drawn out
 	#begin_phase_one()
 	view.prompt_phase_one()
 

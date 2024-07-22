@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://b6v33c7vv42j7"]
+[gd_scene load_steps=10 format=3 uid="uid://b6v33c7vv42j7"]
 
 [ext_resource type="Script" path="res://SequenceGame/Sequence.gd" id="1_108bh"]
 [ext_resource type="PackedScene" uid="uid://p3cplwo6jood" path="res://SequenceGame/SessionStats.tscn" id="2_m77uc"]
 [ext_resource type="Texture2D" uid="uid://col77kv6l2cgp" path="res://Art/filler_images/green_image.png" id="3_wh4c4"]
 [ext_resource type="PackedScene" uid="uid://cerk3e58an11t" path="res://SequenceGame/PushPin.tscn" id="4_5xs0h"]
+[ext_resource type="Texture2D" uid="uid://dm6om7dytxa4g" path="res://Art/Pins/correct_pin.png" id="5_ayn30"]
+[ext_resource type="Texture2D" uid="uid://bssbyfdgaog02" path="res://Art/Pins/default_pin.png" id="6_427yx"]
+[ext_resource type="Texture2D" uid="uid://b73s24a4de7n6" path="res://Art/Pins/highlighted_pin.png" id="7_tqyy1"]
+[ext_resource type="Texture2D" uid="uid://cjd2h6m4y7x8g" path="res://Art/Pins/incorrect_pin.png" id="8_00axm"]
+[ext_resource type="Texture2D" uid="uid://cbgqlpnc7rjnu" path="res://Art/demonstration/cbtt_thumbnail.jpeg" id="9_4ljou"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(389, 232)
@@ -207,4 +212,107 @@ offset_right = 99.0
 offset_bottom = 280.0
 text = "Session is Complete, Well Done"
 
+[node name="game_instructions" type="ColorRect" parent="."]
+visible = false
+offset_left = -604.0
+offset_top = -315.0
+offset_right = 548.0
+offset_bottom = 332.0
+color = Color(0.105882, 0.513726, 0.411765, 1)
+
+[node name="Label" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 29.0
+offset_right = 455.0
+offset_bottom = 84.0
+theme_override_font_sizes/font_size = 35
+text = "Corsi Block Tapping Task"
+
+[node name="Label2" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 104.0
+offset_right = 516.0
+offset_bottom = 266.0
+theme_override_font_sizes/font_size = 25
+text = "For each trial a sequence of events will
+be presented and further instructions 
+will tell you how to reacreate the
+sequence."
+
+[node name="Label3" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 275.0
+offset_right = 591.0
+offset_bottom = 462.0
+theme_override_font_sizes/font_size = 25
+text = "Click the push pins to reacreate the 
+sequence. The pin will highlight green if
+correct and orange if incorrect. If your
+order is wrong, you can continue from
+that point to try for the rest of the
+sequence."
+
+[node name="Label4" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 564.0
+offset_top = 102.0
+offset_right = 1134.0
+offset_bottom = 441.0
+theme_override_font_sizes/font_size = 25
+text = "Each level contains different ways to work with
+the sequence of events. These types you will
+come across as you progress:
+- repeat in same, forward order
+- repeat in reverse order
+- repeat every other event
+- repeat with 2 events switched in the order
+- repeat in instructed order with a delay before
+you can respond"
+
+[node name="GreenPin" type="Sprite2D" parent="game_instructions"]
+position = Vector2(886.05, 57.05)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("5_ayn30")
+
+[node name="RedPin" type="Sprite2D" parent="game_instructions"]
+position = Vector2(642.05, 57.05)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_427yx")
+
+[node name="BluePin" type="Sprite2D" parent="game_instructions"]
+position = Vector2(763.05, 57.05)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_tqyy1")
+
+[node name="OrangePin" type="Sprite2D" parent="game_instructions"]
+position = Vector2(1011.05, 57.05)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("8_00axm")
+
+[node name="OverallImage" type="Sprite2D" parent="game_instructions"]
+position = Vector2(710, 545)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("9_4ljou")
+
+[node name="ColorRect" type="ColorRect" parent="game_instructions"]
+layout_mode = 0
+offset_left = 965.0
+offset_top = 532.0
+offset_right = 1133.0
+offset_bottom = 630.0
+color = Color(0.842027, 0.619922, 0.563159, 1)
+
+[node name="Button" type="Button" parent="game_instructions/ColorRect"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = 159.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 20
+text = "Play Game"
+
 [connection signal="pressed" from="ColorRect/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="game_instructions/ColorRect/Button" to="." method="_on_button_pressed"]

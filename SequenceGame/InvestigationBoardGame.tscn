@@ -1,11 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://ox14kx5lraia"]
+[gd_scene load_steps=2 format=3 uid="uid://ox14kx5lraia"]
 
 [ext_resource type="Script" path="res://SequenceGame/InvestigationBoardGame.gd" id="1_4bdi2"]
-[ext_resource type="Texture2D" uid="uid://dm6om7dytxa4g" path="res://Art/Pins/correct_pin.png" id="2_wkxll"]
-[ext_resource type="Texture2D" uid="uid://bssbyfdgaog02" path="res://Art/Pins/default_pin.png" id="3_rdxhd"]
-[ext_resource type="Texture2D" uid="uid://b73s24a4de7n6" path="res://Art/Pins/highlighted_pin.png" id="4_yg0hp"]
-[ext_resource type="Texture2D" uid="uid://cjd2h6m4y7x8g" path="res://Art/Pins/incorrect_pin.png" id="5_ed3el"]
-[ext_resource type="Texture2D" uid="uid://cbgqlpnc7rjnu" path="res://Art/demonstration/cbtt_thumbnail.jpeg" id="6_ols04"]
 
 [node name="InvestigationBoardGame" type="Node2D"]
 script = ExtResource("1_4bdi2")
@@ -31,88 +26,6 @@ offset_right = 960.0
 offset_bottom = 565.0
 color = Color(0.898039, 0.741176, 0.6, 1)
 metadata/_edit_use_anchors_ = true
-
-[node name="game_instructions" type="ColorRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 647.0
-color = Color(0.105882, 0.513726, 0.411765, 1)
-
-[node name="Label" type="Label" parent="game_instructions"]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 29.0
-offset_right = 455.0
-offset_bottom = 84.0
-theme_override_font_sizes/font_size = 35
-text = "Corsi Block Tapping Task"
-
-[node name="Label2" type="Label" parent="game_instructions"]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 104.0
-offset_right = 516.0
-offset_bottom = 266.0
-theme_override_font_sizes/font_size = 25
-text = "For each trial a sequence of events will
-be presented and further instructions 
-will tell you how to reacreate the
-sequence."
-
-[node name="Label3" type="Label" parent="game_instructions"]
-layout_mode = 0
-offset_left = 47.0
-offset_top = 275.0
-offset_right = 591.0
-offset_bottom = 462.0
-theme_override_font_sizes/font_size = 25
-text = "Click the push pins to reacreate the 
-sequence. The pin will highlight green if
-correct and orange if incorrect. If your
-order is wrong, you can continue from
-that point to try for the rest of the
-sequence."
-
-[node name="Label4" type="Label" parent="game_instructions"]
-layout_mode = 0
-offset_left = 564.0
-offset_top = 102.0
-offset_right = 1134.0
-offset_bottom = 441.0
-theme_override_font_sizes/font_size = 25
-text = "Each level contains different ways to work with
-the sequence of events. These types you will
-come across as you progress:
-- repeat in same, forward order
-- repeat in reverse order
-- repeat every other event
-- repeat with 2 events switched in the order
-- repeat in instructed order with a delay before
-you can respond"
-
-[node name="GreenPin" type="Sprite2D" parent="game_instructions"]
-position = Vector2(553, 545)
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_wkxll")
-
-[node name="RedPin" type="Sprite2D" parent="game_instructions"]
-position = Vector2(309, 545)
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("3_rdxhd")
-
-[node name="BluePin" type="Sprite2D" parent="game_instructions"]
-position = Vector2(430, 545)
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("4_yg0hp")
-
-[node name="OrangePin" type="Sprite2D" parent="game_instructions"]
-position = Vector2(678, 545)
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("5_ed3el")
-
-[node name="OverallImage" type="Sprite2D" parent="game_instructions"]
-position = Vector2(956, 536)
-scale = Vector2(0.278981, 0.278981)
-texture = ExtResource("6_ols04")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 15.0

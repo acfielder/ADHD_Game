@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4tsq8qduuri3"]
+[gd_scene load_steps=10 format=3 uid="uid://b4tsq8qduuri3"]
 
 [ext_resource type="Script" path="res://WCST/wcst_view.gd" id="1_kjtxl"]
 [ext_resource type="PackedScene" uid="uid://opf7a7arsd0d" path="res://WCST/evidence_card.tscn" id="2_5hku3"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://0kilfxylb0sh" path="res://WCST/evidence_trial_card.tscn" id="3_p7hyo"]
 [ext_resource type="Texture2D" uid="uid://bcc31wbdp4r00" path="res://Art/WCST/speech_bubble.png" id="4_d3xx7"]
 [ext_resource type="Texture2D" uid="uid://wqc06x36tqee" path="res://Art/WCST/notecard.png" id="6_oam6v"]
+[ext_resource type="Texture2D" uid="uid://fxtw8jnbpsh1" path="res://Art/WCST/number_symbol.png" id="7_fjg4v"]
+[ext_resource type="Texture2D" uid="uid://d3ogjf8d7i7t0" path="res://Art/WCST/color_splat.png" id="8_dndt7"]
+[ext_resource type="Texture2D" uid="uid://db885bp571ye3" path="res://Art/WCST/shape_outline.png" id="9_7ob7j"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_kjtxl")
@@ -259,6 +262,36 @@ offset_bottom = 77.0
 theme_override_font_sizes/font_size = 20
 text = "Play Game"
 
+[node name="Notecard" type="Sprite2D" parent="game_instructions"]
+position = Vector2(735, 480)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("6_oam6v")
+
+[node name="Count" type="Sprite2D" parent="game_instructions"]
+position = Vector2(742.575, 502.225)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("7_fjg4v")
+
+[node name="Color" type="Sprite2D" parent="game_instructions"]
+position = Vector2(634.575, 436.225)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("8_dndt7")
+
+[node name="Shape" type="Sprite2D" parent="game_instructions"]
+position = Vector2(851.575, 430.225)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("9_7ob7j")
+
+[node name="Rules" type="Label" parent="game_instructions"]
+layout_mode = 0
+offset_left = 700.0
+offset_top = 335.0
+offset_right = 772.0
+offset_bottom = 370.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "Rules:"
+
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 27.0
 offset_top = 549.0
@@ -279,4 +312,5 @@ Game"
 [connection signal="pressed" from="SessionBegin/Begin" to="." method="_on_begin_pressed"]
 [connection signal="pressed" from="PhaseBegin2/BeginPhase" to="." method="_on_begin_phase_pressed"]
 [connection signal="pressed" from="PhaseBegin1/BeginPhase1" to="." method="_on_begin_phase_1_pressed"]
+[connection signal="pressed" from="game_instructions/ColorRect/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="ColorRect/ExitGame" to="." method="_on_exit_game_pressed"]

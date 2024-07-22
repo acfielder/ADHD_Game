@@ -35,8 +35,12 @@ func _ready():
 #begins trials
 func _on_start_button_pressed():
 	$ColorRect.hide()
+	show_instructions()
 	#would probably lead to an instruction section rather than already the starting trial
-	sequence_controller.run_trial()
+	#sequence_controller.run_trial()
+	
+func show_instructions():
+	$game_instructions.show()	
 	
 #just creates a small timer to create a delay
 func create_short_timer(time: float):
@@ -125,3 +129,10 @@ func display_session_over():
 	add_child(report)
 	
 
+
+
+func _on_button_pressed():
+	#when done with instructions
+	$game_instructions.hide()
+	sequence_controller.run_trial()
+	
