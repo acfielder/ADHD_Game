@@ -6,6 +6,7 @@ var image_containers : Array
 var pins : Array = [] #pointers to pins in scene
 enum state {HIGHLIGHT, RESPONSE}
 var pins_dict : Dictionary #pins with associated number to recognize correct pin
+var pin_coords : Dictionary
 
 var sequence_controller : Sequence_Controller
 var user : UserModel
@@ -13,13 +14,16 @@ var user : UserModel
 var images_folder_path : String = "res://Art/filler_images/"
 var image_files : Array
 
+var current_string : Path2D = null
+var in_str : bool = false
 
 func _ready():
 	pins = [$PushPin1, $PushPin2, $PushPin3, $PushPin4, $PushPin5, $PushPin6, $PushPin7, $PushPin8]
 	for i in range(pins.size()):
 		pins[i].pin_pressed.connect(_on_pin_pressed_test)
 	pins_dict = {1:$PushPin1, 2:$PushPin2, 3:$PushPin3, 4:$PushPin4, 5:$PushPin5, 6:$PushPin6, 7:$PushPin7, 8:$PushPin8}
-
+	pin_coords = {1:Vector2(-245,-156), 2:Vector2(-314,114), 3:Vector2(-144,-3), 4:Vector2(-52,-165), 5:Vector2(-10,91), 6:Vector2(112,-57), 7:Vector2(237,130), 8:Vector2(271,-90)}
+	
 	sequence_controller = Sequence_Controller.new(self,user)
 	
 	image_files = get_pin_images()
@@ -31,6 +35,15 @@ func _ready():
 	set_pin_images()
 	
 	#randomly select from images in a particular location to assign as images - images may become sprites or texture or something idk yet
+
+func _process(delta):
+	#if in_str:
+		#var mousePos = get_global_mouse_position() - current_string.position
+		#var outX = mousePos. x/3
+		#current_string.curve.set_point_out(0, Vector2(outX,-outX))
+		#current_string.curve.set_point_position(1, mousePos)
+		#current_string.curve.set_point_in(1, Vector2(-outX,-outX))
+	pass
 
 #begins trials
 func _on_start_button_pressed():
@@ -135,4 +148,25 @@ func _on_button_pressed():
 	#when done with instructions
 	$game_instructions.hide()
 	sequence_controller.run_trial()
+	
+func begin_string(pin_key):
+	var string = Path2D.new()
+	string.curve = Curve2D.new()
+	#string.curve.add_point(Vector2(0,0)) 
+	string.curve.add_point(pin_coords.get(pin_key))
+	#string.curve.set_point_position(1,pin_coords.get(pin_key))
+	#string.curve.set_point_in(1,Vector2(50, 50)) # Set the in control point for the first point
+	#string.curve.set_point_out(0,Vector2(50, 50))
+	current_string = string
+	#in_str = false
+	add_child(string)
+	
+func end_string(pin_key):
+	var mousePos = get_global_mouse_position() - current_string.position #process
+	var outX = mousePos.x/3
+	current_string.curve.add_point(pin_coords.get(pin_key))
+	current_string.curve.set_point_out(0, Vector2(outX,-outX))
+	#current_string.curve.set_point_position(0, pin_coords.get(pin_key))
+	current_string.curve.set_point_in(1, Vector2(-outX,-outX))
+	
 	

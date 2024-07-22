@@ -9,6 +9,8 @@ var user : UserModel
 var view : Sequence
 var model : Sequence_Game
 
+var trial_response_begun : bool = false
+
 
 func _init(view_ref: Sequence, user_in: UserModel):
 	view = view_ref
@@ -26,6 +28,14 @@ func highlight_sequence(mem_order: Array): #sequence_type: Array
 #on a pin press detected, check response for trial
 func pin_press_detected(pin_key: int):
 	if game_state == State_Type.RESPONSE:
+		if !trial_response_begun:
+			view.begin_string(pin_key)
+			trial_response_begun = true
+		else:
+			view.end_string(pin_key)
+			if model.get_if_another_event(): 
+				view.begin_string(pin_key)
+		
 		if model.check_update_response(pin_key):
 			view.highlight_pin(pin_key,2,0.3) #correct - feedback
 		else:
@@ -42,6 +52,7 @@ func run_trial():
 #sets up current trial
 func setup_trial():
 	await view.create_short_timer(0.75)
+	trial_response_begun = false
 	game_state = State_Type.HIGHLIGHT
 	var sequence_type = model.choose_sequence_type()
 	if sequence_type[0] == -1:

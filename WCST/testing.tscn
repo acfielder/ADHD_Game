@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://WCST/wcst_rule_block.gd" id="1_38qv8"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D3" type="Node2D"]
 script = ExtResource("1_38qv8")

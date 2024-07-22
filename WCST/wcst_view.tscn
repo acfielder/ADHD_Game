@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://d3ogjf8d7i7t0" path="res://Art/WCST/color_splat.png" id="8_dndt7"]
 [ext_resource type="Texture2D" uid="uid://db885bp571ye3" path="res://Art/WCST/shape_outline.png" id="9_7ob7j"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D2" type="Node2D"]
 script = ExtResource("1_kjtxl")
 
 [node name="sideOfTable" type="Sprite2D" parent="."]

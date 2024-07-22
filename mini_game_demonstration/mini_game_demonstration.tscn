@@ -19,7 +19,7 @@ offset_bottom = 655.0
 color = Color(0.696871, 0.552061, 0.369059, 1)
 
 [node name="CBTT_Image" type="Sprite2D" parent="Demo"]
-position = Vector2(213, 322)
+position = Vector2(210, 322)
 scale = Vector2(0.3, 0.3)
 texture = ExtResource("1_8bqqn")
 

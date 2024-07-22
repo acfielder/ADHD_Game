@@ -270,6 +270,12 @@ func get_current_sequence_type() -> Array:
 func get_answer_order() -> Array:
 	return trial_history[-1].answer_order
 	
+func get_if_another_event():
+	if pins_pressed + 1 < trial_history[-1].mem_order.size():
+		return true
+	else:
+		return false
+	
 func get_performances():
 	return {"Short term memory/ working memory": stm_performance,"update/manipulation": update_performance,"delayed response": delay_performance}
 	
