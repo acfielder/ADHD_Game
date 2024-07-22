@@ -9,7 +9,7 @@ var current_terrain : Array[MeshInstance3D] = [] #terrain blocks currently rende
 var player: CharacterBody3D = null
 
 func _ready() -> void:
-	player = get_node("/root/Stop_Go_World/Player")
+	player = get_parent().get_node("Player")
 	_load_terrain_scenes(terrain_blocks_path)
 	_init_blocks(num_terrain_blocks)
 	#player = get_node("/root/Stop_Go_World/Player")
@@ -22,7 +22,7 @@ func _process_terrain(delta: float) -> void:
 	var next_block = current_terrain[1]
 
 	#this needs to be <=
-	if player.global_transform.origin.z <= next_block.global_transform.origin.z - terrain_length / 2:
+	if player != null && player.global_transform.origin.z <= next_block.global_transform.origin.z - terrain_length / 2:
 		var last_terrain = current_terrain[-1]
 		var first_terrain = current_terrain.pop_front()
 

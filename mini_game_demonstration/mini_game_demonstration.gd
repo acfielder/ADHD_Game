@@ -14,7 +14,8 @@ func _on_cbtt_start_game_pressed():
 	load_game(CBTT)
 
 func _on_stop_go_start_game_pressed():
-	get_tree().change_scene_to_file("res://Stop_Go/stop_go_world.tscn")
+	#get_tree().change_scene_to_file("res://Stop_Go/stop_go_world.tscn")
+	load_game(Stop_Go)
 	#var game = load("res://Stop_Go/stop_go_world.tscn")
 	#var game_instance = game.instantiate()
 	#add_child(game_instance)

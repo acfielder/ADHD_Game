@@ -157,4 +157,4 @@ func on_trial_key_press(direction: int):
 
 func on_exit_game():
 	#emit_signal("mini_game_finished")
-	get_tree().change_scene_to_file("res://Stop_Go/stop_go_world.tscn")
+	get_tree().change_scene_to_file("res://mini_game_demonstration/mini_game_demonstration.tscn")
