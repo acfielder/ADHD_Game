@@ -91,7 +91,7 @@ func all_pins_pressed():
 	update_display_stats()
 	if model.get_current_trial() < model.session_length:
 		
-		
+		await view.clear_string() #clearing the connecting string
 		model.reset_trial_info()
 		await view.prompt_next_trial()
 		view.prompt(0)

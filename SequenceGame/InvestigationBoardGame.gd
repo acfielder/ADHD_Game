@@ -24,7 +24,7 @@ func _ready():
 	#using text input - or buttons
 
 	#get_tree().get_root().get_node("InvestigationBoardGame/Board")
-	$Board.add_child(new_sequence)
+	add_child(new_sequence)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

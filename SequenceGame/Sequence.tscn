@@ -11,139 +11,156 @@
 [ext_resource type="Texture2D" uid="uid://cbgqlpnc7rjnu" path="res://Art/demonstration/cbtt_thumbnail.jpeg" id="9_4ljou"]
 
 [node name="Node2D" type="Node2D"]
-position = Vector2(389, 232)
+position = Vector2(0, -11)
 script = ExtResource("1_108bh")
 
 [node name="SessionStats" parent="." instance=ExtResource("2_m77uc")]
-position = Vector2(-598, -236)
+position = Vector2(6, 95)
 
 [node name="PinImage1" type="TextureRect" parent="."]
-offset_left = -307.0
-offset_top = -161.0
-offset_right = -190.0
-offset_bottom = -49.0
+offset_left = 297.0
+offset_top = 170.0
+offset_right = 414.0
+offset_bottom = 282.0
 texture = ExtResource("3_wh4c4")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="PinImage2" type="TextureRect" parent="."]
-offset_left = -349.0
-offset_top = 106.0
-offset_right = -264.0
-offset_bottom = 195.0
+offset_left = 255.0
+offset_top = 437.0
+offset_right = 340.0
+offset_bottom = 526.0
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="PinImage3" type="TextureRect" parent="."]
-offset_left = -169.0
-offset_top = -6.0
-offset_right = -99.0
-offset_bottom = 68.0
+offset_left = 435.0
+offset_top = 325.0
+offset_right = 505.0
+offset_bottom = 399.0
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="PinImage4" type="TextureRect" parent="."]
-offset_left = -90.0
-offset_top = -169.0
-offset_right = 2.0
-offset_bottom = -79.0
+offset_left = 514.0
+offset_top = 162.0
+offset_right = 606.0
+offset_bottom = 252.0
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="PinImage5" type="TextureRect" parent="."]
-offset_left = -47.0
-offset_top = 86.0
-offset_right = 39.0
-offset_bottom = 166.0
+offset_left = 557.0
+offset_top = 417.0
+offset_right = 643.0
+offset_bottom = 497.0
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="PinImage6" type="TextureRect" parent="."]
-offset_left = 67.0
-offset_top = -64.0
-offset_right = 170.0
-offset_bottom = 42.0
+offset_left = 671.0
+offset_top = 267.0
+offset_right = 774.0
+offset_bottom = 373.0
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="PinImage7" type="TextureRect" parent="."]
-offset_left = 192.0
-offset_top = 127.0
-offset_right = 287.0
-offset_bottom = 199.0
+offset_left = 796.0
+offset_top = 458.0
+offset_right = 891.0
+offset_bottom = 530.0
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="PinImage8" type="TextureRect" parent="."]
-offset_left = 226.0
-offset_top = -94.0
-offset_right = 322.0
-offset_bottom = 13.0
+offset_left = 830.0
+offset_top = 237.0
+offset_right = 926.0
+offset_bottom = 344.0
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="PushPin1" parent="." instance=ExtResource("4_5xs0h")]
-offset_left = -267.0
-offset_top = -221.0
-offset_right = 20.0
-offset_bottom = 137.0
+offset_left = 337.0
+offset_top = 110.0
+offset_right = 624.0
+offset_bottom = 468.0
 scale = Vector2(0.2, 0.2)
+metadata/_edit_use_anchors_ = true
 
 [node name="PushPin2" parent="." instance=ExtResource("4_5xs0h")]
-offset_left = -326.0
-offset_top = 48.0
-offset_right = -39.0
-offset_bottom = 406.0
+offset_left = 278.0
+offset_top = 379.0
+offset_right = 565.0
+offset_bottom = 737.0
 scale = Vector2(0.2, 0.2)
+metadata/_edit_use_anchors_ = true
 
 [node name="PushPin3" parent="." instance=ExtResource("4_5xs0h")]
-offset_left = -158.0
-offset_top = -67.0
-offset_right = 129.0
-offset_bottom = 291.0
+offset_left = 446.0
+offset_top = 264.0
+offset_right = 733.0
+offset_bottom = 622.0
 scale = Vector2(0.2, 0.2)
+metadata/_edit_use_anchors_ = true
 
 [node name="PushPin4" parent="." instance=ExtResource("4_5xs0h")]
-offset_left = -65.0
-offset_top = -229.0
-offset_right = 222.0
-offset_bottom = 129.0
+offset_left = 539.0
+offset_top = 102.0
+offset_right = 826.0
+offset_bottom = 460.0
 scale = Vector2(0.2, 0.2)
+metadata/_edit_use_anchors_ = true
 
 [node name="PushPin5" parent="." instance=ExtResource("4_5xs0h")]
-offset_left = -23.0
-offset_top = 27.0
-offset_right = 264.0
-offset_bottom = 385.0
+offset_left = 581.0
+offset_top = 358.0
+offset_right = 868.0
+offset_bottom = 716.0
 scale = Vector2(0.2, 0.2)
+metadata/_edit_use_anchors_ = true
 
 [node name="PushPin6" parent="." instance=ExtResource("4_5xs0h")]
-offset_left = 99.0
-offset_top = -123.0
-offset_right = 386.0
-offset_bottom = 235.0
+offset_left = 703.0
+offset_top = 208.0
+offset_right = 990.0
+offset_bottom = 566.0
 scale = Vector2(0.2, 0.2)
+metadata/_edit_use_anchors_ = true
 
 [node name="PushPin7" parent="." instance=ExtResource("4_5xs0h")]
-offset_left = 224.0
-offset_top = 66.0
-offset_right = 511.0
-offset_bottom = 424.0
+offset_left = 828.0
+offset_top = 397.0
+offset_right = 1115.0
+offset_bottom = 755.0
 scale = Vector2(0.2, 0.2)
+metadata/_edit_use_anchors_ = true
 
 [node name="PushPin8" parent="." instance=ExtResource("4_5xs0h")]
-offset_left = 258.0
-offset_top = -154.0
-offset_right = 545.0
-offset_bottom = 204.0
+offset_left = 862.0
+offset_top = 177.0
+offset_right = 1149.0
+offset_bottom = 535.0
 scale = Vector2(0.2, 0.2)
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -100.0
-offset_top = -318.0
-offset_right = 55.0
-offset_bottom = -236.0
+offset_left = 504.0
+offset_top = 13.0
+offset_right = 659.0
+offset_bottom = 95.0
 color = Color(0.761363, 0.201599, 0.147851, 0.470588)
+metadata/_edit_use_anchors_ = true
 
 [node name="StartButton" type="Button" parent="ColorRect"]
 layout_mode = 0
@@ -152,6 +169,7 @@ offset_top = 9.0
 offset_right = 143.0
 offset_bottom = 75.0
 text = "Start Trial"
+metadata/_edit_use_anchors_ = true
 
 [node name="ResponsePrompt" type="Label" parent="."]
 visible = false
@@ -162,22 +180,25 @@ offset_bottom = -237.0
 text = "Recreate the sequence"
 
 [node name="current_trial" type="Label" parent="."]
-offset_left = -429.0
-offset_top = -261.0
-offset_right = -389.0
-offset_bottom = -238.0
+offset_left = 175.0
+offset_top = 70.0
+offset_right = 215.0
+offset_bottom = 93.0
+metadata/_edit_use_anchors_ = true
 
 [node name="sequence_type" type="Label" parent="."]
-offset_left = 192.0
-offset_top = -258.0
-offset_right = 324.0
-offset_bottom = -235.0
+offset_left = 796.0
+offset_top = 73.0
+offset_right = 928.0
+offset_bottom = 96.0
+metadata/_edit_use_anchors_ = true
 
 [node name="current_level" type="Label" parent="."]
-offset_left = -389.0
-offset_top = -100.0
-offset_right = -349.0
-offset_bottom = -77.0
+offset_left = 215.0
+offset_top = 231.0
+offset_right = 255.0
+offset_bottom = 254.0
+metadata/_edit_use_anchors_ = true
 
 [node name="delay_distraction" type="ColorRect" parent="."]
 visible = false
@@ -196,13 +217,14 @@ offset_bottom = 237.0
 text = "distraction."
 
 [node name="trial_prompt" type="Label" parent="."]
-offset_left = -340.0
-offset_top = -298.0
-offset_right = 304.0
-offset_bottom = -206.0
+offset_left = 264.0
+offset_top = 33.0
+offset_right = 908.0
+offset_bottom = 125.0
 theme_override_font_sizes/font_size = 20
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="session_over_display" type="Label" parent="."]
 visible = false
@@ -214,10 +236,10 @@ text = "Session is Complete, Well Done"
 
 [node name="game_instructions" type="ColorRect" parent="."]
 visible = false
-offset_left = -604.0
-offset_top = -315.0
-offset_right = 548.0
-offset_bottom = 332.0
+offset_left = 2.0
+offset_top = 11.0
+offset_right = 1154.0
+offset_bottom = 658.0
 color = Color(0.105882, 0.513726, 0.411765, 1)
 
 [node name="Label" type="Label" parent="game_instructions"]
@@ -313,6 +335,8 @@ offset_right = 159.0
 offset_bottom = 90.0
 theme_override_font_sizes/font_size = 20
 text = "Play Game"
+
+[node name="String" type="Node2D" parent="."]
 
 [connection signal="pressed" from="ColorRect/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="game_instructions/ColorRect/Button" to="." method="_on_button_pressed"]
