@@ -79,7 +79,8 @@ func _process(delta):
 #begins trials
 func _on_start_button_pressed():
 	$ColorRect.hide()
-	show_instructions()
+	sequence_controller.run_trial()
+	#show_instructions()
 	#would probably lead to an instruction section rather than already the starting trial
 	#sequence_controller.run_trial()
 	
@@ -163,7 +164,7 @@ func display_session_over():
 	#breakpoint below
 	var report = report_load.instantiate()
 	#report.set_game_type(0)
-	report.position = Vector2(-250,0)
+	report.position = Vector2(0,0)
 	report.setup_report(0,sequence_controller.get_performances(),sequence_controller.get_scores(),sequence_controller)
 	#report.setup_graph(sequence_controller.get_performances())
 	#report.setup_report()
@@ -178,7 +179,7 @@ func display_session_over():
 func _on_button_pressed():
 	#when done with instructions
 	$game_instructions.hide()
-	sequence_controller.run_trial()
+	
 	
 func begin_string(pin_key):
 	var string = Path2D.new()
@@ -196,40 +197,12 @@ func begin_string(pin_key):
 	string_line.default_color = Color(1,0,0)
 	$String.add_child(string_line)
 
-	#string.curve.add_point(Vector2(0,0)) 
-	#string.curve.add_point(pin_coords.get(pin_key))
-	#string.curve.set_point_position(1,pin_coords.get(pin_key))
-	#string.curve.set_point_in(1,Vector2(50, 50)) # Set the in control point for the first point
-	#string.curve.set_point_out(0,Vector2(50, 50))
-	#current_string = string
-	#in_str = false
-	#add_child(string)
-	
-	
-	#path = Path2D.new()
-	#curve = Curve2D.new()
-	#path.curve = curve
-	#add_child(path)
-
-	
-	#initial_point = get_global_mouse_position()
-	#curve.clear_points()
-	#curve.add_point(initial_point)
-	#is_path_started = true
-
 	
 func update_string_line_points():
 	#working for straight
 	#string_line.clear_points()
 	#for i in range(current_string.curve.get_point_count()):
 	#	string_line.add_point(current_string.curve.get_point_position(i))
-		
-	#working to curve
-	#string_line.clear_points()
-	#var points = current_string.curve.get_baked_points()
-	#for point in points:
-		#string_line.add_point(point)
-		
 		
 	#testing for gentle string curve	
 	string_line.clear_points()

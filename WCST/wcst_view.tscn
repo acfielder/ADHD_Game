@@ -192,6 +192,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="game_instructions" type="ColorRect" parent="."]
+visible = false
 offset_left = 6.0
 offset_top = 4.0
 offset_right = 1152.0

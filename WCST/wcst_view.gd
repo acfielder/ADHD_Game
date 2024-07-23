@@ -173,7 +173,7 @@ func end_session():
 	
 	var report_load = load("res://Report/Report.tscn")
 	var report = report_load.instantiate()
-	report.position = Vector2(325,325)
+	report.position = Vector2(0,0)
 	report.setup_report(2,wcst_controller.get_performances(),wcst_controller.get_scores(), wcst_controller,wcst_controller.get_rt_info())
 	add_child(report)
 	
