@@ -46,8 +46,8 @@ func load_cues(folder_path):
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name:
-			if file_name.ends_with(".png"):
-				image_files.append(folder_path + file_name)
+			if file_name.ends_with(".import"): #png
+				image_files.append(folder_path + file_name.replace(".import", "")) #just file_name
 			file_name = dir.get_next()
 		dir.list_dir_end()
 	return image_files

@@ -134,8 +134,8 @@ func get_pin_images():
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name:
-			if file_name.ends_with(".png"):
-				image_files.append(images_folder_path + file_name)
+			if file_name.ends_with(".import"): #.png
+				image_files.append(images_folder_path + file_name.replace(".import", ""))
 			file_name = dir.get_next()
 		dir.list_dir_end()
 	return image_files

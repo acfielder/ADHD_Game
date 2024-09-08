@@ -11,7 +11,7 @@ var terrain_belt: Array[MeshInstance3D] = [] #terrian blocks currently rendered 
 
 
 func _ready() -> void:
-	_load_terrain_scenes(terrian_blocks_path)
+	await _load_terrain_scenes(terrian_blocks_path) #added await
 	_init_blocks(num_terrain_blocks)
 
 
@@ -38,7 +38,10 @@ func _progress_terrain(delta: float) -> void:
 		var last_terrain = terrain_belt[-1]
 		var first_terrain = terrain_belt.pop_front()
 
-		var block = TerrainBlocks.pick_random().instantiate()
+		var block = TerrainBlocks.pick_random()
+		if block.ends_with(".remap"):
+			block.replace(".remap", "")
+		block.instantiate()
 		_append_to_far_edge(last_terrain, block)
 		add_child(block)
 		terrain_belt.append(block)
@@ -52,5 +55,11 @@ func _append_to_far_edge(target_block: MeshInstance3D, appending_block: MeshInst
 func _load_terrain_scenes(target_path: String) -> void:
 	var dir = DirAccess.open(target_path)
 	for scene_path in dir.get_files():
-		print("Loading terrian block scene: " + target_path + "/" + scene_path)
-		TerrainBlocks.append(load(target_path + "/" + scene_path))
+		#if scene_path.ends_with(".remap"):
+			#print("Loading terrian block scene: " + target_path + "/" + scene_path)
+		var path = target_path + "/" + scene_path
+		if path.ends_with(".remap"):
+			path.replace(".remap","")
+		var loaded = ResourceLoader.load(path)
+		if loaded:
+			TerrainBlocks.append(loaded) #just load not resourceloader

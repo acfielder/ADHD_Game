@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Adhd Game"
-run/main_scene="res://SequenceGame/InvestigationBoardGame.tscn"
+run/main_scene="res://mini_game_demonstration/mini_game_demonstration.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
+
+[editor]
+
+export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 
