@@ -7,4 +7,3 @@ static func start_timer(node: Node, duration: float, callback: Callable):
 	timer.connect("timeout", callback)
 	return timer
 	
-

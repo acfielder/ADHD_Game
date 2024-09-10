@@ -41,13 +41,14 @@ func setup_session():
 
 	
 func update_rule_block_phase_length():
+	# i think this was backwards, rule blocks should be shorter if better adaptiton rate
 	rule_length = user.prev_overall_adaption_rate
-	if user.prev_overall_adaption_rate < 0.50 && rule_length > 5:
-		rule_length = user.prev_rule_block_length - 3
+	if user.prev_overall_adaption_rate < 0.50 && rule_length < 17: # was rule_length > 5
+		rule_length = user.prev_rule_block_length + 3 #was - 3
 	elif user.prev_overall_adaption_rate > 0.50 && user.prev_overall_adaption_rate < 0.70:
 		rule_length = user.prev_rule_block_length
-	elif rule_length < 17:
-		rule_length = user.prev_rule_block_length + 3
+	elif rule_length > 5: #was < 17
+		rule_length = user.prev_rule_block_length - 3 #was +3
 	#phase_length = int(60 / rule_length / 2) #this should be uncommented for the actual game
 	#60 is the number of trials roughly that should be in this session
 	

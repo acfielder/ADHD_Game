@@ -20,4 +20,3 @@ func test_rule_change():
 	assert_eq(model.current_rule,1)
 	assert_eq(model.session_rule_blocks.size(),1)
 	
-

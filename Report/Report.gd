@@ -144,11 +144,3 @@ func setup_graph_key(keys: Dictionary):
 		line.width = 3
 		y_coord_counter += 15
 		$Page2/graph_key_cont.add_child(line)
-
-
-
-
-
-
-
-

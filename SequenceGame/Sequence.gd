@@ -259,4 +259,3 @@ func clear_string():
 		child.queue_free()
 
 	
-

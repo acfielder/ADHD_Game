@@ -8,15 +8,15 @@
 [ext_resource type="Texture2D" uid="uid://dffqohtn8rlxf" path="res://Art/demonstration/Screen Shot 2024-07-17 at 5.01.59 PM.jpeg" id="6_alnaf"]
 [ext_resource type="Texture2D" uid="uid://cjt5kepgac3q3" path="res://Art/demonstration/stop_go_thumbnail.jpeg" id="7_1he85"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jywmt"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cmhxn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bor8j"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_c8nlw"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hdqn0"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bor8j"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cmhxn"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jywmt"]
 
 [node name="StopGoHud" type="Node2D"]
 script = ExtResource("1_r6tlx")
@@ -41,11 +41,11 @@ offset_top = 13.5416
 offset_right = 289.0
 offset_bottom = 214.542
 theme_override_font_sizes/font_size = 30
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jywmt")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_cmhxn")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_bor8j")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_c8nlw")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_hdqn0")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_bor8j")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_cmhxn")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jywmt")
 text = "Begin Session"
 
 [node name="left_arrow" type="Sprite2D" parent="top_bar"]

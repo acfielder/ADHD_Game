@@ -17,5 +17,3 @@ func test_get_card_info_string():
 	trial.count = wcstTrialInfo.Counts.THREE
 	trial.shape = wcstTrialInfo.Shapes.SQUARE
 	assert_eq(trial.get_card_info_string(),["orange","square","three"])
-
-
