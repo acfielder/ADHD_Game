@@ -78,12 +78,12 @@ func record_check_response(info: Array): #color,shape,count - CHECK
 	var trial_info = block_trials[-1].get_card_info_string()
 	match rule:
 		Rules.HAT:
-			if trial_info[1] == info[1]:
+			if trial_info[0] == info[0]:
 				block_trials[-1].successful = true
 			else:
 				block_trials[-1].successful = false
 		Rules.GLASSES:
-			if trial_info[0] == info[0]:
+			if trial_info[1] == info[1]:
 				block_trials[-1].successful = true
 			else:
 				block_trials[-1].successful = false
