@@ -1,29 +1,30 @@
 extends Node
 class_name wcstTrialInfo
 
-enum Colors {GREEN, BLUE, PURPLE, ORANGE}
-enum Shapes {CIRCLE, SQUARE, TRIANGLE, STAR}
-enum Counts {ONE, TWO, THREE, FOUR}
 
-const COLORS_STR = {
-	Colors.GREEN: "green",
-	Colors.BLUE: "blue",
-	Colors.PURPLE: "purple",
-	Colors.ORANGE: "orange"
+enum Hats {BEANIE, BUCKET, BOWLER, COWBOY}
+enum Glasses {SHADES, CATEYE, BROKENGLASSES, MONOCLE}
+enum Clothes {HOODIE, SUIT, TRENCHCOAT, TORNSHIRT}
+
+const HATS_STR = {
+	Hats.BEANIE: "beanie",
+	Hats.BUCKET: "bucket",
+	Hats.BOWLER: "bowler",
+	Hats.COWBOY: "cowboy"
 }
 
-const SHAPES_STR = {
-	Shapes.CIRCLE : "circle",
-	Shapes.SQUARE : "square",
-	Shapes.TRIANGLE : "triangle",
-	Shapes.STAR : "star"
+const GLASSES_STR = {
+	Glasses.SHADES: "shades",
+	Glasses.CATEYE: "cateye",
+	Glasses.BROKENGLASSES: "brokenglasses",
+	Glasses.MONOCLE: "monocle"
 }
 
-const COUNTS_STR = {
-	Counts.ONE: "one",
-	Counts.TWO: "two",
-	Counts.THREE: "three",
-	Counts.FOUR: "four"
+const CLOTHES_STR = {
+	Clothes.HOODIE: "hoodie",
+	Clothes.SUIT: "suit",
+	Clothes.TRENCHCOAT: "trenchcoat",
+	Clothes.TORNSHIRT: "tornshirt"
 }
 
 
@@ -33,9 +34,9 @@ var successful : bool #whether or not the trial was successful
 var r_t : float = -1 #reaction time in sorting card
 var sort_press : bool = false #whether or not the player sorted the card
 
-var shape : Shapes
-var color : Colors
-var count : Counts
+var hats : Hats
+var glasses : Glasses
+var clothes : Clothes
 
 var rng = RandomNumberGenerator.new()
 
@@ -48,29 +49,29 @@ func _ready():
 
 #select card type based on phase (1 or 2)
 func set_card_type(phase: int): 
-	var rand_shape
-	var rand_color
-	var rand_count
+	var rand_hat
+	var rand_glasses
+	var rand_clothes
 	match phase:
 		1:
-			rand_shape = rng.randi_range(0, 2)
-			rand_color = rng.randi_range(0, 2)
-			rand_count = rng.randi_range(0, 2)	
+			rand_hat = rng.randi_range(0, 2)
+			rand_glasses = rng.randi_range(0, 2)
+			rand_clothes = rng.randi_range(0, 2)	
 		2:
-			rand_shape = rng.randi_range(0, 3)#become 3
-			rand_color = rng.randi_range(0, 3)#become 3
-			rand_count = rng.randi_range(0, 3)
-	shape = Shapes.values()[rand_shape]
-	color = Colors.values()[rand_color]
-	count = Counts.values()[rand_count]
+			rand_hat = rng.randi_range(0, 3)#become 3
+			rand_glasses = rng.randi_range(0, 3)#become 3
+			rand_clothes = rng.randi_range(0, 3)
+	hats = Hats.values()[rand_hat]
+	glasses = Glasses.values()[rand_glasses]
+	clothes = Clothes.values()[rand_clothes]
 
 #string of 3 info about physical card - color, shape, count
 func get_card_info_string() -> Array: 
 	var card_details #= [COLORS_STR[color],SHAPES_STR[shape],COUNTS_STR[count]]
-	var s = SHAPES_STR[shape]
-	var cou = COUNTS_STR[count]
-	var col = COLORS_STR[color]
-	card_details = [col,s,cou]
+	var h = HATS_STR[hats]
+	var g = GLASSES_STR[glasses]
+	var c = CLOTHES_STR[clothes]
+	card_details = [h,g,c]
 	return card_details
 	
 func set_sort_press_true():

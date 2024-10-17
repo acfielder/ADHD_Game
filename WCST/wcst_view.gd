@@ -29,7 +29,7 @@ func _ready():
 	
 	
 	
-	#user.reset_wcst_data()
+	user.reset_wcst_data()
 	
 	
 	
@@ -53,11 +53,11 @@ func update_rule():
 	var rule_text = wcst_controller.get_current_rule_string()
 	$RuleCard/Label.text = rule_text
 	match rule_text:
-		"Shape":
+		"Hat":
 			$RuleCard/RuleIcon.texture = load("res://Art/WCST/shape_outline.png")
-		"Color":
+		"Glasses":
 			$RuleCard/RuleIcon.texture = load("res://Art/WCST/color_splat.png")
-		"Count":
+		"Clothes":
 			$RuleCard/RuleIcon.texture = load("res://Art/WCST/number_symbol.png")
 
 #starting point for when a card press is detected
@@ -69,40 +69,40 @@ func _card_press_detected(card):
 func set_base_cards(phase: int):
 	if phase == 1:
 		var vals
-		$base_card_1.choose_set_properties("one","circle","green")
+		$base_card_1.choose_set_properties("beanie","shades","hoodie")
 		vals = $base_card_1.get_card_info_string()
 		$base_card_1.give_card_texture(create_art_string(vals))
 		
-		$base_card_2.choose_set_properties("two","square","blue")
+		$base_card_2.choose_set_properties("bucket","cateye","suit")
 		vals = $base_card_2.get_card_info_string()
 		$base_card_2.give_card_texture(create_art_string(vals))
 		
-		$base_card_3.choose_set_properties("three","triangle","purple")
+		$base_card_3.choose_set_properties("bowler","brokenglasses","trenchcoat")
 		vals = $base_card_3.get_card_info_string()
 		$base_card_3.give_card_texture(create_art_string(vals))
 		
 	if phase == 2:
 		var vals
-		$base_card_1.choose_set_properties("one","square","green")
+		$base_card_1.choose_set_properties("beanie","shades","hoodie")
 		vals = $base_card_1.get_card_info_string()
 		$base_card_1.give_card_texture(create_art_string(vals))
 		
-		$base_card_2.choose_set_properties("two","star","blue")
+		$base_card_2.choose_set_properties("bucket","cateye","suit")
 		vals = $base_card_2.get_card_info_string()
 		$base_card_2.give_card_texture(create_art_string(vals))
 		
-		$base_card_3.choose_set_properties("three","circle","orange")
+		$base_card_3.choose_set_properties("bowler","brokenglasses","trenchcoat")
 		vals = $base_card_3.get_card_info_string()
 		$base_card_3.give_card_texture(create_art_string(vals))
 		
-		$base_card_4.choose_set_properties("four","triangle","purple")
+		$base_card_4.choose_set_properties("cowboy","monocle","tornshirt")
 		vals = $base_card_4.get_card_info_string()
 		$base_card_4.give_card_texture(create_art_string(vals))
 	
 	#var vals
 	#$base_card_1.choose_set_properties("one")
 	#vals = $base_card_1.get_card_info_string()
-	#$base_card_1.give_card_texture(create_art_string(vals))
+	#$base_card_1.give_card_texture(create_art_string(vals))     
 	
 	#$base_card_2.choose_set_properties("two")
 	#vals = $base_card_2.get_card_info_string()

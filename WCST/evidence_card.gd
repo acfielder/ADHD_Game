@@ -3,34 +3,34 @@ class_name evidence_card
 
 signal card_pressed
 
-enum Colors {GREEN, BLUE, PURPLE, ORANGE}
-enum Shapes {CIRCLE, SQUARE, TRIANGLE, STAR}
-enum Counts {ONE, TWO, THREE, FOUR}
+enum Hats {BEANIE, BUCKET, BOWLER, COWBOY}
+enum Glasses {SHADES, CATEYE, BROKENGLASSES, MONOCLE}
+enum Clothes {HOODIE, SUIT, TRENCHCOAT, TORNSHIRT}
 
-const COLORS_STR = {
-	Colors.GREEN: "green",
-	Colors.BLUE: "blue",
-	Colors.PURPLE: "purple",
-	Colors.ORANGE: "orange"
+const HATS_STR = {
+	Hats.BEANIE: "beanie",
+	Hats.BUCKET: "bucket",
+	Hats.BOWLER: "bowler",
+	Hats.COWBOY: "cowboy"
 }
 
-const SHAPES_STR = {
-	Shapes.CIRCLE : "circle",
-	Shapes.SQUARE : "square",
-	Shapes.TRIANGLE : "triangle",
-	Shapes.STAR : "star"
+const GLASSES_STR = {
+	Glasses.SHADES: "shades",
+	Glasses.CATEYE: "cateye",
+	Glasses.BROKENGLASSES: "brokenglasses",
+	Glasses.MONOCLE: "monocle"
 }
 
-const COUNTS_STR = {
-	Counts.ONE: "one",
-	Counts.TWO: "two",
-	Counts.THREE: "three",
-	Counts.FOUR: "four"
+const CLOTHES_STR = {
+	Clothes.HOODIE: "hoodie",
+	Clothes.SUIT: "suit",
+	Clothes.TRENCHCOAT: "trenchcoat",
+	Clothes.TORNSHIRT: "tornshirt"
 }
 
-var shape: Shapes
-var color: Colors
-var count: Counts
+var hat: Hats 
+var glasses: Glasses 
+var clothes: Clothes 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -62,10 +62,10 @@ func flip_card_face_down():
 	$Sprite2D.texture = texture
 
 #update to use parameters
-func choose_set_properties(count_in: String, shape_in: String, color_in: String):
-	count = COUNTS_STR.find_key(count_in)
-	shape = SHAPES_STR.find_key(shape_in)
-	color = COLORS_STR.find_key(color_in)
+func choose_set_properties(hat_in: String, glasses_in: String, clothes_in: String):
+	hat = HATS_STR.find_key(hat_in)
+	glasses = GLASSES_STR.find_key(glasses_in)
+	clothes = CLOTHES_STR.find_key(clothes_in)
 	#var shape_keys = SHAPES_STR.keys()
 	#shape = shape_keys.pick_random()
 	#var color_keys = COLORS_STR.keys()
@@ -74,10 +74,10 @@ func choose_set_properties(count_in: String, shape_in: String, color_in: String)
 #string of 3 info about physical card - color, shape, count
 func get_card_info_string() -> Array: 
 	var card_details #= [COLORS_STR[color],SHAPES_STR[shape],COUNTS_STR[count]]
-	var s = SHAPES_STR[shape]
-	var cou = COUNTS_STR[count]
-	var col = COLORS_STR[color]
-	card_details = [col,s,cou]
+	var h = HATS_STR[hat]
+	var g = GLASSES_STR[glasses]
+	var c = CLOTHES_STR[clothes]
+	card_details = [h,g,c]
 	return card_details
 
 

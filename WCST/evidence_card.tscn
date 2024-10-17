@@ -4,15 +4,15 @@
 
 [sub_resource type="Theme" id="Theme_6uwnr"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4sxlg"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eqkiw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hp4ev"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kio7v"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wc21c"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hp4ev"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eqkiw"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4sxlg"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pm7iq"]
 load_path = "res://.godot/imported/card_back.png-477d6a464dd25a8b74a6a66aa6f8235d.ctex"
@@ -26,11 +26,11 @@ offset_top = 18.0
 offset_right = 171.0
 offset_bottom = 225.0
 theme = SubResource("Theme_6uwnr")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_4sxlg")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_eqkiw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_hp4ev")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_kio7v")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_wc21c")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_hp4ev")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_eqkiw")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4sxlg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(98, 122)

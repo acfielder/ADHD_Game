@@ -3,10 +3,10 @@ class_name wcstRuleBlock
 
 var block_trials : Array = []
 
-enum Rules {SHAPE,COLOR,COUNT}
+enum Rules {HAT, GLASSES, CLOTHES}
 var rule : Rules
 
-const RULES_STR : Dictionary = {Rules.SHAPE: "Shape", Rules.COLOR: "Color", Rules.COUNT: "Count"}
+const RULES_STR : Dictionary = {Rules.HAT: "Hat", Rules.GLASSES: "Glasses", Rules.CLOTHES: "Clothes"}
 
 var adaption_rate : float
 
@@ -46,14 +46,14 @@ func _ready():
 func set_phase(phase_in: int):
 	phase = phase_in
 
-func set_rule(prev_rule : Rules = Rules.SHAPE):
+func set_rule(prev_rule : Rules = Rules.HAT):
 	rule = prev_rule
 	while rule == prev_rule:
 		var rule_num = rng.randi_range(0, 2)
 		match rule_num:
-			0: rule = Rules.SHAPE
-			1: rule = Rules.COLOR
-			2: rule = Rules.COUNT
+			0: rule = Rules.HAT
+			1: rule = Rules.GLASSES
+			2: rule = Rules.CLOTHES
 	return rule
 
 func setup_add_trial():
@@ -66,28 +66,28 @@ func setup_add_trial():
 func calc_adaption_rate():
 	var sorted = 0
 	for i in range(5):
-		if block_trials[i].successful:
+		if block_trials[i].successful: 
 			sorted += 1
 	adaption_rate = float(float(sorted)/float(5))#correct/adaption period length
 	return adaption_rate
 	
 #when a card is attempted to be sorted
 #the following two will need to go into the block to get the last trial
-func record_check_response(info: Array): #color,shape,count
+func record_check_response(info: Array): #color,shape,count - CHECK
 	block_trials[-1].set_sort_press_true()
 	var trial_info = block_trials[-1].get_card_info_string()
 	match rule:
-		Rules.SHAPE:
+		Rules.HAT:
 			if trial_info[1] == info[1]:
 				block_trials[-1].successful = true
 			else:
 				block_trials[-1].successful = false
-		Rules.COLOR:
+		Rules.GLASSES:
 			if trial_info[0] == info[0]:
 				block_trials[-1].successful = true
 			else:
 				block_trials[-1].successful = false
-		Rules.COUNT:
+		Rules.CLOTHES:
 			if trial_info[2] == info[2]:
 				block_trials[-1].successful = true
 			else:
