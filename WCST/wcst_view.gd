@@ -54,11 +54,11 @@ func update_rule():
 	$RuleCard/Label.text = rule_text
 	match rule_text:
 		"Hat":
-			$RuleCard/RuleIcon.texture = load("res://Art/WCST/shape_outline.png")
+			$RuleCard/RuleIcon.texture = load("res://Art/WCST/hats_sym.png")
 		"Glasses":
-			$RuleCard/RuleIcon.texture = load("res://Art/WCST/color_splat.png")
+			$RuleCard/RuleIcon.texture = load("res://Art/WCST/glasses_sym.png")
 		"Clothes":
-			$RuleCard/RuleIcon.texture = load("res://Art/WCST/number_symbol.png")
+			$RuleCard/RuleIcon.texture = load("res://Art/WCST/clothes_sym.png")
 
 #starting point for when a card press is detected
 func _card_press_detected(card):

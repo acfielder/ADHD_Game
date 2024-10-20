@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://0kilfxylb0sh" path="res://WCST/evidence_trial_card.tscn" id="3_p7hyo"]
 [ext_resource type="Texture2D" uid="uid://bcc31wbdp4r00" path="res://Art/WCST/speech_bubble.png" id="4_d3xx7"]
 [ext_resource type="Texture2D" uid="uid://wqc06x36tqee" path="res://Art/WCST/notecard.png" id="6_oam6v"]
-[ext_resource type="Texture2D" uid="uid://fxtw8jnbpsh1" path="res://Art/WCST/number_symbol.png" id="7_fjg4v"]
-[ext_resource type="Texture2D" uid="uid://d3ogjf8d7i7t0" path="res://Art/WCST/color_splat.png" id="8_dndt7"]
-[ext_resource type="Texture2D" uid="uid://db885bp571ye3" path="res://Art/WCST/shape_outline.png" id="9_7ob7j"]
+[ext_resource type="Texture2D" uid="uid://cq2jb2cck1tsl" path="res://Art/WCST/hats_sym.png" id="7_sdbet"]
+[ext_resource type="Texture2D" uid="uid://dh37qhethbeta" path="res://Art/WCST/glasses_sym.png" id="8_72sf6"]
+[ext_resource type="Texture2D" uid="uid://d3yxrrl23bh5a" path="res://Art/WCST/clothes_sym.png" id="9_b5le8"]
 
 [node name="Node2D2" type="Node2D"]
 script = ExtResource("1_kjtxl")
@@ -192,7 +192,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="game_instructions" type="ColorRect" parent="."]
-visible = false
 offset_left = 6.0
 offset_top = 4.0
 offset_right = 1152.0
@@ -209,7 +208,7 @@ theme_override_font_sizes/font_size = 25
 text = "For each trial, an evidence card will be presented
 in the lower left. Sort this card as quickly
 as possible in the above piles by clicking
-the pile that  the active card matcches
+the pile that  the active card matches
 based on the current rule in the top left"
 
 [node name="Label3" type="Label" parent="game_instructions"]
@@ -230,9 +229,9 @@ offset_bottom = 283.0
 theme_override_font_sizes/font_size = 25
 text = "The rule for sorting evidence will 
 switch between:
-- color
-- 'count' of items
-- shape"
+- suspect's hat
+- suspect's glasses
+- suspect's clothing"
 
 [node name="Label2" type="Label" parent="game_instructions"]
 layout_mode = 0
@@ -268,20 +267,20 @@ position = Vector2(735, 480)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("6_oam6v")
 
-[node name="Count" type="Sprite2D" parent="game_instructions"]
+[node name="Hat" type="Sprite2D" parent="game_instructions"]
 position = Vector2(742.575, 502.225)
 scale = Vector2(0.05, 0.05)
-texture = ExtResource("7_fjg4v")
+texture = ExtResource("7_sdbet")
 
-[node name="Color" type="Sprite2D" parent="game_instructions"]
+[node name="Glasses" type="Sprite2D" parent="game_instructions"]
 position = Vector2(634.575, 436.225)
 scale = Vector2(0.05, 0.05)
-texture = ExtResource("8_dndt7")
+texture = ExtResource("8_72sf6")
 
-[node name="Shape" type="Sprite2D" parent="game_instructions"]
+[node name="Clothing" type="Sprite2D" parent="game_instructions"]
 position = Vector2(851.575, 430.225)
 scale = Vector2(0.05, 0.05)
-texture = ExtResource("9_7ob7j")
+texture = ExtResource("9_b5le8")
 
 [node name="Rules" type="Label" parent="game_instructions"]
 layout_mode = 0
