@@ -10,8 +10,9 @@ var data_manager: Node = null  # This will hold the single instance of the data 
 var main_controller1 = null #should be of type Sequence_Controller
 
 func _ready():
-	update_player_stats({"id": 2343, "name": "jeremiah", "randnum": 234524})
-
+	#update_player_stats({"id": 2343, "name": "jeremiah", "randnum": 234524})
+	#fetch_user_data()
+	pass
 
 	
 func initialize(main_controller):
@@ -29,6 +30,7 @@ func setup_signal_connections():
 func get_data_manager() -> Node:
 	if data_manager == null:
 		data_manager = DataManager.instantiate()
+		await get_tree().create_timer(0.0).timeout
 		#might need the below but its not possible rn?
 		#get_tree().root.add_child(data_manager)
 		#get_tree().root.call_deferred("add_child", data_manager)
@@ -37,7 +39,8 @@ func get_data_manager() -> Node:
 			#get_tree().root.add_child(data_manager)
 		#else:
 			#call_deferred("add_child", data_manager)
-		call_deferred("add_child", data_manager)
+		#call_deferred("add_child", data_manager)
+		add_child(data_manager)
 	return data_manager
 
 #example

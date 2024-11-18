@@ -17,3 +17,4 @@ func setup_things():
 	var datamanagerscene = datamanager.instantiate()
 	datamanagerscene.initialize(self)
 	call_deferred("add_child", datamanagerscene)
+	await get_tree().create_timer(0.0).timeout
