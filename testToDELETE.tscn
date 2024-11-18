@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://rbmftwahfd2s"]
+
+[ext_resource type="Script" path="res://test_to_delete.gd" id="1_ebheh"]
+
+[node name="TestToDelete" type="Node2D"]
+script = ExtResource("1_ebheh")

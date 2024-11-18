@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://67vcijcu7lek"]
+
+[ext_resource type="Script" path="res://SequenceGame/CBTT_DataManager.gd" id="1_yg5w8"]
+
+[node name="CbttDataManager" type="Node"]
+script = ExtResource("1_yg5w8")
