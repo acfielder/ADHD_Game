@@ -12,19 +12,15 @@ UML Component Diagram:
 
 link!
 
-Initial Idea Poster - Research Stage:
+[Initial Idea Poster - Research Stage](Posters/ADHDGamePoster.pdf)
 
-link!
-
-First Implementation of Mini-Games Poster:
-
-link!
+[First Implementation of Mini-Games Poster](Posters/MiniGamePoster.pdf)
 
 # The Database
 
 The database for this project was created to begin the experimentation process to ensure the adapted cogitive tasks work as expected and for future use as the project grows. The database component repository is linked below:
 
-link!
+[Database Repository](https://github.com/acfielder/ADHD_Game_Database)
 
 # Getting Started
 
