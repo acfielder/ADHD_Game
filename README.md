@@ -5,20 +5,25 @@ This project began in a search for new ADHD treatments to work alongside existin
 # System Design
 
 UML Class Diagram:
+
 link!
 
 UML Component Diagram:
+
 link!
 
 Initial Idea Poster - Research Stage:
+
 link!
 
 First Implementation of Mini-Games Poster:
+
 link!
 
 # The Database
 
 The database for this project was created to begin the experimentation process to ensure the adapted cogitive tasks work as expected and for future use as the project grows. The database component repository is linked below:
+
 link!
 
 # Getting Started
