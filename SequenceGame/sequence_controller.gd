@@ -1,5 +1,10 @@
 class_name Sequence_Controller
 
+#signals emitted for CBTTDataManager
+signal request_session_start_data
+signal update_session_progress #must send session progress stats all together
+signal update_session_stats #must send new session stats all together
+signal update_trials_stats #must send all trials - may have to break up before being sent to CBTTDataManager controller
 
 enum State_Type{MODEL, RESPONSE, HIGHLIGHT}
 var game_state = State_Type.MODEL
@@ -10,6 +15,8 @@ var view : Sequence
 var model : Sequence_Game
 
 var trial_response_begun : bool = false
+
+
 
 
 func _init(view_ref: Sequence, user_in: UserModel):

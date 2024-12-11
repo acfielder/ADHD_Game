@@ -7,6 +7,7 @@ signal update_player_stats
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	#print("huh")
 	await setup_things()
 	print("pleasseeeee")
 	#emit_signal("request_user_data")
