@@ -4,27 +4,19 @@ This project began in a search for new ADHD treatments to work alongside existin
 
 # System Design
 
-UML Class Diagram:
+[UML Class Diagram](https://drive.google.com/file/d/1Zk5DqUHnCzLOM4m2FGaskZUNYU8AOONk/view?usp=sharing)
 
-link!
+[UML Component Diagram](https://drive.google.com/file/d/1YOw1Kju2w-ld6_wyqusGffQ8ynLHdf1M/view?usp=sharing)
 
-UML Component Diagram:
+[Initial Idea Poster - Research Stage](Posters/ADHDGamePoster.pdf)
 
-link!
-
-Initial Idea Poster - Research Stage:
-
-link!
-
-First Implementation of Mini-Games Poster:
-
-link!
+[First Implementation of Mini-Games Poster](Posters/MiniGamePoster.pdf)
 
 # The Database
 
 The database for this project was created to begin the experimentation process to ensure the adapted cogitive tasks work as expected and for future use as the project grows. The database component repository is linked below:
 
-link!
+[Database Repository](https://github.com/acfielder/ADHD_Game_Database)
 
 # Getting Started
 
