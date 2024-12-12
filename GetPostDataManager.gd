@@ -1,6 +1,7 @@
 extends Node
 
 func _ready():
+	#testing
 	#http_get("http://127.0.0.1:5000/get-data")
 	#http_post("http://127.0.0.1:5000/save-player-data", {"id": 2343, "name": "jeremiah", "randnum": 234524}, Callable(self, "temp_callback"), [])
 	pass
@@ -9,7 +10,7 @@ func http_get(url: String, callback: Callable, headers: Array = []):
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 	#call_deferred("add_child", http_request)
-	await get_tree().create_timer(0.0).timeout #TODO
+	await get_tree().create_timer(0.0).timeout 
 	set_meta("callback", callback) #used to have http_request. first
 	http_request.request_completed.connect(_on_request_completed_get)
 	http_request.request(url, headers)
@@ -23,7 +24,7 @@ func http_post(url: String, data: Dictionary, callback: Callable, headers: Array
 	var http_request = HTTPRequest.new()
 	#call_deferred("add_child", http_request)
 	add_child(http_request)
-	#await get_tree().create_timer(0.0).timeout #TODO
+	#await get_tree().create_timer(0.0).timeout 
 	print("Is HTTPRequest inside tree:", http_request.is_inside_tree())
 	set_meta("callback", callback)
 	http_request.request_completed.connect(_on_request_completed_post)

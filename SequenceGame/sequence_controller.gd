@@ -1,10 +1,15 @@
 class_name Sequence_Controller
 
 #signals emitted for CBTTDataManager
-signal request_session_start_data
-signal update_session_progress #must send session progress stats all together
-signal update_session_stats #must send new session stats all together
-signal update_trials_stats #must send all trials - may have to break up before being sent to CBTTDataManager controller
+signal request_session_start_data #emitted at end of _init, both along with and partially in place of model.setup_game_for_player
+#the three below would be emitted at session end but should be session_stats, trial_stats, then session_progress, and things 
+	#inbetween as things like what level they're on may change and completed of level may be reset for session progress.
+signal update_session_progress #must send session progress stats all together - dictionary created as emitting
+signal update_session_stats #must send new session stats all together - dictionary created as emitting
+signal update_trials_stats #must send all trials - may have to break up before being sent to CBTTDataManager 
+							#controller but currently setup to send model's trial_history. should also send user's id
+							
+var datamanager = preload("res://SequenceGame/CBTT_DataManager.tscn")
 
 enum State_Type{MODEL, RESPONSE, HIGHLIGHT}
 var game_state = State_Type.MODEL
@@ -25,6 +30,14 @@ func _init(view_ref: Sequence, user_in: UserModel):
 	user = user_in
 	model.set_user(user)
 	model.setup_game_for_player()
+	#setup_data_manager() #should be uncommented!!! - needs to be initialized though this controller will only ever emit signals for it to listen for
+
+#to initialize CBTT datamanager - though will not directly interact, will emit signals to it
+func setup_data_manager():
+	var datamanagerscene = datamanager.instantiate()
+	datamanagerscene.initialize(self)
+	call_deferred("add_child", datamanagerscene)
+	await view.create_short_timer(0.0)
 
 #highlights sequence of pins based on the type of sequence and chosen order - incomplete
 func highlight_sequence(mem_order: Array): #sequence_type: Array
