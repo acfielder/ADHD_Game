@@ -10,7 +10,7 @@ var data_manager: Node = null  # This will hold the single instance of the data 
 var main_controller1 = null #should be of type Sequence_Controller
 var model = null
 
-@export var server = "http://127.0.0.1:5000/"
+@export var server = "http://127.0.0.1:5000/" #should eventually become a live, nonlocal server
 
 func _ready():
 	#update_player_stats({"id": 2343, "name": "jeremiah", "randnum": 234524})
